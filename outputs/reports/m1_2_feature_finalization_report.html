@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M1.2 Feature Finalization Report — Phishing Detection</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px; color: #1a1a1a; background: #fff;
+  max-width: 1100px; margin: 40px auto; padding: 0 28px 80px;
+}
+h1  { font-size: 22px; font-weight: 700; border-bottom: 3px solid #185FA5;
+      padding-bottom: 12px; margin-bottom: 6px; }
+h2  { font-size: 16px; font-weight: 600; color: #185FA5;
+      margin: 36px 0 12px; border-left: 4px solid #185FA5;
+      padding-left: 10px; }
+h3  { font-size: 14px; font-weight: 600; color: #333; margin: 20px 0 8px; }
+p   { line-height: 1.65; color: #444; margin-bottom: 10px; }
+p.meta { font-size: 12px; color: #888; margin-bottom: 24px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 10px 0 22px; }
+th    { background: #E6F1FB; padding: 9px 13px; text-align: left;
+        border: 1px solid #B5D4F4; font-weight: 600; white-space: nowrap; }
+td    { padding: 7px 13px; border: 1px solid #ddd; vertical-align: top; }
+tr:nth-child(even) td { background: #F8FBFF; }
+code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 12px;
+       background: #F1F3F5; padding: 2px 5px; border-radius: 3px; }
+.grid3 { display: grid; grid-template-columns: repeat(3,1fr); gap:16px; margin:16px 0 24px; }
+.grid4 { display: grid; grid-template-columns: repeat(4,1fr); gap:14px; margin:16px 0 24px; }
+.card  { border:1px solid #B5D4F4; border-radius:8px; padding:16px 18px;
+         background:#F0F7FF; }
+.card-v { font-size:28px; font-weight:700; color:#185FA5; }
+.card-l { font-size:12px; color:#666; margin-top:4px; }
+.pass  { background:#E1F5EE; color:#0F6E56; padding:3px 8px; border-radius:4px;
+         font-size:12px; font-weight:600; }
+.fail  { background:#FCEBEB; color:#A32D2D; padding:3px 8px; border-radius:4px;
+         font-size:12px; font-weight:600; }
+.warn  { background:#FAEEDA; color:#854F0B; padding:3px 8px; border-radius:4px;
+         font-size:12px; font-weight:600; }
+.info  { background:#E6F1FB; color:#185FA5; padding:3px 8px; border-radius:4px;
+         font-size:12px; font-weight:600; }
+.alert { border-left:4px solid #E24B4A; background:#FCEBEB;
+         padding:12px 16px; border-radius:0 6px 6px 0; margin:12px 0; }
+.alert-warn { border-left:4px solid #EF9F27; background:#FAEEDA;
+              padding:12px 16px; border-radius:0 6px 6px 0; margin:12px 0; }
+.alert-info { border-left:4px solid #378ADD; background:#E6F1FB;
+              padding:12px 16px; border-radius:0 6px 6px 0; margin:12px 0; }
+.tag  { display:inline-block; font-size:11px; font-weight:500;
+        padding:2px 7px; border-radius:4px; margin:2px 3px 2px 0; }
+.tag-url    { background:#E6F1FB; color:#185FA5; }
+.tag-stat   { background:#EAF3DE; color:#3B6D11; }
+.tag-char   { background:#EEEDFE; color:#533AB7; }
+.tag-obf    { background:#FAEEDA; color:#854F0B; }
+.tag-html   { background:#FBEAF0; color:#993556; }
+.tag-redir  { background:#FAECE7; color:#993C1D; }
+.tag-form   { background:#E1F5EE; color:#0F6E56; }
+.tag-trust  { background:#EAF3DE; color:#3B6D11; }
+.tag-ext    { background:#E6F1FB; color:#185FA5; }
+.corr-bar   { display:inline-block; height:10px; border-radius:3px;
+              vertical-align:middle; margin-right:6px; }
+.footer { font-size:12px; color:#aaa; margin-top:56px;
+          border-top:1px solid #eee; padding-top:16px; }
+img { max-width:100%; border:1px solid #ddd; border-radius:6px; margin:8px 0; }
+</style>
+</head>
+<body>
+<h1>Module M1.2 — Column Removal &amp; Feature Set Finalization</h1>
+<p class="meta">
+  Project: Explainable and Bias-Aware ML for Phishing Website Detection &nbsp;|&nbsp;
+  Generated: 2026-06-17 16:59:34 &nbsp;|&nbsp;
+  Track B: 49 features &nbsp;|&nbsp; Track A: 50 features
+</p>
+
+<h2>1. Dataset Overview</h2>
+<div class="grid4">
+  <div class="card"><div class="card-v">235,370</div><div class="card-l">Total rows (post-dedup)</div></div>
+  <div class="card"><div class="card-v">56</div><div class="card-l">Raw columns</div></div>
+  <div class="card"><div class="card-v">100,520</div><div class="card-l">Phishing (label=0)</div></div>
+  <div class="card"><div class="card-v">134,850</div><div class="card-l">Legitimate (label=1)</div></div>
+</div>
+
+<h2>2. Columns Removed</h2>
+<p>5 columns removed before any modelling. These are identifiers or structurally
+redundant features that provide no independent predictive signal.</p>
+
+<h3>2a. Identifier Columns (4)</h3>
+<table>
+  <tr><th>Column</th><th>Dtype</th><th>Unique Values</th><th>Reason</th><th>Decision</th></tr>
+  <tr><td><code>FILENAME</code></td><td>str</td><td>235,370</td><td>Identifier — no predictive value</td><td><span class='fail'>✗ DROPPED</span></td></tr>
+<tr><td><code>URL</code></td><td>str</td><td>235,370</td><td>Identifier — no predictive value</td><td><span class='fail'>✗ DROPPED</span></td></tr>
+<tr><td><code>Domain</code></td><td>str</td><td>220,086</td><td>Identifier — no predictive value</td><td><span class='fail'>✗ DROPPED</span></td></tr>
+<tr><td><code>Title</code></td><td>str</td><td>197,782</td><td>Identifier — no predictive value</td><td><span class='fail'>✗ DROPPED</span></td></tr>
+
+</table>
+
+<h3>2b. Multicollinear Column (1)</h3>
+<table>
+  <tr><th>Column</th><th>Dtype</th><th>Unique Values</th><th>Reason</th><th>Decision</th></tr>
+  <tr><td><code>URLTitleMatchScore</code></td><td>float64</td><td>—</td><td>r=0.961 with DomainTitleMatchScore — multicollinear</td><td><span class='fail'>✗ DROPPED</span></td></tr>
+
+</table>
+
+<h2>3. Leakage & Bias-Risk Features</h2>
+
+<h3>3a. Critical Leakage — URLSimilarityIndex</h3>
+<div class="alert">
+  <strong>CRITICAL DATA LEAKAGE</strong><br>
+  Every legitimate record (label=1) has <code>URLSimilarityIndex = 100.0</code> exactly.
+  Zero variance in the legitimate class. All-100 confirmed: <strong>True</strong>.
+  This feature encodes the label directly and cannot be used in a real deployment scenario.
+  <br><br>
+  <strong>Decision:</strong> Excluded from <em>Track B</em> (primary benchmark).
+  Included in <em>Track A</em> only to quantify the performance inflation it causes.
+  The AUC delta between Track A and Track B is reported as the leakage impact.
+</div>
+<table>
+  <tr><th>Label</th><th>Min</th><th>Mean</th><th>Max</th><th>Std</th></tr>
+  <tr><td>0 — Phishing</td><td>~0</td><td>~49.6</td><td>&lt;100</td><td>high</td></tr>
+  <tr><td>1 — Legitimate</td><td>100.0</td><td>100.0</td><td>100.0</td><td>0.0</td></tr>
+</table>
+
+<h3>3b. Advisory Leakage — IsHTTPS</h3>
+<div class="alert-warn">
+  <strong>ADVISORY: Near-Perfect Separation</strong><br>
+  All legitimate records (label=1) have <code>IsHTTPS = 1</code>.
+  All-1 confirmed: <strong>True</strong>. However,
+  49.1% of phishing sites in this dataset also use HTTPS, so the
+  feature is not a perfect separator in the phishing class. This pattern is
+  temporally unstable — modern phishing campaigns increasingly obtain SSL certificates.
+  <br><br>
+  <strong>Decision:</strong> Retained in <em>both tracks</em> but flagged for bias
+  analysis (M9.2) and SHAP attribution investigation (M7.1).
+</div>
+
+<h2>4. Approved Feature Catalog — Track B (49 features)</h2>
+<p>These 49 features are the approved set for Track B (leakage-aware primary model).
+Track A uses the same 49 plus <code>URLSimilarityIndex</code> = 50 features total.</p>
+<table>
+  <tr>
+    <th>Feature</th><th>Category</th><th>Dtype</th><th>Unique</th>
+    <th>Top-val%</th><th>|r| with label</th><th>Skew</th><th>Flags</th>
+  </tr>
+  <tr><td><code>URLLength</code></td><td><span class="tag tag-url">URL Structure</span></td><td>int64</td><td>482</td><td>6.6%</td><td><span class="corr-bar" style="width:27px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.2331</span></td><td>53.3</td><td>—</td></tr>
+<tr><td><code>DomainLength</code></td><td><span class="tag tag-url">URL Structure</span></td><td>int64</td><td>101</td><td>7.1%</td><td><span class="corr-bar" style="width:33px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.2826</span></td><td>2.5</td><td>—</td></tr>
+<tr><td><code>IsDomainIP</code></td><td><span class="tag tag-url">URL Structure</span></td><td>int64</td><td>2</td><td>99.7%</td><td><span class="corr-bar" style="width:7px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.0603</span></td><td>19.2</td><td><span class="warn">near-const</span></td></tr>
+<tr><td><code>TLD</code></td><td><span class="tag tag-url">URL Structure</span></td><td>str</td><td>695</td><td>47.8%</td><td>—</td><td>nan</td><td>—</td></tr>
+<tr><td><code>CharContinuationRate</code></td><td><span class="tag tag-stat">URL Statistical</span></td><td>float64</td><td>898</td><td>59.4%</td><td><span class="corr-bar" style="width:56px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.4672</span></td><td>1.1</td><td>—</td></tr>
+<tr><td><code>TLDLegitimateProb</code></td><td><span class="tag tag-stat">URL Statistical</span></td><td>float64</td><td>465</td><td>47.8%</td><td><span class="corr-bar" style="width:11px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.0972</span></td><td>0.1</td><td>—</td></tr>
+<tr><td><code>URLCharProb</code></td><td><span class="tag tag-stat">URL Statistical</span></td><td>float64</td><td>227,293</td><td>0.0%</td><td><span class="corr-bar" style="width:56px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.4695</span></td><td>1.1</td><td>—</td></tr>
+<tr><td><code>TLDLength</code></td><td><span class="tag tag-url">URL Structure</span></td><td>int64</td><td>12</td><td>66.6%</td><td><span class="corr-bar" style="width:9px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.0790</span></td><td>1.7</td><td>—</td></tr>
+<tr><td><code>NoOfSubDomain</code></td><td><span class="tag tag-url">URL Structure</span></td><td>int64</td><td>10</td><td>75.7%</td><td><span class="corr-bar" style="width:2px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.0064</span></td><td>1.8</td><td>—</td></tr>
+<tr><td><code>HasObfuscation</code></td><td><span class="tag tag-obf">Obfuscation</span></td><td>int64</td><td>2</td><td>99.8%</td><td><span class="corr-bar" style="width:6px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.0525</span></td><td>22.0</td><td><span class="warn">near-const</span></td></tr>
+<tr><td><code>NoOfObfuscatedChar</code></td><td><span class="tag tag-obf">Obfuscation</span></td><td>int64</td><td>20</td><td>99.8%</td><td><span class="corr-bar" style="width:2px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.0153</span></td><td>204.5</td><td><span class="warn">near-const</span></td></tr>
+<tr><td><code>ObfuscationRatio</code></td><td><span class="tag tag-obf">Obfuscation</span></td><td>float64</td><td>146</td><td>99.8%</td><td><span class="corr-bar" style="width:5px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.0420</span></td><td>40.1</td><td><span class="warn">near-const</span></td></tr>
+<tr><td><code>NoOfLettersInURL</code></td><td><span class="tag tag-char">URL Character Composition</span></td><td>int64</td><td>421</td><td>6.4%</td><td><span class="corr-bar" style="width:30px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.2576</span></td><td>58.5</td><td>—</td></tr>
+<tr><td><code>LetterRatioInURL</code></td><td><span class="tag tag-char">URL Character Composition</span></td><td>float64</td><td>709</td><td>6.4%</td><td><span class="corr-bar" style="width:44px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.3670</span></td><td>0.1</td><td>—</td></tr>
+<tr><td><code>NoOfDegitsInURL</code></td><td><span class="tag tag-char">URL Character Composition</span></td><td>int64</td><td>182</td><td>78.2%</td><td><span class="corr-bar" style="width:21px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.1778</span></td><td>94.9</td><td>—</td></tr>
+<tr><td><code>DegitRatioInURL</code></td><td><span class="tag tag-char">URL Character Composition</span></td><td>float64</td><td>575</td><td>78.2%</td><td><span class="corr-bar" style="width:51px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.4319</span></td><td>3.3</td><td>—</td></tr>
+<tr><td><code>NoOfEqualsInURL</code></td><td><span class="tag tag-char">URL Character Composition</span></td><td>int64</td><td>25</td><td>97.7%</td><td><span class="corr-bar" style="width:9px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.0772</span></td><td>114.9</td><td><span class="warn">near-const</span></td></tr>
+<tr><td><code>NoOfQMarkInURL</code></td><td><span class="tag tag-char">URL Character Composition</span></td><td>int64</td><td>5</td><td>97.4%</td><td><span class="corr-bar" style="width:21px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.1760</span></td><td>8.2</td><td><span class="warn">near-const</span></td></tr>
+<tr><td><code>NoOfAmpersandInURL</code></td><td><span class="tag tag-char">URL Character Composition</span></td><td>int64</td><td>31</td><td>99.6%</td><td><span class="corr-bar" style="width:4px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.0347</span></td><td>106.6</td><td><span class="warn">near-const</span></td></tr>
+<tr><td><code>NoOfOtherSpecialCharsInURL</code></td><td><span class="tag tag-char">URL Character Composition</span></td><td>int64</td><td>74</td><td>55.7%</td><td><span class="corr-bar" style="width:42px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.3583</span></td><td>47.5</td><td>—</td></tr>
+<tr><td><code>SpacialCharRatioInURL</code></td><td><span class="tag tag-char">URL Character Composition</span></td><td>float64</td><td>240</td><td>4.7%</td><td><span class="corr-bar" style="width:63px;background:#EF9F27;"></span><span style="font-size:12px;font-family:monospace">0.5330</span></td><td>1.2</td><td>—</td></tr>
+<tr><td><code>IsHTTPS</code></td><td><span class="tag tag-url">URL Structure</span></td><td>int64</td><td>2</td><td>78.3%</td><td><span class="corr-bar" style="width:73px;background:#EF9F27;"></span><span style="font-size:12px;font-family:monospace">0.6103</span></td><td>1.4</td><td><span class="warn">advisory</span></td></tr>
+<tr><td><code>LineOfCode</code></td><td><span class="tag tag-html">HTML Structure</span></td><td>int64</td><td>10,738</td><td>11.2%</td><td><span class="corr-bar" style="width:32px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.2720</span></td><td>53.0</td><td>—</td></tr>
+<tr><td><code>LargestLineLength</code></td><td><span class="tag tag-html">HTML Structure</span></td><td>int64</td><td>26,178</td><td>4.7%</td><td><span class="corr-bar" style="width:4px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.0410</span></td><td>47.9</td><td>—</td></tr>
+<tr><td><code>HasTitle</code></td><td><span class="tag tag-html">HTML Structure</span></td><td>int64</td><td>2</td><td>86.1%</td><td><span class="corr-bar" style="width:55px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.4603</span></td><td>2.1</td><td>—</td></tr>
+<tr><td><code>DomainTitleMatchScore</code></td><td><span class="tag tag-html">HTML Structure</span></td><td>float64</td><td>152</td><td>48.7%</td><td><span class="corr-bar" style="width:70px;background:#EF9F27;"></span><span style="font-size:12px;font-family:monospace">0.5842</span></td><td>0.0</td><td>—</td></tr>
+<tr><td><code>HasFavicon</code></td><td><span class="tag tag-html">HTML Structure</span></td><td>int64</td><td>2</td><td>63.8%</td><td><span class="corr-bar" style="width:59px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.4936</span></td><td>0.6</td><td>—</td></tr>
+<tr><td><code>Robots</code></td><td><span class="tag tag-html">HTML Structure</span></td><td>int64</td><td>2</td><td>73.3%</td><td><span class="corr-bar" style="width:47px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.3925</span></td><td>1.1</td><td>—</td></tr>
+<tr><td><code>IsResponsive</code></td><td><span class="tag tag-html">HTML Structure</span></td><td>int64</td><td>2</td><td>62.5%</td><td><span class="corr-bar" style="width:65px;background:#EF9F27;"></span><span style="font-size:12px;font-family:monospace">0.5490</span></td><td>0.5</td><td>—</td></tr>
+<tr><td><code>NoOfURLRedirect</code></td><td><span class="tag tag-redir">Redirects & Navigation</span></td><td>int64</td><td>2</td><td>86.7%</td><td><span class="corr-bar" style="width:5px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.0464</span></td><td>2.2</td><td>—</td></tr>
+<tr><td><code>NoOfSelfRedirect</code></td><td><span class="tag tag-redir">Redirects & Navigation</span></td><td>int64</td><td>2</td><td>96.0%</td><td><span class="corr-bar" style="width:9px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.0768</span></td><td>4.7</td><td><span class="warn">near-const</span></td></tr>
+<tr><td><code>HasDescription</code></td><td><span class="tag tag-html">HTML Structure</span></td><td>int64</td><td>2</td><td>55.9%</td><td><span class="corr-bar" style="width:82px;background:#EF9F27;"></span><span style="font-size:12px;font-family:monospace">0.6900</span></td><td>0.2</td><td>—</td></tr>
+<tr><td><code>NoOfPopup</code></td><td><span class="tag tag-redir">Redirects & Navigation</span></td><td>int64</td><td>115</td><td>94.3%</td><td><span class="corr-bar" style="width:5px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.0474</span></td><td>84.9</td><td>—</td></tr>
+<tr><td><code>NoOfiFrame</code></td><td><span class="tag tag-redir">Redirects & Navigation</span></td><td>int64</td><td>119</td><td>66.6%</td><td><span class="corr-bar" style="width:27px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.2256</span></td><td>97.6</td><td>—</td></tr>
+<tr><td><code>HasExternalFormSubmit</code></td><td><span class="tag tag-form">Forms & Interaction</span></td><td>int64</td><td>2</td><td>95.6%</td><td><span class="corr-bar" style="width:20px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.1674</span></td><td>4.4</td><td><span class="warn">near-const</span></td></tr>
+<tr><td><code>HasSocialNet</code></td><td><span class="tag tag-trust">Content & Trust</span></td><td>int64</td><td>2</td><td>54.3%</td><td><span class="corr-bar" style="width:94px;background:#E24B4A;"></span><span style="font-size:12px;font-family:monospace">0.7839</span></td><td>0.2</td><td>—</td></tr>
+<tr><td><code>HasSubmitButton</code></td><td><span class="tag tag-form">Forms & Interaction</span></td><td>int64</td><td>2</td><td>58.5%</td><td><span class="corr-bar" style="width:69px;background:#EF9F27;"></span><span style="font-size:12px;font-family:monospace">0.5788</span></td><td>0.3</td><td>—</td></tr>
+<tr><td><code>HasHiddenFields</code></td><td><span class="tag tag-form">Forms & Interaction</span></td><td>int64</td><td>2</td><td>62.2%</td><td><span class="corr-bar" style="width:60px;background:#EF9F27;"></span><span style="font-size:12px;font-family:monospace">0.5077</span></td><td>0.5</td><td>—</td></tr>
+<tr><td><code>HasPasswordField</code></td><td><span class="tag tag-form">Forms & Interaction</span></td><td>int64</td><td>2</td><td>89.8%</td><td><span class="corr-bar" style="width:16px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.1392</span></td><td>2.6</td><td>—</td></tr>
+<tr><td><code>Bank</code></td><td><span class="tag tag-trust">Content & Trust</span></td><td>int64</td><td>2</td><td>87.3%</td><td><span class="corr-bar" style="width:22px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.1889</span></td><td>2.2</td><td>—</td></tr>
+<tr><td><code>Pay</code></td><td><span class="tag tag-trust">Content & Trust</span></td><td>int64</td><td>2</td><td>76.3%</td><td><span class="corr-bar" style="width:43px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.3597</span></td><td>1.2</td><td>—</td></tr>
+<tr><td><code>Crypto</code></td><td><span class="tag tag-trust">Content & Trust</span></td><td>int64</td><td>2</td><td>97.7%</td><td><span class="corr-bar" style="width:11px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.0997</span></td><td>6.3</td><td><span class="warn">near-const</span></td></tr>
+<tr><td><code>HasCopyrightInfo</code></td><td><span class="tag tag-trust">Content & Trust</span></td><td>int64</td><td>2</td><td>51.2%</td><td><span class="corr-bar" style="width:89px;background:#EF9F27;"></span><span style="font-size:12px;font-family:monospace">0.7432</span></td><td>0.1</td><td>—</td></tr>
+<tr><td><code>NoOfImage</code></td><td><span class="tag tag-ext">External Resources</span></td><td>int64</td><td>992</td><td>36.2%</td><td><span class="corr-bar" style="width:32px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.2744</span></td><td>28.2</td><td>—</td></tr>
+<tr><td><code>NoOfCSS</code></td><td><span class="tag tag-ext">External Resources</span></td><td>int64</td><td>209</td><td>35.5%</td><td><span class="corr-bar" style="width:8px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.0680</span></td><td>464.0</td><td>—</td></tr>
+<tr><td><code>NoOfJS</code></td><td><span class="tag tag-ext">External Resources</span></td><td>int64</td><td>253</td><td>33.6%</td><td><span class="corr-bar" style="width:44px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.3732</span></td><td>140.4</td><td>—</td></tr>
+<tr><td><code>NoOfSelfRef</code></td><td><span class="tag tag-ext">External Resources</span></td><td>int64</td><td>1,374</td><td>35.7%</td><td><span class="corr-bar" style="width:37px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.3159</span></td><td>60.3</td><td>—</td></tr>
+<tr><td><code>NoOfEmptyRef</code></td><td><span class="tag tag-ext">External Resources</span></td><td>int64</td><td>296</td><td>69.2%</td><td><span class="corr-bar" style="width:13px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.1091</span></td><td>106.7</td><td>—</td></tr>
+<tr><td><code>NoOfExternalRef</code></td><td><span class="tag tag-ext">External Resources</span></td><td>int64</td><td>1,191</td><td>23.6%</td><td><span class="corr-bar" style="width:31px;background:#378ADD;"></span><span style="font-size:12px;font-family:monospace">0.2583</span></td><td>65.9</td><td>—</td></tr>
+
+</table>
+
+<h2>5. Feature-Feature Correlation Analysis</h2>
+
+<h3>5a. High-Correlation Pairs (|r| ≥ 0.75)</h3>
+<div class="alert-info">
+  Pairs below are from the <em>retained</em> feature set only (after dropping
+  URLTitleMatchScore). The remaining high-correlation pairs consist primarily of
+  ratio/count pairs that carry complementary information and are retained intentionally.
+  Tree-based models are robust to moderate inter-feature correlation.
+</div>
+<table>
+  <tr><th>Feature A</th><th>Feature B</th><th>|r|</th><th>Action</th></tr>
+  <tr><td><code>URLLength</code></td><td><code>NoOfLettersInURL</code></td><td style='color:#E24B4A;font-weight:600'>0.9560</td><td>High — review</td></tr>
+<tr><td><code>URLLength</code></td><td><code>NoOfDegitsInURL</code></td><td style='color:#E24B4A;font-weight:600'>0.8360</td><td>High — review</td></tr>
+<tr><td><code>NoOfDegitsInURL</code></td><td><code>NoOfEqualsInURL</code></td><td style='color:#E24B4A;font-weight:600'>0.8064</td><td>High — review</td></tr>
+<tr><td><code>HasObfuscation</code></td><td><code>ObfuscationRatio</code></td><td style='color:#E24B4A;font-weight:600'>0.7988</td><td>High — review</td></tr>
+<tr><td><code>NoOfObfuscatedChar</code></td><td><code>NoOfAmpersandInURL</code></td><td style='color:#E24B4A;font-weight:600'>0.7865</td><td>High — review</td></tr>
+<tr><td><code>NoOfEqualsInURL</code></td><td><code>NoOfOtherSpecialCharsInURL</code></td><td style='color:#E24B4A;font-weight:600'>0.7854</td><td>High — review</td></tr>
+<tr><td><code>URLLength</code></td><td><code>NoOfOtherSpecialCharsInURL</code></td><td style='color:#E24B4A;font-weight:600'>0.7826</td><td>High — review</td></tr>
+<tr><td><code>NoOfDegitsInURL</code></td><td><code>NoOfOtherSpecialCharsInURL</code></td><td style='color:#E24B4A;font-weight:600'>0.7679</td><td>High — review</td></tr>
+<tr><td><code>NoOfObfuscatedChar</code></td><td><code>NoOfEqualsInURL</code></td><td style='color:#E24B4A;font-weight:600'>0.7546</td><td>High — review</td></tr>
+
+</table>
+
+<h3>5b. Medium-Correlation Pairs (0.50 ≤ |r| &lt; 0.75)</h3>
+<table>
+  <tr><th>Feature A</th><th>Feature B</th><th>|r|</th><th>Action</th></tr>
+  <tr><td><code>NoOfObfuscatedChar</code></td><td><code>NoOfDegitsInURL</code></td><td style='color:#EF9F27;font-weight:600'>0.7215</td><td>Medium — retained</td></tr>
+<tr><td><code>CharContinuationRate</code></td><td><code>SpacialCharRatioInURL</code></td><td style='color:#EF9F27;font-weight:600'>0.7117</td><td>Medium — retained</td></tr>
+<tr><td><code>URLCharProb</code></td><td><code>DegitRatioInURL</code></td><td style='color:#EF9F27;font-weight:600'>0.7085</td><td>Medium — retained</td></tr>
+<tr><td><code>NoOfSelfRef</code></td><td><code>NoOfExternalRef</code></td><td style='color:#EF9F27;font-weight:600'>0.7006</td><td>Medium — retained</td></tr>
+<tr><td><code>NoOfEqualsInURL</code></td><td><code>NoOfAmpersandInURL</code></td><td style='color:#EF9F27;font-weight:600'>0.6950</td><td>Medium — retained</td></tr>
+<tr><td><code>URLLength</code></td><td><code>NoOfEqualsInURL</code></td><td style='color:#EF9F27;font-weight:600'>0.6854</td><td>Medium — retained</td></tr>
+<tr><td><code>URLSimilarityIndex</code></td><td><code>HasSocialNet</code></td><td style='color:#EF9F27;font-weight:600'>0.6733</td><td>Medium — retained</td></tr>
+<tr><td><code>NoOfDegitsInURL</code></td><td><code>NoOfAmpersandInURL</code></td><td style='color:#EF9F27;font-weight:600'>0.6578</td><td>Medium — retained</td></tr>
+<tr><td><code>NoOfLettersInURL</code></td><td><code>NoOfOtherSpecialCharsInURL</code></td><td style='color:#EF9F27;font-weight:600'>0.6523</td><td>Medium — retained</td></tr>
+<tr><td><code>NoOfLettersInURL</code></td><td><code>NoOfDegitsInURL</code></td><td style='color:#EF9F27;font-weight:600'>0.6482</td><td>Medium — retained</td></tr>
+<tr><td><code>URLSimilarityIndex</code></td><td><code>HasCopyrightInfo</code></td><td style='color:#EF9F27;font-weight:600'>0.6135</td><td>Medium — retained</td></tr>
+<tr><td><code>HasSocialNet</code></td><td><code>HasCopyrightInfo</code></td><td style='color:#EF9F27;font-weight:600'>0.6071</td><td>Medium — retained</td></tr>
+<tr><td><code>URLSimilarityIndex</code></td><td><code>SpacialCharRatioInURL</code></td><td style='color:#EF9F27;font-weight:600'>0.6047</td><td>Medium — retained</td></tr>
+<tr><td><code>URLSimilarityIndex</code></td><td><code>DomainTitleMatchScore</code></td><td style='color:#EF9F27;font-weight:600'>0.6034</td><td>Medium — retained</td></tr>
+<tr><td><code>URLSimilarityIndex</code></td><td><code>HasDescription</code></td><td style='color:#EF9F27;font-weight:600'>0.5900</td><td>Medium — retained</td></tr>
+<tr><td><code>SpacialCharRatioInURL</code></td><td><code>DomainTitleMatchScore</code></td><td style='color:#EF9F27;font-weight:600'>0.5875</td><td>Medium — retained</td></tr>
+<tr><td><code>HasDescription</code></td><td><code>HasSocialNet</code></td><td style='color:#EF9F27;font-weight:600'>0.5767</td><td>Medium — retained</td></tr>
+<tr><td><code>DomainLength</code></td><td><code>CharContinuationRate</code></td><td style='color:#EF9F27;font-weight:600'>0.5764</td><td>Medium — retained</td></tr>
+<tr><td><code>URLSimilarityIndex</code></td><td><code>CharContinuationRate</code></td><td style='color:#EF9F27;font-weight:600'>0.5725</td><td>Medium — retained</td></tr>
+<tr><td><code>URLSimilarityIndex</code></td><td><code>URLCharProb</code></td><td style='color:#EF9F27;font-weight:600'>0.5714</td><td>Medium — retained</td></tr>
+
+</table>
+
+<h2>6. Feature Categories (Track B)</h2>
+<table>
+  <tr><th>Category</th><th>Count</th><th>Features</th></tr>
+  <tr><td><span class="tag tag-url">URL Structure</span></td><td style='text-align:center'>7</td><td><code style='margin:2px 3px;display:inline-block'>URLLength</code><code style='margin:2px 3px;display:inline-block'>DomainLength</code><code style='margin:2px 3px;display:inline-block'>TLDLength</code><code style='margin:2px 3px;display:inline-block'>TLD</code><code style='margin:2px 3px;display:inline-block'>IsDomainIP</code><code style='margin:2px 3px;display:inline-block'>NoOfSubDomain</code><code style='margin:2px 3px;display:inline-block'>IsHTTPS</code></td></tr>
+<tr><td><span class="tag tag-stat">URL Statistical</span></td><td style='text-align:center'>3</td><td><code style='margin:2px 3px;display:inline-block'>CharContinuationRate</code><code style='margin:2px 3px;display:inline-block'>TLDLegitimateProb</code><code style='margin:2px 3px;display:inline-block'>URLCharProb</code></td></tr>
+<tr><td><span class="tag tag-char">URL Character Composition</span></td><td style='text-align:center'>9</td><td><code style='margin:2px 3px;display:inline-block'>NoOfLettersInURL</code><code style='margin:2px 3px;display:inline-block'>LetterRatioInURL</code><code style='margin:2px 3px;display:inline-block'>NoOfDegitsInURL</code><code style='margin:2px 3px;display:inline-block'>DegitRatioInURL</code><code style='margin:2px 3px;display:inline-block'>NoOfEqualsInURL</code><code style='margin:2px 3px;display:inline-block'>NoOfQMarkInURL</code><code style='margin:2px 3px;display:inline-block'>NoOfAmpersandInURL</code><code style='margin:2px 3px;display:inline-block'>NoOfOtherSpecialCharsInURL</code><code style='margin:2px 3px;display:inline-block'>SpacialCharRatioInURL</code></td></tr>
+<tr><td><span class="tag tag-obf">Obfuscation</span></td><td style='text-align:center'>3</td><td><code style='margin:2px 3px;display:inline-block'>HasObfuscation</code><code style='margin:2px 3px;display:inline-block'>NoOfObfuscatedChar</code><code style='margin:2px 3px;display:inline-block'>ObfuscationRatio</code></td></tr>
+<tr><td><span class="tag tag-html">HTML Structure</span></td><td style='text-align:center'>8</td><td><code style='margin:2px 3px;display:inline-block'>LineOfCode</code><code style='margin:2px 3px;display:inline-block'>LargestLineLength</code><code style='margin:2px 3px;display:inline-block'>HasTitle</code><code style='margin:2px 3px;display:inline-block'>DomainTitleMatchScore</code><code style='margin:2px 3px;display:inline-block'>HasFavicon</code><code style='margin:2px 3px;display:inline-block'>Robots</code><code style='margin:2px 3px;display:inline-block'>IsResponsive</code><code style='margin:2px 3px;display:inline-block'>HasDescription</code></td></tr>
+<tr><td><span class="tag tag-redir">Redirects & Navigation</span></td><td style='text-align:center'>4</td><td><code style='margin:2px 3px;display:inline-block'>NoOfURLRedirect</code><code style='margin:2px 3px;display:inline-block'>NoOfSelfRedirect</code><code style='margin:2px 3px;display:inline-block'>NoOfPopup</code><code style='margin:2px 3px;display:inline-block'>NoOfiFrame</code></td></tr>
+<tr><td><span class="tag tag-form">Forms & Interaction</span></td><td style='text-align:center'>4</td><td><code style='margin:2px 3px;display:inline-block'>HasExternalFormSubmit</code><code style='margin:2px 3px;display:inline-block'>HasSubmitButton</code><code style='margin:2px 3px;display:inline-block'>HasHiddenFields</code><code style='margin:2px 3px;display:inline-block'>HasPasswordField</code></td></tr>
+<tr><td><span class="tag tag-trust">Content & Trust</span></td><td style='text-align:center'>5</td><td><code style='margin:2px 3px;display:inline-block'>HasSocialNet</code><code style='margin:2px 3px;display:inline-block'>HasCopyrightInfo</code><code style='margin:2px 3px;display:inline-block'>Bank</code><code style='margin:2px 3px;display:inline-block'>Pay</code><code style='margin:2px 3px;display:inline-block'>Crypto</code></td></tr>
+<tr><td><span class="tag tag-ext">External Resources</span></td><td style='text-align:center'>6</td><td><code style='margin:2px 3px;display:inline-block'>NoOfImage</code><code style='margin:2px 3px;display:inline-block'>NoOfCSS</code><code style='margin:2px 3px;display:inline-block'>NoOfJS</code><code style='margin:2px 3px;display:inline-block'>NoOfSelfRef</code><code style='margin:2px 3px;display:inline-block'>NoOfEmptyRef</code><code style='margin:2px 3px;display:inline-block'>NoOfExternalRef</code></td></tr>
+
+</table>
+
+<h2>7. Experimental Track Definitions</h2>
+<table>
+  <tr><th>Track</th><th>Features</th><th>Includes URLSimilarityIndex</th>
+      <th>Purpose</th><th>Primary Report</th></tr>
+  <tr>
+    <td><strong>Track A</strong></td><td>50</td>
+    <td><span class="fail">Yes — leakage included</span></td>
+    <td>Ceiling experiment — quantify leakage inflation</td>
+    <td>No — reference only</td>
+  </tr>
+  <tr>
+    <td><strong>Track B</strong></td><td>49</td>
+    <td><span class="pass">No — leakage excluded</span></td>
+    <td>Deployment-realistic model — honest benchmark</td>
+    <td><span class="pass">Yes — all XAI &amp; bias analysis</span></td>
+  </tr>
+</table>
+
+<h3>Track A — 50 Features</h3>
+<div style="line-height:2"><code style='margin:2px 3px;display:inline-block;'>URLLength</code><code style='margin:2px 3px;display:inline-block;'>DomainLength</code><code style='margin:2px 3px;display:inline-block;'>TLDLength</code><code style='margin:2px 3px;display:inline-block;'>TLD</code><code style='margin:2px 3px;display:inline-block;'>IsDomainIP</code><code style='margin:2px 3px;display:inline-block;'>NoOfSubDomain</code><code style='margin:2px 3px;display:inline-block;'>IsHTTPS</code><code style='margin:2px 3px;display:inline-block;'>CharContinuationRate</code><code style='margin:2px 3px;display:inline-block;'>TLDLegitimateProb</code><code style='margin:2px 3px;display:inline-block;'>URLCharProb</code><code style='margin:2px 3px;display:inline-block;background:#FCEBEB;color:#A32D2D'>URLSimilarityIndex</code><code style='margin:2px 3px;display:inline-block;'>NoOfLettersInURL</code><code style='margin:2px 3px;display:inline-block;'>LetterRatioInURL</code><code style='margin:2px 3px;display:inline-block;'>NoOfDegitsInURL</code><code style='margin:2px 3px;display:inline-block;'>DegitRatioInURL</code><code style='margin:2px 3px;display:inline-block;'>NoOfEqualsInURL</code><code style='margin:2px 3px;display:inline-block;'>NoOfQMarkInURL</code><code style='margin:2px 3px;display:inline-block;'>NoOfAmpersandInURL</code><code style='margin:2px 3px;display:inline-block;'>NoOfOtherSpecialCharsInURL</code><code style='margin:2px 3px;display:inline-block;'>SpacialCharRatioInURL</code><code style='margin:2px 3px;display:inline-block;'>HasObfuscation</code><code style='margin:2px 3px;display:inline-block;'>NoOfObfuscatedChar</code><code style='margin:2px 3px;display:inline-block;'>ObfuscationRatio</code><code style='margin:2px 3px;display:inline-block;'>LineOfCode</code><code style='margin:2px 3px;display:inline-block;'>LargestLineLength</code><code style='margin:2px 3px;display:inline-block;'>HasTitle</code><code style='margin:2px 3px;display:inline-block;'>DomainTitleMatchScore</code><code style='margin:2px 3px;display:inline-block;'>HasFavicon</code><code style='margin:2px 3px;display:inline-block;'>Robots</code><code style='margin:2px 3px;display:inline-block;'>IsResponsive</code><code style='margin:2px 3px;display:inline-block;'>HasDescription</code><code style='margin:2px 3px;display:inline-block;'>NoOfURLRedirect</code><code style='margin:2px 3px;display:inline-block;'>NoOfSelfRedirect</code><code style='margin:2px 3px;display:inline-block;'>NoOfPopup</code><code style='margin:2px 3px;display:inline-block;'>NoOfiFrame</code><code style='margin:2px 3px;display:inline-block;'>HasExternalFormSubmit</code><code style='margin:2px 3px;display:inline-block;'>HasSubmitButton</code><code style='margin:2px 3px;display:inline-block;'>HasHiddenFields</code><code style='margin:2px 3px;display:inline-block;'>HasPasswordField</code><code style='margin:2px 3px;display:inline-block;'>HasSocialNet</code><code style='margin:2px 3px;display:inline-block;'>HasCopyrightInfo</code><code style='margin:2px 3px;display:inline-block;'>Bank</code><code style='margin:2px 3px;display:inline-block;'>Pay</code><code style='margin:2px 3px;display:inline-block;'>Crypto</code><code style='margin:2px 3px;display:inline-block;'>NoOfImage</code><code style='margin:2px 3px;display:inline-block;'>NoOfCSS</code><code style='margin:2px 3px;display:inline-block;'>NoOfJS</code><code style='margin:2px 3px;display:inline-block;'>NoOfSelfRef</code><code style='margin:2px 3px;display:inline-block;'>NoOfEmptyRef</code><code style='margin:2px 3px;display:inline-block;'>NoOfExternalRef</code></div>
+
+<h3 style="margin-top:16px">Track B — 49 Features</h3>
+<div style="line-height:2"><code style='margin:2px 3px;display:inline-block'>URLLength</code><code style='margin:2px 3px;display:inline-block'>DomainLength</code><code style='margin:2px 3px;display:inline-block'>TLDLength</code><code style='margin:2px 3px;display:inline-block'>TLD</code><code style='margin:2px 3px;display:inline-block'>IsDomainIP</code><code style='margin:2px 3px;display:inline-block'>NoOfSubDomain</code><code style='margin:2px 3px;display:inline-block'>IsHTTPS</code><code style='margin:2px 3px;display:inline-block'>CharContinuationRate</code><code style='margin:2px 3px;display:inline-block'>TLDLegitimateProb</code><code style='margin:2px 3px;display:inline-block'>URLCharProb</code><code style='margin:2px 3px;display:inline-block'>NoOfLettersInURL</code><code style='margin:2px 3px;display:inline-block'>LetterRatioInURL</code><code style='margin:2px 3px;display:inline-block'>NoOfDegitsInURL</code><code style='margin:2px 3px;display:inline-block'>DegitRatioInURL</code><code style='margin:2px 3px;display:inline-block'>NoOfEqualsInURL</code><code style='margin:2px 3px;display:inline-block'>NoOfQMarkInURL</code><code style='margin:2px 3px;display:inline-block'>NoOfAmpersandInURL</code><code style='margin:2px 3px;display:inline-block'>NoOfOtherSpecialCharsInURL</code><code style='margin:2px 3px;display:inline-block'>SpacialCharRatioInURL</code><code style='margin:2px 3px;display:inline-block'>HasObfuscation</code><code style='margin:2px 3px;display:inline-block'>NoOfObfuscatedChar</code><code style='margin:2px 3px;display:inline-block'>ObfuscationRatio</code><code style='margin:2px 3px;display:inline-block'>LineOfCode</code><code style='margin:2px 3px;display:inline-block'>LargestLineLength</code><code style='margin:2px 3px;display:inline-block'>HasTitle</code><code style='margin:2px 3px;display:inline-block'>DomainTitleMatchScore</code><code style='margin:2px 3px;display:inline-block'>HasFavicon</code><code style='margin:2px 3px;display:inline-block'>Robots</code><code style='margin:2px 3px;display:inline-block'>IsResponsive</code><code style='margin:2px 3px;display:inline-block'>HasDescription</code><code style='margin:2px 3px;display:inline-block'>NoOfURLRedirect</code><code style='margin:2px 3px;display:inline-block'>NoOfSelfRedirect</code><code style='margin:2px 3px;display:inline-block'>NoOfPopup</code><code style='margin:2px 3px;display:inline-block'>NoOfiFrame</code><code style='margin:2px 3px;display:inline-block'>HasExternalFormSubmit</code><code style='margin:2px 3px;display:inline-block'>HasSubmitButton</code><code style='margin:2px 3px;display:inline-block'>HasHiddenFields</code><code style='margin:2px 3px;display:inline-block'>HasPasswordField</code><code style='margin:2px 3px;display:inline-block'>HasSocialNet</code><code style='margin:2px 3px;display:inline-block'>HasCopyrightInfo</code><code style='margin:2px 3px;display:inline-block'>Bank</code><code style='margin:2px 3px;display:inline-block'>Pay</code><code style='margin:2px 3px;display:inline-block'>Crypto</code><code style='margin:2px 3px;display:inline-block'>NoOfImage</code><code style='margin:2px 3px;display:inline-block'>NoOfCSS</code><code style='margin:2px 3px;display:inline-block'>NoOfJS</code><code style='margin:2px 3px;display:inline-block'>NoOfSelfRef</code><code style='margin:2px 3px;display:inline-block'>NoOfEmptyRef</code><code style='margin:2px 3px;display:inline-block'>NoOfExternalRef</code></div>
+<h2>8. Visualisations</h2>
+        <h3>Feature count by category (Track B)</h3>
+        <img src="../../outputs/plots/eda/category_distribution.png" alt="Feature count by category (Track B)" loading="lazy">
+        
+        <h3>Full feature-feature correlation heatmap</h3>
+        <img src="../../outputs/plots/eda/correlation_heatmap.png" alt="Full feature-feature correlation heatmap" loading="lazy">
+        
+        <h3>High-correlation pairs (|r| ≥ 0.75)</h3>
+        <img src="../../outputs/plots/eda/high_corr_pairs.png" alt="High-correlation pairs (|r| ≥ 0.75)" loading="lazy">
+        
+        <h3>Feature correlation with target label</h3>
+        <img src="../../outputs/plots/eda/target_correlation.png" alt="Feature correlation with target label" loading="lazy">
+        
+        <h3>Near-constant feature variance audit</h3>
+        <img src="../../outputs/plots/eda/variance_audit.png" alt="Near-constant feature variance audit" loading="lazy">
+        
+<h2>9. Validation Checks</h2>
+<p>All checks must pass before proceeding to Module M2.1 (EDA).</p>
+<table>
+  <tr><th>Check</th><th>Status</th></tr>
+  <tr><td>Track B feature count == 49</td><td><span class="pass">✓ PASS</span></td></tr>
+<tr><td>Track A feature count == 50</td><td><span class="pass">✓ PASS</span></td></tr>
+<tr><td>No duplicates in Track B</td><td><span class="pass">✓ PASS</span></td></tr>
+<tr><td>No duplicates in Track A</td><td><span class="pass">✓ PASS</span></td></tr>
+<tr><td>URLSimilarityIndex in Track A</td><td><span class="pass">✓ PASS</span></td></tr>
+<tr><td>URLSimilarityIndex NOT in Track B</td><td><span class="pass">✓ PASS</span></td></tr>
+<tr><td>label NOT in any track</td><td><span class="pass">✓ PASS</span></td></tr>
+<tr><td>All identifiers dropped</td><td><span class="pass">✓ PASS</span></td></tr>
+<tr><td>URLTitleMatchScore dropped</td><td><span class="pass">✓ PASS</span></td></tr>
+
+</table>
+<p><strong>Overall: <span class="pass">✓ ALL CHECKS PASSED</span></strong></p>
+
+<p class="footer">
+  M1.2 complete. This report is the permanent audit trail for all feature decisions.
+  Next: M2.1 — Exploratory Data Analysis.
+</p>
+</body>
+</html>

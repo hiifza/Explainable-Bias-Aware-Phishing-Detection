@@ -1,0 +1,74 @@
+{
+  "sample_index": 4397,
+  "sample_number": 7,
+  "category": "tp",
+  "category_label": "True Positive  (correct: Legitimate)",
+  "prediction_proba": 0.999988,
+  "prediction_class": 1,
+  "true_label": 1,
+  "local_r2": 0.149308,
+  "intercept": 0.5229969230587753,
+  "is_native_lime": true,
+  "top_contributions": [
+    {
+      "rank": 1,
+      "feature": "NoOfDegitsInURL <= 0.00",
+      "contribution": 0.34954929,
+      "direction": "\u2192 Legitimate"
+    },
+    {
+      "rank": 2,
+      "feature": "NoOfAmpersandInURL <= 0.00",
+      "contribution": -0.24248174,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 3,
+      "feature": "NoOfOtherSpecialCharsInURL <= 0.00",
+      "contribution": 0.13636847,
+      "direction": "\u2192 Legitimate"
+    },
+    {
+      "rank": 4,
+      "feature": "ObfuscationRatio <= 0.00",
+      "contribution": 0.12375429,
+      "direction": "\u2192 Legitimate"
+    },
+    {
+      "rank": 5,
+      "feature": "HasObfuscation <= 0.00",
+      "contribution": -0.10193367,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 6,
+      "feature": "NoOfPopup <= 0.00",
+      "contribution": -0.09838058,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 7,
+      "feature": "-0.53 < LetterRatioInURL <= 0.00",
+      "contribution": 0.07830336,
+      "direction": "\u2192 Legitimate"
+    },
+    {
+      "rank": 8,
+      "feature": "NoOfObfuscatedChar <= 0.00",
+      "contribution": 0.07499875,
+      "direction": "\u2192 Legitimate"
+    },
+    {
+      "rank": 9,
+      "feature": "-1.00 < CharContinuationRate <= 0.00",
+      "contribution": -0.07447153,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 10,
+      "feature": "-0.78 < ContentComplexityScore <= 0.00",
+      "contribution": -0.06593937,
+      "direction": "\u2192 Phishing"
+    }
+  ]
+}

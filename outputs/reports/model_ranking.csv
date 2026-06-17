@@ -1,0 +1,9 @@
+model,track,roc_auc,f1,accuracy,cv_mean_roc_auc,rank_within_track
+Logistic Regression,A,1.0,0.999958,0.999958,0.999999,1
+Random Forest,A,1.0,1.0,1.0,1.0,1
+XGBoost,A,1.0,0.999958,0.999958,1.0,1
+LightGBM,A,1.0,1.0,1.0,1.0,1
+Logistic Regression,B,1.0,0.999936,0.999936,0.999993,1
+Random Forest,B,1.0,0.999851,0.999851,0.999999,1
+XGBoost,B,1.0,0.999894,0.999894,0.999999,1
+LightGBM,B,1.0,0.999936,0.999936,1.0,1

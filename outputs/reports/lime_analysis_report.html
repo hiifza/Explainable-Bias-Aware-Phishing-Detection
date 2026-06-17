@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>M8.1 LIME Analysis — Phishing Detection</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,sans-serif;font-size:14px;color:#1a1a1a;
+     max-width:1120px;margin:40px auto;padding:0 26px 80px}
+h1{font-size:22px;font-weight:700;border-bottom:3px solid #185FA5;
+   padding-bottom:12px;margin-bottom:6px}
+h2{font-size:16px;font-weight:600;color:#185FA5;margin:32px 0 10px;
+   border-left:4px solid #185FA5;padding-left:10px}
+h3{font-size:14px;font-weight:600;color:#333;margin:16px 0 8px}
+p{line-height:1.65;color:#444;margin-bottom:10px}
+p.meta{font-size:12px;color:#888;margin-bottom:22px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0 20px}
+th{background:#E6F1FB;padding:8px 12px;text-align:left;
+   border:1px solid #B5D4F4;font-weight:600;white-space:nowrap}
+td{padding:7px 12px;border:1px solid #ddd}
+tr:nth-child(even) td{background:#F8FBFF}
+code{font-family:monospace;font-size:12px;background:#F1F3F5;
+     padding:2px 5px;border-radius:3px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:12px 0 20px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0}
+.card{border:1px solid #B5D4F4;border-radius:8px;padding:13px 17px;background:#F0F7FF}
+.card-v{font-size:24px;font-weight:700;color:#185FA5}
+.card-l{font-size:12px;color:#666;margin-top:3px}
+.pass{background:#E1F5EE;color:#0F6E56;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:600}
+.warn{background:#FAEEDA;color:#854F0B;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:600}
+.fail{background:#FCEBEB;color:#A32D2D;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:600}
+.alert{border-left:4px solid #E24B4A;background:#FCEBEB;padding:10px 14px;
+       border-radius:0 6px 6px 0;margin:10px 0}
+.info{border-left:4px solid #378ADD;background:#E6F1FB;padding:10px 14px;
+      border-radius:0 6px 6px 0;margin:10px 0}
+.ok{border-left:4px solid #1D9E75;background:#E1F5EE;padding:10px 14px;
+    border-radius:0 6px 6px 0;margin:10px 0}
+img{max-width:100%;border:1px solid #ddd;border-radius:6px;margin:6px 0;display:block}
+.img2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.footer{font-size:12px;color:#aaa;margin-top:56px;border-top:1px solid #eee;padding-top:16px}
+</style>
+</head>
+<body>
+<h1>Module M8.1 — LIME Explainability &amp; SHAP Agreement Validation</h1>
+<p class="meta">
+  Project: Explainable and Bias-Aware ML for Phishing Website Detection
+  &nbsp;|&nbsp; Generated: 2026-06-17 21:01:25
+  &nbsp;|&nbsp; LIME backend: native
+</p>
+
+<h2>1. Executive Summary</h2>
+<div class="grid3">
+  <div class="card"><div class="card-v">23</div>
+    <div class="card-l">Samples explained</div></div>
+  <div class="card"><div class="card-v">0.0000</div>
+    <div class="card-l">Mean SHAP-LIME agreement</div></div>
+  <div class="card"><div class="card-v">0.5000</div>
+    <div class="card-l">Feature consistency score</div></div>
+</div>
+<div class="alert">
+  <strong>Mean agreement: <span class='fail'>✗ 0.00</span></strong>
+  &nbsp;|&nbsp; High-disagreement samples (&lt;0.4): <strong>23</strong>
+  &nbsp;|&nbsp; LIME backend: <code>native</code>
+</div>
+<h2>2. SHAP vs LIME Agreement Analysis</h2>
+<figure><img src='../../outputs\plots\lime\shap_lime_agreement.png' alt='Agreement distribution, category comparison, R² scatter'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Agreement distribution, category comparison, R² scatter</figcaption></figure>
+<table>
+  <tr><th>Category</th><th>Mean agreement</th><th>Median</th><th>N</th></tr>
+  <tr><td><strong>TP</strong></td><td>0.0000</td><td>0.0000</td><td>10</td></tr><tr><td><strong>TN</strong></td><td>0.0000</td><td>0.0000</td><td>10</td></tr><tr><td><strong>FN</strong></td><td>0.0000</td><td>0.0000</td><td>3</td></tr>
+</table>
+<h3>Top-10 Best Agreement Samples</h3>
+<table>
+  <tr><th>Sample ID</th><th>Cat</th><th>SHAP top-5</th><th>LIME top-5</th>
+      <th>Overlap</th><th>Score</th></tr>
+  <tr><td>3971</td><td>TP</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|IsDomainIP <= 0.00|LineOfCode > 0.26|NoOfOtherSpecialCharsInURL <= 0.00|NoOfAmpersandInURL <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td></tr><tr><td>36372</td><td>TP</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|ObfuscationRatio <= 0.00|NoOfAmpersandInURL <= 0.00|0.00 < LineOfCode <= 0.26|NoOfEqualsInURL <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td></tr><tr><td>4147</td><td>TP</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|LineOfCode > 0.26|HasObfuscation <= 0.00|NoOfExternalRef > 0.49|NoOfEqualsInURL <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td></tr><tr><td>30744</td><td>TP</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|DomainLength > 0.45|NoOfAmpersandInURL <= 0.00|0.00 < LineOfCode <= 0.26|NoOfEqualsInURL <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td></tr><tr><td>20604</td><td>TP</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL > 0.00|LetterRatioInURL <= -0.53|DomainLength <= -0.55|NoOfAmpersandInURL <= 0.00|NoOfOtherSpecialCharsInURL <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td></tr><tr><td>20324</td><td>TP</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|LetterRatioInURL <= -0.53|DomainLength <= -0.55|NoOfObfuscatedChar <= 0.00|ObfuscationRatio <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td></tr><tr><td>32758</td><td>TP</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|LineOfCode > 0.26|NoOfEqualsInURL <= 0.00|HasObfuscation <= 0.00|TLD_is_gov_edu <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td></tr><tr><td>4397</td><td>TP</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|NoOfAmpersandInURL <= 0.00|NoOfOtherSpecialCharsInURL <= 0.00|ObfuscationRatio <= 0.00|HasObfuscation <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td></tr><tr><td>9346</td><td>TP</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|IsDomainIP <= 0.00|NoOfObfuscatedChar <= 0.00|ObfuscationRatio <= 0.00|LargestLineLength > 0.54</td><td>0</td><td><span class='fail'>✗ 0.00</span></td></tr><tr><td>40392</td><td>TP</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|LineOfCode > 0.26|NoOfAmpersandInURL <= 0.00|NoOfObfuscatedChar <= 0.00|NoOfOtherSpecialCharsInURL <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td></tr>
+</table>
+<h2>3. High-Disagreement Cases (agreement &lt; 0.40)</h2>
+<div class="alert">
+  <strong>23 samples</strong> with agreement &lt; 0.40.
+  Possible causes: low LIME local R² (poor local fit), highly non-linear
+  decision boundary in sample neighbourhood, or sparse feature region.
+</div>
+<table>
+  <tr><th>Sample ID</th><th>Cat</th><th>SHAP top-5</th><th>LIME top-5</th>
+      <th>Overlap</th><th>Score</th><th>LIME R²</th></tr>
+  <tr><td>3971</td><td>TP</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|IsDomainIP <= 0.00|LineOfCode > 0.26|NoOfOtherSpecialCharsInURL <= 0.00|NoOfAmpersandInURL <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.2132</td></tr><tr><td>36372</td><td>TP</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|ObfuscationRatio <= 0.00|NoOfAmpersandInURL <= 0.00|0.00 < LineOfCode <= 0.26|NoOfEqualsInURL <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.1716</td></tr><tr><td>4147</td><td>TP</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|LineOfCode > 0.26|HasObfuscation <= 0.00|NoOfExternalRef > 0.49|NoOfEqualsInURL <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.2321</td></tr><tr><td>30744</td><td>TP</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|DomainLength > 0.45|NoOfAmpersandInURL <= 0.00|0.00 < LineOfCode <= 0.26|NoOfEqualsInURL <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.2295</td></tr><tr><td>20604</td><td>TP</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL > 0.00|LetterRatioInURL <= -0.53|DomainLength <= -0.55|NoOfAmpersandInURL <= 0.00|NoOfOtherSpecialCharsInURL <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.2727</td></tr><tr><td>20324</td><td>TP</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|LetterRatioInURL <= -0.53|DomainLength <= -0.55|NoOfObfuscatedChar <= 0.00|ObfuscationRatio <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.2916</td></tr><tr><td>32758</td><td>TP</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|LineOfCode > 0.26|NoOfEqualsInURL <= 0.00|HasObfuscation <= 0.00|TLD_is_gov_edu <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.2252</td></tr><tr><td>4397</td><td>TP</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|NoOfAmpersandInURL <= 0.00|NoOfOtherSpecialCharsInURL <= 0.00|ObfuscationRatio <= 0.00|HasObfuscation <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.1493</td></tr><tr><td>9346</td><td>TP</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|IsDomainIP <= 0.00|NoOfObfuscatedChar <= 0.00|ObfuscationRatio <= 0.00|LargestLineLength > 0.54</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.1788</td></tr><tr><td>40392</td><td>TP</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|LineOfCode > 0.26|NoOfAmpersandInURL <= 0.00|NoOfObfuscatedChar <= 0.00|NoOfOtherSpecialCharsInURL <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.2015</td></tr><tr><td>36889</td><td>TN</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|LetterRatioInURL > 0.47|LineOfCode <= -0.74|NoOfAmpersandInURL <= 0.00|NoOfOtherSpecialCharsInURL <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.3935</td></tr><tr><td>18994</td><td>TN</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|LetterRatioInURL > 0.47|NoOfAmpersandInURL <= 0.00|NoOfOtherSpecialCharsInURL > 1.00|SpacialCharRatioInURL > 0.73</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.3091</td></tr><tr><td>17563</td><td>TN</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>LetterRatioInURL > 0.47|LineOfCode <= -0.74|NoOfDegitsInURL > 0.00|NoOfAmpersandInURL <= 0.00|DomainLength > 0.45</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.4144</td></tr><tr><td>30402</td><td>TN</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|NoOfAmpersandInURL <= 0.00|LineOfCode <= -0.74|ObfuscationRatio <= 0.00|IsDomainIP <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.2564</td></tr><tr><td>38769</td><td>TN</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>LetterRatioInURL > 0.47|NoOfDegitsInURL > 0.00|NoOfAmpersandInURL <= 0.00|DomainLength > 0.45|ObfuscationRatio <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.2876</td></tr><tr><td>8738</td><td>TN</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>LetterRatioInURL > 0.47|NoOfDegitsInURL > 0.00|DomainLength > 0.45|NoOfOtherSpecialCharsInURL > 1.00|IsDomainIP <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.3422</td></tr><tr><td>21286</td><td>TN</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>LetterRatioInURL > 0.47|NoOfDegitsInURL > 0.00|DomainLength > 0.45|NoOfAmpersandInURL <= 0.00|IsDomainIP <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.3266</td></tr><tr><td>23614</td><td>TN</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|NoOfAmpersandInURL <= 0.00|LetterRatioInURL <= -0.53|ObfuscationRatio <= 0.00|DomainLength <= -0.55</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.3264</td></tr><tr><td>25718</td><td>TN</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|LineOfCode <= -0.74|IsDomainIP <= 0.00|LargestLineLength <= -0.46|NoOfAmpersandInURL <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.2472</td></tr><tr><td>43586</td><td>TN</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL > 0.00|LineOfCode <= -0.74|LetterRatioInURL <= -0.53|NoOfObfuscatedChar <= 0.00|DomainLength <= -0.55</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.4426</td></tr><tr><td>30588</td><td>FN</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfObfuscatedChar <= 0.00|NoOfDegitsInURL <= 0.00|DomainLength <= -0.55|NoOfOtherSpecialCharsInURL <= 0.00|HasExternalFormSubmit <= 0.00</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.2114</td></tr><tr><td>17372</td><td>FN</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|NoOfAmpersandInURL <= 0.00|DomainLength <= -0.55|LargestLineLength > 0.54|SpacialCharRatioInURL > 0.73</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.2316</td></tr><tr><td>11301</td><td>FN</td><td style='font-size:11px'>LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef</td><td style='font-size:11px'>NoOfDegitsInURL <= 0.00|NoOfAmpersandInURL <= 0.00|ObfuscationRatio <= 0.00|HasObfuscation <= 0.00|LargestLineLength <= -0.46</td><td>0</td><td><span class='fail'>✗ 0.00</span></td><td>0.1704</td></tr>
+</table>
+<h2>4. Feature Consistency Analysis</h2>
+<figure><img src='../../outputs\plots\lime\feature_consistency.png' alt='Feature overlap and LIME global ranking'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Feature overlap and LIME global ranking</figcaption></figure>
+<div class="grid3">
+  <div class="card">
+    <div class="card-v">10</div>
+    <div class="card-l">Shared features (SHAP ∩ LIME top-20)</div>
+  </div>
+  <div class="card">
+    <div class="card-v">10</div>
+    <div class="card-l">SHAP-only features</div>
+  </div>
+  <div class="card">
+    <div class="card-v">10</div>
+    <div class="card-l">LIME-only features</div>
+  </div>
+</div>
+<p><strong>Consistency score: 0.5000</strong>
+   (10 / 20 features agree in both top-20 lists)</p>
+<h3>Shared features</h3>
+<p><code>DomainLength</code>, <code>LargestLineLength</code>, <code>LetterRatioInURL</code>, <code>LineOfCode</code>, <code>NoOfDegitsInURL</code>, <code>NoOfExternalRef</code>, <code>NoOfOtherSpecialCharsInURL</code>, <code>NoOfSelfRef</code>, <code>SpacialCharRatioInURL</code>, <code>URLCharProb</code></p>
+<h3>SHAP-only (top-20)</h3>
+<p><code>ContentComplexityScore</code>, <code>DomainTitleMatchScore</code>, <code>HasCopyrightInfo</code>, <code>HasDescription</code>, <code>HasSocialNet</code>, <code>IsHTTPS</code>, <code>NoOfImage</code>, <code>NoOfJS</code>, <code>SubdomainRatio</code>, <code>TrustBadgeScore</code></p>
+<h3>LIME-only (top-20)</h3>
+<p><code>Crypto</code>, <code>HasObfuscation</code>, <code>IsDomainIP</code>, <code>NoOfAmpersandInURL</code>, <code>NoOfEqualsInURL</code>, <code>NoOfObfuscatedChar</code>, <code>NoOfPopup</code>, <code>NoOfSelfRedirect</code>, <code>ObfuscationRatio</code>, <code>TLD</code></p>
+<h3>LIME Global Ranking (top-10)</h3>
+<table>
+  <tr><th>Rank</th><th>Feature</th><th>Total |contribution|</th></tr>
+  <tr><td>1</td><td><code>NoOfDegitsInURL</code></td><td>7.986795</td></tr><tr><td>2</td><td><code>NoOfAmpersandInURL</code></td><td>4.089915</td></tr><tr><td>3</td><td><code>LetterRatioInURL</code></td><td>4.036039</td></tr><tr><td>4</td><td><code>LineOfCode</code></td><td>3.441183</td></tr><tr><td>5</td><td><code>NoOfOtherSpecialCharsInURL</code></td><td>2.693684</td></tr><tr><td>6</td><td><code>DomainLength</code></td><td>2.585850</td></tr><tr><td>7</td><td><code>ObfuscationRatio</code></td><td>2.166829</td></tr><tr><td>8</td><td><code>IsDomainIP</code></td><td>2.066445</td></tr><tr><td>9</td><td><code>NoOfObfuscatedChar</code></td><td>2.052191</td></tr><tr><td>10</td><td><code>LargestLineLength</code></td><td>1.520513</td></tr>
+</table><h2>5. Local LIME Explanations</h2>
+<h3>True Positive (10 samples)</h3>
+<figure><img src='../../outputs\plots\lime\tp\tp_00.png' alt='TP sample 0'><figcaption style='font-size:11px;color:#888;margin-top:4px'>TP sample 0</figcaption></figure><figure><img src='../../outputs\plots\lime\tp\tp_01.png' alt='TP sample 1'><figcaption style='font-size:11px;color:#888;margin-top:4px'>TP sample 1</figcaption></figure>
+<h3>True Negative (10 samples)</h3>
+<figure><img src='../../outputs\plots\lime\tn\tn_00.png' alt='TN sample 0'><figcaption style='font-size:11px;color:#888;margin-top:4px'>TN sample 0</figcaption></figure><figure><img src='../../outputs\plots\lime\tn\tn_01.png' alt='TN sample 1'><figcaption style='font-size:11px;color:#888;margin-top:4px'>TN sample 1</figcaption></figure>
+<h3>False Positive (0 samples)</h3>
+<p>No samples.</p>
+<h3>False Negative (3 samples)</h3>
+<figure><img src='../../outputs\plots\lime\fn\fn_00.png' alt='FN sample 0'><figcaption style='font-size:11px;color:#888;margin-top:4px'>FN sample 0</figcaption></figure><figure><img src='../../outputs\plots\lime\fn\fn_01.png' alt='FN sample 1'><figcaption style='font-size:11px;color:#888;margin-top:4px'>FN sample 1</figcaption></figure>
+<p class="footer">M8.1 complete. Next: M9 — Bias Analysis.</p>
+</body>
+</html>

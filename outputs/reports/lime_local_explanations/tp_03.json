@@ -1,0 +1,74 @@
+{
+  "sample_index": 30744,
+  "sample_number": 3,
+  "category": "tp",
+  "category_label": "True Positive  (correct: Legitimate)",
+  "prediction_proba": 0.999999,
+  "prediction_class": 1,
+  "true_label": 1,
+  "local_r2": 0.229536,
+  "intercept": 0.3986764971364517,
+  "is_native_lime": true,
+  "top_contributions": [
+    {
+      "rank": 1,
+      "feature": "NoOfDegitsInURL <= 0.00",
+      "contribution": 0.35704599,
+      "direction": "\u2192 Legitimate"
+    },
+    {
+      "rank": 2,
+      "feature": "DomainLength > 0.45",
+      "contribution": 0.23863094,
+      "direction": "\u2192 Legitimate"
+    },
+    {
+      "rank": 3,
+      "feature": "NoOfAmpersandInURL <= 0.00",
+      "contribution": -0.17613999,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 4,
+      "feature": "0.00 < LineOfCode <= 0.26",
+      "contribution": 0.15349306,
+      "direction": "\u2192 Legitimate"
+    },
+    {
+      "rank": 5,
+      "feature": "NoOfEqualsInURL <= 0.00",
+      "contribution": -0.10698028,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 6,
+      "feature": "SpacialCharRatioInURL <= -0.27",
+      "contribution": 0.10512676,
+      "direction": "\u2192 Legitimate"
+    },
+    {
+      "rank": 7,
+      "feature": "NoOfOtherSpecialCharsInURL <= 0.00",
+      "contribution": 0.10214483,
+      "direction": "\u2192 Legitimate"
+    },
+    {
+      "rank": 8,
+      "feature": "HasExternalFormSubmit <= 0.00",
+      "contribution": 0.09549963,
+      "direction": "\u2192 Legitimate"
+    },
+    {
+      "rank": 9,
+      "feature": "0.00 < LetterRatioInURL <= 0.47",
+      "contribution": -0.09527949,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 10,
+      "feature": "TLD_is_gov_edu <= 0.00",
+      "contribution": -0.06469192,
+      "direction": "\u2192 Phishing"
+    }
+  ]
+}

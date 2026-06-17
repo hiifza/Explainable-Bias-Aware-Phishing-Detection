@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>M6.1 Model Evaluation — Phishing Detection</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+     font-size:14px;color:#1a1a1a;background:#fff;
+     max-width:1140px;margin:40px auto;padding:0 28px 80px}
+h1{font-size:22px;font-weight:700;border-bottom:3px solid #185FA5;
+   padding-bottom:12px;margin-bottom:6px}
+h2{font-size:16px;font-weight:600;color:#185FA5;margin:34px 0 10px;
+   border-left:4px solid #185FA5;padding-left:10px}
+h3{font-size:14px;font-weight:600;color:#333;margin:18px 0 8px}
+p{line-height:1.65;color:#444;margin-bottom:10px}
+p.meta{font-size:12px;color:#888;margin-bottom:22px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0 20px}
+th{background:#E6F1FB;padding:8px 11px;text-align:left;
+   border:1px solid #B5D4F4;font-weight:600;white-space:nowrap}
+td{padding:7px 11px;border:1px solid #ddd;vertical-align:top}
+tr:nth-child(even) td{background:#F8FBFF}
+.best{background:#E1F5EE!important;font-weight:600;color:#0F6E56}
+.warn{background:#FAEEDA!important}
+code{font-family:"SF Mono",Menlo,monospace;font-size:12px;
+     background:#F1F3F5;padding:2px 5px;border-radius:3px}
+.card{border:1px solid #B5D4F4;border-radius:8px;padding:14px 18px;
+      background:#F0F7FF;margin:8px 0}
+.card-v{font-size:24px;font-weight:700;color:#185FA5}
+.card-l{font-size:12px;color:#666;margin-top:3px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:12px 0 20px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0}
+.alert{border-left:4px solid #E24B4A;background:#FCEBEB;
+       padding:10px 14px;border-radius:0 6px 6px 0;margin:10px 0}
+.info{border-left:4px solid #378ADD;background:#E6F1FB;
+      padding:10px 14px;border-radius:0 6px 6px 0;margin:10px 0}
+.deploy{border-left:4px solid #1D9E75;background:#E1F5EE;
+        padding:12px 16px;border-radius:0 6px 6px 0;margin:12px 0}
+img{max-width:100%;border:1px solid #ddd;border-radius:6px;margin:6px 0;display:block}
+.img-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.footer{font-size:12px;color:#aaa;margin-top:56px;
+        border-top:1px solid #eee;padding-top:16px}
+.badge-a{background:#FCEBEB;color:#A32D2D;padding:2px 7px;
+         border-radius:4px;font-size:11px;font-weight:600}
+.badge-b{background:#E1F5EE;color:#0F6E56;padding:2px 7px;
+         border-radius:4px;font-size:11px;font-weight:600}
+</style>
+</head>
+<body>
+<h1>Module M6.1 — Comprehensive Model Evaluation &amp; Final Model Selection</h1>
+<p class="meta">
+  Project: Explainable and Bias-Aware ML for Phishing Website Detection
+  &nbsp;|&nbsp; Generated: 2026-06-17 20:58:50
+  &nbsp;|&nbsp; 8 models &times; 2 tracks
+</p>
+
+<h2>1. Executive Summary</h2>
+
+<div class="grid3">
+  <div class="card">
+    <div class="card-v">8</div>
+    <div class="card-l">Models evaluated</div>
+  </div>
+  <div class="card">
+    <div class="card-v">47,074</div>
+    <div class="card-l">Test set rows</div>
+  </div>
+  <div class="card">
+    <div class="card-v">1.0000</div>
+    <div class="card-l">Best Track B ROC AUC</div>
+  </div>
+</div>
+
+<div class="deploy">
+  <strong>FINAL_DEPLOYMENT_MODEL</strong>
+  &nbsp;=&nbsp;
+  <strong style="font-size:16px">Logistic Regression</strong>
+  &nbsp;(Track B)&nbsp;&nbsp;
+  ROC AUC: <strong>1.000000</strong>
+  &nbsp;|&nbsp;
+  F1: <strong>0.999936</strong>
+  &nbsp;|&nbsp;
+  Calibration: <strong>0.8288</strong>
+  <br>
+  <em style="font-size:12px">Highest ROC AUC on Track B test set: 1.000000 | Tie-broke by F1: 0.999936 | Calibration quality: 0.8288</em>
+</div>
+
+<div class="info">
+  Leakage impact (Track A − Track B best AUC): +0.000000.
+  Minimal benefit from <code>URLSimilarityIndex</code>;
+  both tracks perform similarly.
+</div>
+
+<h2>2. Full Metrics Comparison Table</h2>
+<p>Highlighted rows = winners per track. Columns sorted by evaluation priority.
+   Brier Score: lower is better. All others: higher is better.</p>
+<table><thead><tr><th>model</th><th>track</th><th>accuracy</th><th>precision</th><th>recall</th><th>f1</th><th>roc_auc</th><th>pr_auc</th><th>mcc</th><th>balanced_accuracy</th><th>brier_score</th><th>fpr</th><th>fnr</th><th>training_time</th></tr></thead><tbody><tr class='best'><td>Logistic Regression</td><td><span class='badge-a'>A</span></td><td>0.999958</td><td>0.999958</td><td>0.999958</td><td>0.999958</td><td>1.000000</td><td>1.000000</td><td>0.999913</td><td>0.999950</td><td>0.000031</td><td>0.000099</td><td>0.000000</td><td>2.311000</td></tr>
+<tr class='best'><td>Random Forest</td><td><span class='badge-a'>A</span></td><td>1.000000</td><td>1.000000</td><td>1.000000</td><td>1.000000</td><td>1.000000</td><td>1.000000</td><td>1.000000</td><td>1.000000</td><td>0.000047</td><td>0.000000</td><td>0.000000</td><td>20.486000</td></tr>
+<tr class='best'><td>XGBoost</td><td><span class='badge-a'>A</span></td><td>0.999958</td><td>0.999958</td><td>0.999958</td><td>0.999958</td><td>1.000000</td><td>1.000000</td><td>0.999913</td><td>0.999950</td><td>0.000042</td><td>0.000099</td><td>0.000000</td><td>4.474000</td></tr>
+<tr class='best'><td>LightGBM</td><td><span class='badge-a'>A</span></td><td>1.000000</td><td>1.000000</td><td>1.000000</td><td>1.000000</td><td>1.000000</td><td>1.000000</td><td>1.000000</td><td>1.000000</td><td>0.000000</td><td>0.000000</td><td>0.000000</td><td>2.774000</td></tr>
+<tr class='best'><td>Logistic Regression</td><td><span class='badge-b'>B</span></td><td>0.999936</td><td>0.999936</td><td>0.999936</td><td>0.999936</td><td>1.000000</td><td>1.000000</td><td>0.999870</td><td>0.999925</td><td>0.000083</td><td>0.000149</td><td>0.000000</td><td>2.891000</td></tr>
+<tr class='best'><td>Random Forest</td><td><span class='badge-b'>B</span></td><td>0.999851</td><td>0.999851</td><td>0.999851</td><td>0.999851</td><td>1.000000</td><td>1.000000</td><td>0.999696</td><td>0.999839</td><td>0.000404</td><td>0.000249</td><td>0.000074</td><td>29.625000</td></tr>
+<tr class='best'><td>XGBoost</td><td><span class='badge-b'>B</span></td><td>0.999894</td><td>0.999894</td><td>0.999894</td><td>0.999894</td><td>1.000000</td><td>1.000000</td><td>0.999783</td><td>0.999888</td><td>0.000078</td><td>0.000149</td><td>0.000074</td><td>7.949000</td></tr>
+<tr class='best'><td>LightGBM</td><td><span class='badge-b'>B</span></td><td>0.999936</td><td>0.999936</td><td>0.999936</td><td>0.999936</td><td>1.000000</td><td>1.000000</td><td>0.999870</td><td>0.999932</td><td>0.000055</td><td>0.000099</td><td>0.000037</td><td>4.214000</td></tr>
+</tbody></table>
+
+<h2>3. Selection Rationale</h2>
+<table>
+  <tr><th>Track</th><th>Winner</th><th>ROC AUC</th>
+      <th>F1</th><th>Calibration</th><th>Rationale</th></tr>
+  <tr>
+    <td><span class="badge-a">A</span></td>
+    <td><strong>LightGBM</strong></td>
+    <td>1.000000</td>
+    <td>1.000000</td>
+    <td>1.0000</td>
+    <td>Highest ROC AUC on Track A test set: 1.000000 | Tie-broke by F1: 1.000000 | Calibration quality: 1.0000</td>
+  </tr>
+  <tr class="best">
+    <td><span class="badge-b">B</span></td>
+    <td><strong>Logistic Regression</strong></td>
+    <td>1.000000</td>
+    <td>0.999936</td>
+    <td>0.8288</td>
+    <td>Highest ROC AUC on Track B test set: 1.000000 | Tie-broke by F1: 0.999936 | Calibration quality: 0.8288</td>
+  </tr>
+</table>
+
+
+<h2>4. ROC Curves</h2>
+<div class="img-grid">
+  <figure><img src='../../outputs\plots\evaluation\roc\roc_trackA.png' alt='ROC — Track A'><figcaption style='font-size:11px;color:#888;margin-top:4px'>ROC — Track A</figcaption></figure>
+  <figure><img src='../../outputs\plots\evaluation\roc\roc_trackB.png' alt='ROC — Track B'><figcaption style='font-size:11px;color:#888;margin-top:4px'>ROC — Track B</figcaption></figure>
+</div>
+<figure><img src='../../outputs\plots\evaluation\roc\roc_all_tracks.png' alt='ROC — All models'><figcaption style='font-size:11px;color:#888;margin-top:4px'>ROC — All models</figcaption></figure>
+<figure><img src='../../outputs\plots\evaluation\roc\auc_ranking.png' alt='AUC ranking chart'><figcaption style='font-size:11px;color:#888;margin-top:4px'>AUC ranking chart</figcaption></figure>
+
+<h2>5. Precision-Recall Curves</h2>
+<div class="img-grid">
+  <figure><img src='../../outputs\plots\evaluation\pr_curves\pr_trackA.png' alt='PR — Track A'><figcaption style='font-size:11px;color:#888;margin-top:4px'>PR — Track A</figcaption></figure>
+  <figure><img src='../../outputs\plots\evaluation\pr_curves\pr_trackB.png' alt='PR — Track B'><figcaption style='font-size:11px;color:#888;margin-top:4px'>PR — Track B</figcaption></figure>
+</div>
+
+<h2>6. Confusion Matrices</h2>
+<div class="img-grid">
+  <figure><img src='../../outputs\plots\evaluation\confusion_matrices\cm_grid_trackA.png' alt='CM grid — Track A'><figcaption style='font-size:11px;color:#888;margin-top:4px'>CM grid — Track A</figcaption></figure>
+  <figure><img src='../../outputs\plots\evaluation\confusion_matrices\cm_grid_trackB.png' alt='CM grid — Track B'><figcaption style='font-size:11px;color:#888;margin-top:4px'>CM grid — Track B</figcaption></figure>
+</div>
+
+<h2>7. Calibration Analysis</h2>
+<figure><img src='../../outputs\plots\evaluation\calibration\calibration_comparison.png' alt='Calibration quality ranking'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Calibration quality ranking</figcaption></figure>
+<div class="img-grid">
+  <figure><img src='../../outputs\plots\evaluation\calibration\calibration_trackA.png' alt='Reliability diagrams — Track A'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Reliability diagrams — Track A</figcaption></figure>
+  <figure><img src='../../outputs\plots\evaluation\calibration\calibration_trackB.png' alt='Reliability diagrams — Track B'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Reliability diagrams — Track B</figcaption></figure>
+</div>
+<div class="img-grid">
+  <figure><img src='../../outputs\plots\evaluation\calibration\prob_dist_trackA.png' alt='Prob distributions — Track A'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Prob distributions — Track A</figcaption></figure>
+  <figure><img src='../../outputs\plots\evaluation\calibration\prob_dist_trackB.png' alt='Prob distributions — Track B'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Prob distributions — Track B</figcaption></figure>
+</div>
+
+
+<h2>8. Downstream Module Interface</h2>
+
+<table>
+  <tr><th>Module</th><th>Variable</th><th>Type / Shape</th><th>Description</th></tr>
+  <tr><td>M7.1 SHAP</td><td><code>SHAP_model</code></td>
+      <td>LogisticRegression</td>
+      <td>Track B winner — TreeExplainer or LinearExplainer</td></tr>
+  <tr><td>M7.1 SHAP</td><td><code>SHAP_X_train</code></td>
+      <td>DataFrame</td><td>Track B training data (SHAP background)</td></tr>
+  <tr><td>M7.1 SHAP</td><td><code>SHAP_X_test</code></td>
+      <td>DataFrame</td><td>Track B test data (SHAP values)</td></tr>
+  <tr><td>M8.1 LIME</td><td><code>LIME_predict_fn</code></td>
+      <td>callable</td><td><code>best_model_B.predict_proba</code></td></tr>
+  <tr><td>M8.1 LIME</td><td><code>LIME_X_train_np</code></td>
+      <td>np.ndarray</td><td>Track B training data (numpy)</td></tr>
+  <tr><td>M9 Bias</td><td><code>BIAS_X_test, BIAS_y_test, BIAS_y_pred</code></td>
+      <td>DataFrame / Series</td><td>Track B test set + predictions</td></tr>
+  <tr><td>M10 Blindspot</td><td><code>BLINDSPOT_y_pred, BLINDSPOT_y_proba</code></td>
+      <td>np.ndarray</td><td>Track B predictions for FP/FN analysis</td></tr>
+  <tr><td>All</td><td><code>feature_names_B</code></td>
+      <td>list[str] (Logistic Regression)</td>
+      <td>56 Track B feature names</td></tr>
+</table>
+
+<p class="footer">
+  M6.1 complete.
+  FINAL_DEPLOYMENT_MODEL = <strong>Logistic Regression</strong> (Track B).
+  Next: M7.1 — SHAP Explainability.
+</p>
+</body>
+</html>

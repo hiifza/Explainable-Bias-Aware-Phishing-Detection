@@ -1,0 +1,74 @@
+{
+  "sample_index": 18994,
+  "sample_number": 1,
+  "category": "tn",
+  "category_label": "True Negative  (correct: Phishing)",
+  "prediction_proba": 0.0,
+  "prediction_class": 0,
+  "true_label": 0,
+  "local_r2": 0.309109,
+  "intercept": 0.8056377545793676,
+  "is_native_lime": true,
+  "top_contributions": [
+    {
+      "rank": 1,
+      "feature": "NoOfDegitsInURL <= 0.00",
+      "contribution": 0.3685298,
+      "direction": "\u2192 Legitimate"
+    },
+    {
+      "rank": 2,
+      "feature": "LetterRatioInURL > 0.47",
+      "contribution": -0.34144424,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 3,
+      "feature": "NoOfAmpersandInURL <= 0.00",
+      "contribution": -0.25858186,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 4,
+      "feature": "NoOfOtherSpecialCharsInURL > 1.00",
+      "contribution": -0.17521843,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 5,
+      "feature": "SpacialCharRatioInURL > 0.73",
+      "contribution": -0.1313843,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 6,
+      "feature": "LargestLineLength <= -0.46",
+      "contribution": 0.10621781,
+      "direction": "\u2192 Legitimate"
+    },
+    {
+      "rank": 7,
+      "feature": "NoOfExternalRef <= -0.51",
+      "contribution": -0.10564685,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 8,
+      "feature": "IsDomainIP <= 0.00",
+      "contribution": -0.09530443,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 9,
+      "feature": "NoOfQMarkInURL <= 0.00",
+      "contribution": 0.07845273,
+      "direction": "\u2192 Legitimate"
+    },
+    {
+      "rank": 10,
+      "feature": "NoOfObfuscatedChar <= 0.00",
+      "contribution": -0.06771252,
+      "direction": "\u2192 Phishing"
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "sample_index": 1341,
+  "category": "tn",
+  "category_label": "True Negative (correct: Phishing)",
+  "sample_number": 6,
+  "prediction_proba": 1.8e-05,
+  "prediction_class": 0,
+  "true_label": 0,
+  "base_value": 1.643425,
+  "top_contributions": [
+    {
+      "rank": 1,
+      "feature": "NoOfDegitsInURL",
+      "shap_value": -6.66317159,
+      "feature_val": 2.079442,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 2,
+      "feature": "DomainLength",
+      "shap_value": 2.30393357,
+      "feature_val": 0.745943,
+      "direction": "\u2192 Legitimate"
+    },
+    {
+      "rank": 3,
+      "feature": "NoOfSelfRef",
+      "shap_value": -2.02200864,
+      "feature_val": -0.571432,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 4,
+      "feature": "IsHTTPS",
+      "shap_value": 1.69573217,
+      "feature_val": 1.0,
+      "direction": "\u2192 Legitimate"
+    },
+    {
+      "rank": 5,
+      "feature": "NoOfOtherSpecialCharsInURL",
+      "shap_value": -1.26180712,
+      "feature_val": 1.0,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 6,
+      "feature": "NoOfImage",
+      "shap_value": -1.24626701,
+      "feature_val": -0.676992,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 7,
+      "feature": "URLCharProb",
+      "shap_value": -1.12723629,
+      "feature_val": -1.466712,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 8,
+      "feature": "ContentComplexityScore",
+      "shap_value": -1.09463135,
+      "feature_val": -0.776206,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 9,
+      "feature": "SpacialCharRatioInURL",
+      "shap_value": -1.02888832,
+      "feature_val": 0.8,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 10,
+      "feature": "NoOfExternalRef",
+      "shap_value": -1.01972408,
+      "feature_val": -0.385854,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 11,
+      "feature": "NoOfJS",
+      "shap_value": -0.96254179,
+      "feature_val": -0.701839,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 12,
+      "feature": "TrustBadgeScore",
+      "shap_value": -0.77692266,
+      "feature_val": -0.666667,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 13,
+      "feature": "LetterRatioInURL",
+      "shap_value": 0.73309718,
+      "feature_val": -0.207547,
+      "direction": "\u2192 Legitimate"
+    },
+    {
+      "rank": 14,
+      "feature": "NoOfSubDomain",
+      "shap_value": 0.66990463,
+      "feature_val": 1.0,
+      "direction": "\u2192 Legitimate"
+    },
+    {
+      "rank": 15,
+      "feature": "HasDescription",
+      "shap_value": -0.65905455,
+      "feature_val": 0.0,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 16,
+      "feature": "HasSocialNet",
+      "shap_value": -0.64276381,
+      "feature_val": 0.0,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 17,
+      "feature": "CharContinuationRate",
+      "shap_value": 0.51798257,
+      "feature_val": -1.432292,
+      "direction": "\u2192 Legitimate"
+    },
+    {
+      "rank": 18,
+      "feature": "SubdomainRatio",
+      "shap_value": 0.46304382,
+      "feature_val": 0.803571,
+      "direction": "\u2192 Legitimate"
+    },
+    {
+      "rank": 19,
+      "feature": "DomainTitleMatchScore",
+      "shap_value": -0.40047526,
+      "feature_val": -0.75,
+      "direction": "\u2192 Phishing"
+    },
+    {
+      "rank": 20,
+      "feature": "HasCopyrightInfo",
+      "shap_value": -0.35251455,
+      "feature_val": 0.0,
+      "direction": "\u2192 Phishing"
+    }
+  ],
+  "model_class": "LogisticRegression",
+  "is_native_shap": true
+}

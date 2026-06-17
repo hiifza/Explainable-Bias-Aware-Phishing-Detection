@@ -1,0 +1,583 @@
+"""
+generate_notebook_02.py
+-----------------------
+Run once from the project root to emit:
+    notebooks/02_feature_finalization.ipynb
+
+Usage
+-----
+    python generate_notebook_02.py
+
+The generated notebook covers Module M1.2:
+  - Load clean_df.csv from M1.1
+  - Feature audit (identifiers, leakage, multicollinearity, variance)
+  - Correlation heatmaps and high-correlation pair plots
+  - Feature category visualisation
+  - Target-correlation bar chart
+  - Feature importance pre-screening (mutual information)
+  - Produce all EDA plots to outputs/plots/eda/
+  - Generate outputs/reports/m1_2_feature_finalization_report.html
+  - Save approved feature lists for downstream modules
+"""
+
+import json
+from pathlib import Path
+
+
+def md(source: list[str], cid: str = "") -> dict:
+    return {
+        "cell_type": "markdown",
+        "id"       : cid or source[0][:12].strip().replace(" ", "_").lower(),
+        "metadata" : {},
+        "source"   : source,
+    }
+
+
+def code(source: list[str], cid: str = "") -> dict:
+    return {
+        "cell_type"       : "code",
+        "execution_count" : None,
+        "id"              : cid or source[0][:12].strip().replace(" ", "_").lower(),
+        "metadata"        : {},
+        "outputs"         : [],
+        "source"          : source,
+    }
+
+
+cells = [
+
+    # ── Title ─────────────────────────────────────────────────────────────────
+    md([
+        "# Module M1.2 — Column Removal & Feature Set Finalization\n",
+        "\n",
+        "**Project:** Explainable and Bias-Aware ML for Phishing Website Detection  \n",
+        "**Roadmap ref:** Phase 1 → Module M1.2  \n",
+        "\n",
+        "### Objectives\n",
+        "1. Load `data/processed/clean_df.csv` from M1.1  \n",
+        "2. Identify and drop identifier columns (FILENAME, URL, Domain, Title)  \n",
+        "3. Identify and drop multicollinear column (URLTitleMatchScore, r=0.961)  \n",
+        "4. Prove URLSimilarityIndex leakage and define Track A / Track B  \n",
+        "5. Compute full feature-feature correlation matrix  \n",
+        "6. Audit near-constant and high-skewness features  \n",
+        "7. Run mutual-information pre-screening  \n",
+        "8. Generate all EDA visualisations  \n",
+        "9. Produce `outputs/reports/m1_2_feature_finalization_report.html`  \n",
+        "10. Save approved feature lists to `config/feature_config.yaml`  \n",
+    ], "title"),
+
+    # ── 0. Setup ──────────────────────────────────────────────────────────────
+    md(["## 0. Environment Setup"], "md_setup"),
+
+    code([
+        "import sys\n",
+        "from pathlib import Path\n",
+        "\n",
+        "PROJECT_ROOT = Path().resolve().parent\n",
+        "if str(PROJECT_ROOT) not in sys.path:\n",
+        "    sys.path.insert(0, str(PROJECT_ROOT))\n",
+        "\n",
+        "print(f'Project root: {PROJECT_ROOT}')\n",
+    ], "cell_root"),
+
+    code([
+        "import warnings\n",
+        "warnings.filterwarnings('ignore')\n",
+        "\n",
+        "import numpy             as np\n",
+        "import pandas            as pd\n",
+        "import matplotlib.pyplot as plt\n",
+        "import matplotlib.ticker as mticker\n",
+        "import seaborn           as sns\n",
+        "import yaml\n",
+        "\n",
+        "from sklearn.feature_selection import mutual_info_classif\n",
+        "\n",
+        "from src.utils.logger              import get_logger\n",
+        "from src.features.feature_catalog  import (\n",
+        "    get_feature_lists, run_feature_audit,\n",
+        "    apply_column_removal, build_feature_audit_table,\n",
+        "    compute_pairwise_correlations, compute_variance_stats,\n",
+        "    compute_skewness, compute_correlation_with_target,\n",
+        "    DROP_IDENTIFIERS, DROP_MULTICOLLINEAR, DROP_ALL,\n",
+        "    LEAKAGE_CRITICAL, LEAKAGE_ADVISORY,\n",
+        "    TRACK_A_FEATURES, TRACK_B_FEATURES,\n",
+        "    FEATURE_CATEGORIES, TARGET_COLUMN,\n",
+        ")\n",
+        "from src.features.report_m1_2 import generate_report\n",
+        "\n",
+        "logger = get_logger('notebook.02_feature_finalization')\n",
+        "sns.set_theme(style='whitegrid', palette='muted', font_scale=1.05)\n",
+        "plt.rcParams['figure.dpi'] = 130\n",
+        "\n",
+        "print('Imports OK')\n",
+    ], "cell_imports"),
+
+    # ── 1. Paths ───────────────────────────────────────────────────────────────
+    md(["## 1. Path Configuration"], "md_paths"),
+
+    code([
+        "CLEAN_CSV   = PROJECT_ROOT / 'data' / 'processed' / 'clean_df.csv'\n",
+        "REPORT_DIR  = PROJECT_ROOT / 'outputs' / 'reports'\n",
+        "PLOTS_EDA   = PROJECT_ROOT / 'outputs' / 'plots' / 'eda'\n",
+        "CONFIG_PATH = PROJECT_ROOT / 'config' / 'feature_config.yaml'\n",
+        "\n",
+        "assert CLEAN_CSV.exists(), f'clean_df.csv not found — run M1.1 first: {CLEAN_CSV}'\n",
+        "REPORT_DIR.mkdir(parents=True, exist_ok=True)\n",
+        "PLOTS_EDA.mkdir(parents=True, exist_ok=True)\n",
+        "\n",
+        "print(f'Clean CSV   : {CLEAN_CSV}')\n",
+        "print(f'Report dir  : {REPORT_DIR}')\n",
+        "print(f'Plots dir   : {PLOTS_EDA}')\n",
+    ], "cell_paths"),
+
+    # ── 2. Load Data ──────────────────────────────────────────────────────────
+    md(["## 2. Load clean_df.csv"], "md_load"),
+
+    code([
+        "df = pd.read_csv(CLEAN_CSV, low_memory=False)\n",
+        "print(f'Loaded: {df.shape[0]:,} rows × {df.shape[1]} columns')\n",
+        "display(df.head(3))\n",
+    ], "cell_load"),
+
+    # ── 3. Feature lists ──────────────────────────────────────────────────────
+    md(["## 3. Feature Lists — Single Source of Truth"], "md_flists"),
+
+    code([
+        "fl = get_feature_lists()\n",
+        "\n",
+        "print(f'Identifiers to drop    : {fl.drop_identifiers}')\n",
+        "print(f'Multicollinear to drop : {fl.drop_multicollinear}')\n",
+        "print(f'Leakage critical       : {fl.leakage_critical}')\n",
+        "print(f'Leakage advisory       : {fl.leakage_advisory}')\n",
+        "print(f'Track A features       : {len(fl.track_A)}')\n",
+        "print(f'Track B features       : {len(fl.track_B)}')\n",
+    ], "cell_flists"),
+
+    code([
+        "print('=== Track B Features (49) ===')\n",
+        "for i, f in enumerate(fl.track_B, 1):\n",
+        "    cat = next((c for c, feats in fl.categories.items() if f in feats), '—')\n",
+        "    print(f'  {i:2}. {f:<38} [{cat}]')\n",
+    ], "cell_track_b_list"),
+
+    # ── 4. Identifier and Multicollinear drops ────────────────────────────────
+    md(["## 4. Column Removal — Identifiers & Multicollinear"], "md_drop"),
+
+    code([
+        "print('--- Identifier columns ---')\n",
+        "for c in fl.drop_identifiers:\n",
+        "    print(f'  {c:<20} dtype={df[c].dtype}  nunique={df[c].nunique():,}')\n",
+        "\n",
+        "print('\\n--- Multicollinear column ---')\n",
+        "if 'URLTitleMatchScore' in df.columns and 'DomainTitleMatchScore' in df.columns:\n",
+        "    r = df[['URLTitleMatchScore','DomainTitleMatchScore']].corr().iloc[0,1]\n",
+        "    print(f'  URLTitleMatchScore <-> DomainTitleMatchScore: r={r:.6f}')\n",
+        "    print(f'  Decision: DROP URLTitleMatchScore (highest corr, less informative name)')\n",
+    ], "cell_drop_review"),
+
+    code([
+        "# Apply Track B column removal\n",
+        "df_B = apply_column_removal(df, track='B')\n",
+        "df_A = apply_column_removal(df, track='A')\n",
+        "\n",
+        "print(f'Original shape : {df.shape}')\n",
+        "print(f'Track A shape  : {df_A.shape}  (50 features + label)')\n",
+        "print(f'Track B shape  : {df_B.shape}  (49 features + label)')\n",
+        "\n",
+        "assert df_B.shape[1] == 50, f'Expected 50 cols (49 features + label), got {df_B.shape[1]}'\n",
+        "assert df_A.shape[1] == 51, f'Expected 51 cols (50 features + label), got {df_A.shape[1]}'\n",
+        "print('Shape validation PASSED ✓')\n",
+    ], "cell_apply_drop"),
+
+    # ── 5. Leakage analysis ───────────────────────────────────────────────────
+    md(["## 5. Leakage Analysis — URLSimilarityIndex"], "md_leakage"),
+
+    code([
+        "# Prove leakage: URLSimilarityIndex == 100.0 for ALL label=1\n",
+        "usi_by_label = df.groupby(TARGET_COLUMN)['URLSimilarityIndex'].describe()\n",
+        "print('URLSimilarityIndex statistics by label:')\n",
+        "display(usi_by_label)\n",
+        "\n",
+        "all_legit_100 = (df[df[TARGET_COLUMN]==1]['URLSimilarityIndex'] == 100).all()\n",
+        "any_legit_not = (df[df[TARGET_COLUMN]==1]['URLSimilarityIndex'] != 100).any()\n",
+        "\n",
+        "print(f'\\nAll legitimate records have URLSimilarityIndex=100 : {all_legit_100}')\n",
+        "print(f'Any legitimate record with value != 100           : {any_legit_not}')\n",
+        "assert all_legit_100, 'Leakage assumption violated — recheck dataset'\n",
+        "print('Leakage CONFIRMED: URLSimilarityIndex encodes the label ✓')\n",
+    ], "cell_leakage_proof"),
+
+    code([
+        "# Visualise leakage\n",
+        "fig, axes = plt.subplots(1, 2, figsize=(12, 4))\n",
+        "\n",
+        "# Left: distribution by class\n",
+        "for label_val, color, name in [(0,'#E24B4A','Phishing'), (1,'#1D9E75','Legitimate')]:\n",
+        "    axes[0].hist(\n",
+        "        df[df[TARGET_COLUMN]==label_val]['URLSimilarityIndex'],\n",
+        "        bins=50, alpha=0.7, color=color, label=name, edgecolor='white'\n",
+        "    )\n",
+        "axes[0].set_title('URLSimilarityIndex Distribution\\n(LEAKAGE: Legitimate = 100.0 always)',\n",
+        "                   fontsize=11, fontweight='600')\n",
+        "axes[0].set_xlabel('URLSimilarityIndex')\n",
+        "axes[0].set_ylabel('Count')\n",
+        "axes[0].legend()\n",
+        "axes[0].yaxis.set_major_formatter(mticker.FuncFormatter(lambda x,_: f'{x:,.0f}'))\n",
+        "sns.despine(ax=axes[0])\n",
+        "\n",
+        "# Right: IsHTTPS by class\n",
+        "https_ct = df.groupby([TARGET_COLUMN,'IsHTTPS']).size().unstack(fill_value=0)\n",
+        "https_ct.plot(kind='bar', ax=axes[1], color=['#B0BEC5','#378ADD'],\n",
+        "              edgecolor='white', linewidth=0.8)\n",
+        "axes[1].set_title('IsHTTPS by Label\\n(Advisory: Legitimate = HTTPS always)',\n",
+        "                   fontsize=11, fontweight='600')\n",
+        "axes[1].set_xlabel('label  (0=Phishing, 1=Legitimate)')\n",
+        "axes[1].set_ylabel('Count')\n",
+        "axes[1].legend(['HTTP (0)','HTTPS (1)'])\n",
+        "axes[1].set_xticklabels(['Phishing','Legitimate'], rotation=0)\n",
+        "axes[1].yaxis.set_major_formatter(mticker.FuncFormatter(lambda x,_: f'{x:,.0f}'))\n",
+        "sns.despine(ax=axes[1])\n",
+        "\n",
+        "plt.tight_layout()\n",
+        "plt.savefig(PLOTS_EDA / 'leakage_analysis.png', bbox_inches='tight', dpi=150)\n",
+        "plt.show()\n",
+        "print('Saved → outputs/plots/eda/leakage_analysis.png')\n",
+    ], "cell_leakage_plot"),
+
+    # ── 6. Full feature audit ─────────────────────────────────────────────────
+    md(["## 6. Full Feature Audit"], "md_audit"),
+
+    code([
+        "audit_results = run_feature_audit(df, output_dir=REPORT_DIR)\n",
+        "audit_table   = audit_results['audit_table']\n",
+        "\n",
+        "print(f'Audit table shape: {audit_table.shape}')\n",
+        "display(audit_table[audit_table['in_track_B']]\n",
+        "        [['feature','category','dtype','nunique',\n",
+        "          'top_value_pct','abs_r_with_label','skewness']]\n",
+        "        .sort_values('abs_r_with_label', ascending=False)\n",
+        "        .head(20))\n",
+    ], "cell_audit"),
+
+    # ── 7. Variance audit (near-constant) ─────────────────────────────────────
+    md(["## 7. Near-Constant Feature Variance Audit"], "md_variance"),
+
+    code([
+        "var_stats = audit_results['variance_stats']\n",
+        "near_const = var_stats[var_stats['is_near_constant']].copy()\n",
+        "\n",
+        "print(f'Near-constant features (top-value > 95%): {len(near_const)}')\n",
+        "print(near_const[['feature','nunique','top_value_pct','dtype']].to_string(index=False))\n",
+    ], "cell_variance"),
+
+    code([
+        "# Visualise near-constant features\n",
+        "nc_feats = near_const['feature'].tolist()\n",
+        "nc_pcts  = near_const['top_value_pct'].tolist()\n",
+        "\n",
+        "if nc_feats:\n",
+        "    fig, ax = plt.subplots(figsize=(10, max(4, len(nc_feats)*0.38)))\n",
+        "    colors  = ['#E24B4A' if p > 99 else '#EF9F27' for p in nc_pcts]\n",
+        "    bars    = ax.barh(nc_feats, nc_pcts, color=colors, edgecolor='white')\n",
+        "    ax.axvline(95, color='#888', linestyle='--', linewidth=1, label='95% threshold')\n",
+        "    ax.axvline(99, color='#E24B4A', linestyle=':', linewidth=1, label='99% threshold')\n",
+        "    for bar, pct in zip(bars, nc_pcts):\n",
+        "        ax.text(bar.get_width()+0.3, bar.get_y()+bar.get_height()/2,\n",
+        "                f'{pct:.1f}%', va='center', fontsize=10)\n",
+        "    ax.set_xlim(80, 102)\n",
+        "    ax.set_xlabel('Top-value percentage (%)')\n",
+        "    ax.set_title('Near-Constant Features (top value > 95% of samples)',\n",
+        "                 fontsize=12, fontweight='600')\n",
+        "    ax.legend(fontsize=10)\n",
+        "    sns.despine(ax=ax)\n",
+        "    plt.tight_layout()\n",
+        "    plt.savefig(PLOTS_EDA / 'variance_audit.png', bbox_inches='tight', dpi=150)\n",
+        "    plt.show()\n",
+        "    print('Saved → outputs/plots/eda/variance_audit.png')\n",
+    ], "cell_variance_plot"),
+
+    # ── 8. Correlation with target ─────────────────────────────────────────────
+    md(["## 8. Feature Correlation with Target Label"], "md_corr_target"),
+
+    code([
+        "corr_target = audit_results['corr_with_target']\n",
+        "# Show Track B features only (exclude URLSimilarityIndex)\n",
+        "corr_b = corr_target[corr_target.index.isin(fl.track_B)].sort_values(ascending=True)\n",
+        "\n",
+        "fig, ax = plt.subplots(figsize=(9, 14))\n",
+        "colors  = ['#E24B4A' if v >= 0.6 else '#EF9F27' if v >= 0.4 else '#378ADD'\n",
+        "           for v in corr_b.values]\n",
+        "ax.barh(corr_b.index, corr_b.values, color=colors, edgecolor='white', linewidth=0.5)\n",
+        "\n",
+        "# Colour legend patches\n",
+        "from matplotlib.patches import Patch\n",
+        "legend_elements = [\n",
+        "    Patch(facecolor='#E24B4A', label='|r| ≥ 0.60 — strong'),\n",
+        "    Patch(facecolor='#EF9F27', label='0.40 ≤ |r| < 0.60 — moderate'),\n",
+        "    Patch(facecolor='#378ADD', label='|r| < 0.40 — weak'),\n",
+        "]\n",
+        "ax.legend(handles=legend_elements, fontsize=10)\n",
+        "ax.set_xlabel('|Pearson r| with label', fontsize=11)\n",
+        "ax.set_title('Feature Correlation with Target Label (Track B, 49 features)',\n",
+        "             fontsize=12, fontweight='600')\n",
+        "ax.set_xlim(0, max(corr_b.values)*1.12)\n",
+        "for v, name in zip(corr_b.values, corr_b.index):\n",
+        "    ax.text(v+0.003, name, f'{v:.3f}', va='center', fontsize=8)\n",
+        "sns.despine(ax=ax)\n",
+        "plt.tight_layout()\n",
+        "plt.savefig(PLOTS_EDA / 'target_correlation.png', bbox_inches='tight', dpi=150)\n",
+        "plt.show()\n",
+        "print('Saved → outputs/plots/eda/target_correlation.png')\n",
+    ], "cell_corr_target_plot"),
+
+    # ── 9. Correlation heatmap ────────────────────────────────────────────────
+    md(["## 9. Feature-Feature Correlation Heatmap"], "md_heatmap"),
+
+    code([
+        "num_b = [c for c in fl.track_B if df[c].dtype in ['int64','float64']]\n",
+        "corr_matrix = df[num_b].corr()\n",
+        "\n",
+        "fig, ax = plt.subplots(figsize=(22, 18))\n",
+        "mask    = np.triu(np.ones_like(corr_matrix, dtype=bool), k=1)\n",
+        "\n",
+        "sns.heatmap(\n",
+        "    corr_matrix, ax=ax, mask=mask,\n",
+        "    cmap='RdBu_r', center=0, vmin=-1, vmax=1,\n",
+        "    square=True, linewidths=0.3, linecolor='white',\n",
+        "    cbar_kws={'shrink': 0.6, 'label': 'Pearson r'},\n",
+        "    annot=False,\n",
+        ")\n",
+        "ax.set_title('Feature-Feature Correlation Heatmap (Track B numeric features)',\n",
+        "             fontsize=14, fontweight='600', pad=14)\n",
+        "ax.tick_params(axis='x', rotation=90, labelsize=8)\n",
+        "ax.tick_params(axis='y', rotation=0,  labelsize=8)\n",
+        "plt.tight_layout()\n",
+        "plt.savefig(PLOTS_EDA / 'correlation_heatmap.png', bbox_inches='tight', dpi=130)\n",
+        "plt.show()\n",
+        "print('Saved → outputs/plots/eda/correlation_heatmap.png')\n",
+    ], "cell_heatmap"),
+
+    # ── 10. High-correlation pairs ────────────────────────────────────────────
+    md(["## 10. High-Correlation Feature Pairs (|r| ≥ 0.75)"], "md_highcorr"),
+
+    code([
+        "pairs_high   = audit_results['pairwise_high']\n",
+        "pairs_medium = audit_results['pairwise_medium']\n",
+        "\n",
+        "print(f'High-correlation pairs (|r|≥0.75)    : {len(pairs_high)}')\n",
+        "print(f'Medium-correlation pairs (0.50–0.75) : {len(pairs_medium)}')\n",
+        "\n",
+        "print('\\nHigh-correlation pairs:')\n",
+        "display(pairs_high)\n",
+    ], "cell_highcorr"),
+
+    code([
+        "if len(pairs_high) > 0:\n",
+        "    fig, ax = plt.subplots(figsize=(9, max(3, len(pairs_high)*0.55)))\n",
+        "    labels  = [f\"{r['feat_A']}\\n↔ {r['feat_B']}\" for _, r in pairs_high.iterrows()]\n",
+        "    values  = pairs_high['abs_r'].values\n",
+        "    colors  = ['#A32D2D' if v>=0.9 else '#E24B4A' if v>=0.8 else '#EF9F27'\n",
+        "               for v in values]\n",
+        "    bars = ax.barh(labels, values, color=colors, edgecolor='white')\n",
+        "    ax.axvline(0.75, color='#888', linestyle='--', linewidth=1)\n",
+        "    ax.axvline(0.90, color='#E24B4A', linestyle=':', linewidth=1)\n",
+        "    for bar, v in zip(bars, values):\n",
+        "        ax.text(bar.get_width()+0.003, bar.get_y()+bar.get_height()/2,\n",
+        "                f'{v:.4f}', va='center', fontsize=9)\n",
+        "    ax.set_xlim(0.5, 1.05)\n",
+        "    ax.set_xlabel('|Pearson r|')\n",
+        "    ax.set_title('High-Correlation Feature Pairs (|r| ≥ 0.75)',\n",
+        "                 fontsize=12, fontweight='600')\n",
+        "    sns.despine(ax=ax)\n",
+        "    plt.tight_layout()\n",
+        "    plt.savefig(PLOTS_EDA / 'high_corr_pairs.png', bbox_inches='tight', dpi=150)\n",
+        "    plt.show()\n",
+        "    print('Saved → outputs/plots/eda/high_corr_pairs.png')\n",
+    ], "cell_highcorr_plot"),
+
+    # ── 11. Category distribution ─────────────────────────────────────────────
+    md(["## 11. Feature Category Distribution"], "md_categories"),
+
+    code([
+        "cat_counts = {cat: len(feats) for cat, feats in fl.categories.items()}\n",
+        "cats   = list(cat_counts.keys())\n",
+        "counts = list(cat_counts.values())\n",
+        "\n",
+        "palette = [\n",
+        "    '#185FA5','#3B6D11','#533AB7','#854F0B','#993556',\n",
+        "    '#993C1D','#0F6E56','#3B6D11','#185FA5'\n",
+        "]\n",
+        "fig, ax = plt.subplots(figsize=(10, 5))\n",
+        "bars    = ax.bar(cats, counts, color=palette, edgecolor='white', linewidth=1.2)\n",
+        "for bar, cnt in zip(bars, counts):\n",
+        "    ax.text(bar.get_x()+bar.get_width()/2, bar.get_height()+0.05,\n",
+        "            str(cnt), ha='center', va='bottom', fontsize=11, fontweight='600')\n",
+        "ax.set_ylabel('Feature count')\n",
+        "ax.set_title('Feature Count by Category (Track B — 49 features)',\n",
+        "             fontsize=12, fontweight='600')\n",
+        "ax.set_xticklabels(cats, rotation=35, ha='right', fontsize=9)\n",
+        "ax.set_ylim(0, max(counts)*1.2)\n",
+        "sns.despine(ax=ax)\n",
+        "plt.tight_layout()\n",
+        "plt.savefig(PLOTS_EDA / 'category_distribution.png', bbox_inches='tight', dpi=150)\n",
+        "plt.show()\n",
+        "print('Saved → outputs/plots/eda/category_distribution.png')\n",
+    ], "cell_categories_plot"),
+
+    # ── 12. Mutual information pre-screening ──────────────────────────────────
+    md(["## 12. Mutual Information Pre-Screening"], "md_mi"),
+
+    code([
+        "# Use a 20k sample for speed; MI is computed on Track B numeric features\n",
+        "SAMPLE_N  = 20_000\n",
+        "rng       = np.random.default_rng(42)\n",
+        "idx       = rng.choice(len(df_B), size=min(SAMPLE_N, len(df_B)), replace=False)\n",
+        "\n",
+        "num_b_cols = [c for c in fl.track_B\n",
+        "              if df_B[c].dtype in ['int64','float64'] and c != TARGET_COLUMN]\n",
+        "X_mi = df_B.iloc[idx][num_b_cols].fillna(0).values\n",
+        "y_mi = df_B.iloc[idx][TARGET_COLUMN].values\n",
+        "\n",
+        "mi_scores = mutual_info_classif(X_mi, y_mi, discrete_features='auto',\n",
+        "                                random_state=42)\n",
+        "mi_series = pd.Series(mi_scores, index=num_b_cols).sort_values(ascending=False)\n",
+        "\n",
+        "print(f'Mutual information computed on {min(SAMPLE_N, len(df_B)):,} samples')\n",
+        "print('\\nTop 15 features by MI score:')\n",
+        "print(mi_series.head(15).to_string())\n",
+    ], "cell_mi"),
+
+    code([
+        "# MI bar chart\n",
+        "mi_plot = mi_series.sort_values(ascending=True)\n",
+        "fig, ax = plt.subplots(figsize=(9, 13))\n",
+        "colors  = ['#E24B4A' if v >= mi_series.quantile(0.75) else\n",
+        "           '#EF9F27' if v >= mi_series.quantile(0.50) else '#B0BEC5'\n",
+        "           for v in mi_plot.values]\n",
+        "ax.barh(mi_plot.index, mi_plot.values, color=colors, edgecolor='white')\n",
+        "ax.set_xlabel('Mutual Information Score')\n",
+        "ax.set_title('Feature Importance Pre-Screening — Mutual Information\\n(Track B, 20k sample)',\n",
+        "             fontsize=12, fontweight='600')\n",
+        "sns.despine(ax=ax)\n",
+        "plt.tight_layout()\n",
+        "plt.savefig(PLOTS_EDA / 'mutual_information.png', bbox_inches='tight', dpi=150)\n",
+        "plt.show()\n",
+        "print('Saved → outputs/plots/eda/mutual_information.png')\n",
+    ], "cell_mi_plot"),
+
+    # ── 13. Validation ────────────────────────────────────────────────────────
+    md(["## 13. Feature List Validation"], "md_validate"),
+
+    code([
+        "checks = [\n",
+        "    ('Track B feature count == 49',       len(fl.track_B) == 49),\n",
+        "    ('Track A feature count == 50',       len(fl.track_A) == 50),\n",
+        "    ('No duplicates in Track B',           len(set(fl.track_B)) == 49),\n",
+        "    ('No duplicates in Track A',           len(set(fl.track_A)) == 50),\n",
+        "    ('URLSimilarityIndex in Track A',      'URLSimilarityIndex' in fl.track_A),\n",
+        "    ('URLSimilarityIndex NOT in Track B',  'URLSimilarityIndex' not in fl.track_B),\n",
+        "    ('label NOT in Track A or B',          'label' not in fl.track_A),\n",
+        "    ('All identifiers dropped',            all(c not in fl.track_A for c in fl.drop_identifiers)),\n",
+        "    ('URLTitleMatchScore dropped',         'URLTitleMatchScore' not in fl.track_A),\n",
+        "    ('df_B has correct columns',           set(fl.track_B) == set(df_B.columns)-{'label'}),\n",
+        "    ('df_A has correct columns',           set(fl.track_A) == set(df_A.columns)-{'label'}),\n",
+        "]\n",
+        "\n",
+        "all_pass = True\n",
+        "for desc, result in checks:\n",
+        "    status = '✓ PASS' if result else '✗ FAIL'\n",
+        "    if not result:\n",
+        "        all_pass = False\n",
+        "    print(f'  {status}  {desc}')\n",
+        "\n",
+        "print()\n",
+        "if all_pass:\n",
+        "    print('ALL VALIDATION CHECKS PASSED ✓')\n",
+        "else:\n",
+        "    raise AssertionError('One or more validation checks FAILED — review feature catalog')\n",
+    ], "cell_validate"),
+
+    # ── 14. Save processed DataFrames ─────────────────────────────────────────
+    md(["## 14. Save Processed DataFrames (Track A & B)"], "md_save"),
+
+    code([
+        "track_A_path = PROJECT_ROOT / 'data' / 'processed' / 'track_A' / 'features_full.csv'\n",
+        "track_B_path = PROJECT_ROOT / 'data' / 'processed' / 'track_B' / 'features_full.csv'\n",
+        "\n",
+        "track_A_path.parent.mkdir(parents=True, exist_ok=True)\n",
+        "track_B_path.parent.mkdir(parents=True, exist_ok=True)\n",
+        "\n",
+        "df_A.to_csv(track_A_path, index=False)\n",
+        "df_B.to_csv(track_B_path, index=False)\n",
+        "\n",
+        "print(f'Saved Track A: {track_A_path}  ({df_A.shape})')\n",
+        "print(f'Saved Track B: {track_B_path}  ({df_B.shape})')\n",
+    ], "cell_save"),
+
+    # ── 15. Generate HTML report ──────────────────────────────────────────────
+    md(["## 15. Generate HTML Report"], "md_report"),
+
+    code([
+        "report_path = generate_report(\n",
+        "    df_clean     = df,\n",
+        "    audit_results= audit_results,\n",
+        "    output_path  = REPORT_DIR / 'm1_2_feature_finalization_report.html',\n",
+        "    plots_dir    = PLOTS_EDA,\n",
+        ")\n",
+        "print(f'Report saved: {report_path}')\n",
+    ], "cell_report"),
+
+    # ── 16. Summary ───────────────────────────────────────────────────────────
+    md(["## 16. M1.2 Summary"], "md_summary"),
+
+    code([
+        "summary = {\n",
+        "    'raw_columns'           : 56,\n",
+        "    'identifiers_dropped'   : len(fl.drop_identifiers),\n",
+        "    'multicollinear_dropped': len(fl.drop_multicollinear),\n",
+        "    'leakage_critical'      : fl.leakage_critical,\n",
+        "    'leakage_advisory'      : fl.leakage_advisory,\n",
+        "    'track_A_features'      : len(fl.track_A),\n",
+        "    'track_B_features'      : len(fl.track_B),\n",
+        "    'high_corr_pairs'       : len(pairs_high),\n",
+        "    'near_constant_features': int(audit_results['variance_stats']['is_near_constant'].sum()),\n",
+        "    'plots_saved'           : list(PLOTS_EDA.glob('*.png')).__len__(),\n",
+        "    'report_path'           : report_path,\n",
+        "}\n",
+        "\n",
+        "print('=' * 58)\n",
+        "print('MODULE M1.2 COMPLETE')\n",
+        "print('=' * 58)\n",
+        "for k, v in summary.items():\n",
+        "    print(f'  {k:<30}: {v}')\n",
+        "print('=' * 58)\n",
+        "print('This feature list is the single source of truth for the')\n",
+        "print('entire project. Next step: M2.1 — Exploratory Data Analysis')\n",
+    ], "cell_summary"),
+]
+
+
+# ── Assemble and write ─────────────────────────────────────────────────────────
+
+notebook = {
+    "nbformat"      : 4,
+    "nbformat_minor": 5,
+    "metadata": {
+        "kernelspec": {
+            "display_name": "Python 3",
+            "language"    : "python",
+            "name"        : "python3",
+        },
+        "language_info": {
+            "name"   : "python",
+            "version": "3.11.0",
+        },
+    },
+    "cells": cells,
+}
+
+out_path = Path(__file__).resolve().parent / "notebooks" / "02_feature_finalization.ipynb"
+out_path.parent.mkdir(parents=True, exist_ok=True)
+out_path.write_text(json.dumps(notebook, indent=1), encoding="utf-8")
+print(f"Notebook written → {out_path}")

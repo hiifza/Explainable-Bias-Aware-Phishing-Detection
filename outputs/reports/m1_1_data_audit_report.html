@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M1.1 Data Audit Report — Phishing Detection</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body   { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 14px; color: #1a1a1a; background: #fff;
+            max-width: 980px; margin: 40px auto; padding: 0 24px 60px; }
+  h1     { font-size: 20px; font-weight: 600; border-bottom: 2px solid #185FA5;
+            padding-bottom: 12px; margin-bottom: 24px; }
+  h2     { font-size: 15px; font-weight: 600; color: #185FA5;
+            margin: 32px 0 12px; }
+  p.meta { font-size: 12px; color: #888; margin-bottom: 20px; }
+  table  { width: 100%; border-collapse: collapse; font-size: 13px; margin: 8px 0 20px; }
+  th     { background: #E6F1FB; padding: 9px 14px; text-align: left;
+            border: 1px solid #B5D4F4; font-weight: 600; }
+  td     { padding: 8px 14px; border: 1px solid #ddd; vertical-align: top; }
+  tr:nth-child(even) td { background: #F8FBFF; }
+  code   { font-family: "SF Mono", Menlo, monospace; font-size: 12px;
+            background: #F1F3F5; padding: 2px 5px; border-radius: 3px; }
+  .grid  { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 16px 0 24px; }
+  .card  { border: 1px solid #B5D4F4; border-radius: 8px; padding: 16px 20px;
+            background: #F0F7FF; }
+  .card-value { font-size: 26px; font-weight: 700; color: #185FA5; }
+  .card-label { font-size: 12px; color: #666; margin-top: 4px; }
+  .badge-pass { background: #E1F5EE; color: #0F6E56; padding: 3px 9px;
+                 border-radius: 4px; font-size: 12px; font-weight: 600; }
+  .badge-fail { background: #FCEBEB; color: #A32D2D; padding: 3px 9px;
+                 border-radius: 4px; font-size: 12px; font-weight: 600; }
+  .badge-warn { background: #FAEEDA; color: #854F0B; padding: 3px 9px;
+                 border-radius: 4px; font-size: 12px; font-weight: 600; }
+  .footer { font-size: 12px; color: #aaa; margin-top: 48px;
+             border-top: 1px solid #eee; padding-top: 16px; }
+</style>
+</head>
+<body>
+
+<h1>Module M1.1 — Raw Data Loading &amp; Deduplication Audit</h1>
+<p class="meta">
+  Project: Explainable and Bias-Aware ML for Phishing Website Detection &nbsp;|&nbsp;
+  Generated: 2026-06-17 16:45:46
+</p>
+
+<h2>1. Dataset Overview</h2>
+<div class="grid">
+  <div class="card">
+    <div class="card-value">235,795</div>
+    <div class="card-label">Raw rows loaded</div>
+  </div>
+  <div class="card">
+    <div class="card-value">56</div>
+    <div class="card-label">Columns</div>
+  </div>
+  <div class="card">
+    <div class="card-value">0</div>
+    <div class="card-label">Missing values</div>
+  </div>
+</div>
+
+<h2>2. Structural Validation Results</h2>
+<table>
+  <tr><th>Check</th><th>Expected</th><th>Actual</th><th>Status</th></tr>
+  <tr>
+    <td>Row count</td><td>235,795</td><td>235,795</td>
+    <td><span class="badge-pass">✓ PASS</span></td>
+  </tr>
+  <tr>
+    <td>Column count</td><td>56</td><td>56</td>
+    <td><span class="badge-pass">✓ PASS</span></td>
+  </tr>
+  <tr>
+    <td>Missing values</td><td>0</td><td>0</td>
+    <td><span class="badge-pass">✓ PASS</span></td>
+  </tr>
+  <tr>
+    <td>Label values</td><td>&#123;0, 1&#125;</td>
+    <td>0, 1</td>
+    <td><span class="badge-pass">✓ PASS</span></td>
+  </tr>
+  <tr>
+    <td>All expected columns present</td><td>56</td><td>56</td>
+    <td><span class="badge-pass">✓ PASS</span></td>
+  </tr>
+</table>
+
+<h2>3. Duplicate URL Analysis</h2>
+<table>
+  <tr><th>Metric</th><th>Value</th></tr>
+  <tr><td>Total rows (raw)</td>          <td>235,795</td></tr>
+  <tr><td>Unique URLs</td>               <td>235,370</td></tr>
+  <tr><td>Duplicate rows removed</td>    <td>425</td></tr>
+  <tr><td>Deduplication key</td>         <td><code>URL</code> — keep first occurrence</td></tr>
+  <tr><td>Rows after deduplication</td>  <td>235,370</td></tr>
+</table>
+
+<h2>4. Class Distribution — Before vs After Deduplication</h2>
+<table>
+  <tr>
+    <th>Stage</th>
+    <th>label=0 (Phishing)</th><th>Phishing %</th>
+    <th>label=1 (Legitimate)</th><th>Legitimate %</th>
+    <th>Total</th>
+  </tr>
+  <tr>
+    <td>Before deduplication</td>
+    <td>100,945</td>
+    <td>42.81%</td>
+    <td>134,850</td>
+    <td>57.19%</td>
+    <td>235,795</td>
+  </tr>
+  <tr>
+    <td>After deduplication</td>
+    <td>100,520</td>
+    <td>42.71%</td>
+    <td>134,850</td>
+    <td>57.29%</td>
+    <td>235,370</td>
+  </tr>
+</table>
+
+<h2>5. Data Types Summary</h2>
+<table>
+  <tr><th>Dtype</th><th>Column count</th><th>Sample columns</th></tr>
+  <tr><td><code>int64</code></td><td>41</td><td>URLLength, DomainLength, IsDomainIP, TLDLength, NoOfSubDomain …</td></tr>
+<tr><td><code>float64</code></td><td>10</td><td>URLSimilarityIndex, CharContinuationRate, TLDLegitimateProb, URLCharProb, ObfuscationRatio …</td></tr>
+<tr><td><code>object</code></td><td>5</td><td>FILENAME, URL, Domain, TLD, Title</td></tr>
+
+</table>
+
+<h2>6. Output Artefacts</h2>
+<table>
+  <tr><th>File</th><th>Description</th><th>Status</th></tr>
+  <tr>
+    <td><code>data/processed/clean_df.csv</code></td>
+    <td>Deduplicated dataset — 235,370 rows × 56 columns</td>
+    <td><span class="badge-pass">✓ SAVED</span></td>
+  </tr>
+  <tr>
+    <td><code>outputs/reports/m1_1_data_audit_report.html</code></td>
+    <td>This audit report</td>
+    <td><span class="badge-pass">✓ SAVED</span></td>
+  </tr>
+</table>
+
+<p class="footer">
+  Module M1.1 complete. Next step: M1.2 — Column Removal &amp; Feature Set Finalization.
+</p>
+
+</body>
+</html>

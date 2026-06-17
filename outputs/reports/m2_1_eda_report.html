@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>M2.1 EDA Report — Phishing Detection</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+     font-size:14px;color:#1a1a1a;background:#fff;
+     max-width:1140px;margin:40px auto;padding:0 28px 80px}
+h1{font-size:22px;font-weight:700;border-bottom:3px solid #185FA5;
+   padding-bottom:12px;margin-bottom:6px}
+h2{font-size:16px;font-weight:600;color:#185FA5;margin:36px 0 10px;
+   border-left:4px solid #185FA5;padding-left:10px}
+h3{font-size:14px;font-weight:600;color:#333;margin:18px 0 8px}
+p{line-height:1.65;color:#444;margin-bottom:10px}
+p.meta{font-size:12px;color:#888;margin-bottom:22px}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0 20px}
+th{background:#E6F1FB;padding:8px 13px;text-align:left;
+   border:1px solid #B5D4F4;font-weight:600;white-space:nowrap}
+td{padding:7px 13px;border:1px solid #ddd;vertical-align:top}
+tr:nth-child(even) td{background:#F8FBFF}
+code{font-family:"SF Mono",Menlo,monospace;font-size:12px;
+     background:#F1F3F5;padding:2px 5px;border-radius:3px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:14px 0 22px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0 22px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:14px 0 22px}
+.card{border:1px solid #B5D4F4;border-radius:8px;padding:14px 18px;background:#F0F7FF}
+.card-v{font-size:26px;font-weight:700;color:#185FA5}
+.card-l{font-size:12px;color:#666;margin-top:3px}
+.pass{background:#E1F5EE;color:#0F6E56;padding:3px 8px;border-radius:4px;
+      font-size:12px;font-weight:600}
+.fail{background:#FCEBEB;color:#A32D2D;padding:3px 8px;border-radius:4px;
+      font-size:12px;font-weight:600}
+.warn{background:#FAEEDA;color:#854F0B;padding:3px 8px;border-radius:4px;
+      font-size:12px;font-weight:600}
+.info{background:#E6F1FB;color:#185FA5;padding:3px 8px;border-radius:4px;
+      font-size:12px;font-weight:600}
+.alert{border-left:4px solid #E24B4A;background:#FCEBEB;
+       padding:12px 16px;border-radius:0 6px 6px 0;margin:10px 0}
+.alert-warn{border-left:4px solid #EF9F27;background:#FAEEDA;
+            padding:12px 16px;border-radius:0 6px 6px 0;margin:10px 0}
+.alert-info{border-left:4px solid #378ADD;background:#E6F1FB;
+            padding:12px 16px;border-radius:0 6px 6px 0;margin:10px 0}
+img{max-width:100%;border:1px solid #ddd;border-radius:6px;
+    margin:6px 0;display:block}
+.img-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:10px 0}
+.footer{font-size:12px;color:#aaa;margin-top:56px;
+        border-top:1px solid #eee;padding-top:16px}
+.toc a{display:block;padding:3px 0;color:#185FA5;text-decoration:none;font-size:13px}
+.toc a:hover{text-decoration:underline}
+.finding{background:#F8FBFF;border:1px solid #ddd;border-radius:6px;
+         padding:10px 14px;margin:8px 0;font-size:13px}
+</style>
+</head>
+<body>
+<h1>Module M2.1 — Exploratory Data Analysis</h1>
+<p class='meta'>
+  Project: Explainable and Bias-Aware ML for Phishing Website Detection
+  &nbsp;|&nbsp; Generated: 2026-06-17 20:22:38
+  &nbsp;|&nbsp; Dataset: PhiUSIIL &nbsp;|&nbsp;
+  Rows: 235,370 &nbsp;|&nbsp;
+  Track B: 49 features
+</p>
+
+<nav class='toc' style='background:#F8FBFF;border:1px solid #ddd;
+     border-radius:6px;padding:14px 18px;margin:20px 0;max-width:400px'>
+  <strong style='font-size:13px'>Table of Contents</strong>
+  <a href='#s0'>Executive Summary</a>
+  <a href='#s1'>1. Dataset Overview</a>
+  <a href='#s2'>2. Leakage Analysis</a>
+  <a href='#s3'>3. Correlation Analysis</a>
+  <a href='#s4'>4. TLD Analysis</a>
+  <a href='#s5'>5. Outlier Analysis</a>
+  <a href='#s6'>6. Feature Pre-Screening</a>
+</nav>
+<h2 id='s0'>Executive Summary — Key Findings</h2>
+<div class='finding'>
+  <strong>🔴 Critical Leakage:</strong> <code>URLSimilarityIndex</code> achieves
+  AUROC=0.9961 as a solo predictor. All legitimate records = 100.0 exactly.
+  Excluded from Track B.
+</div>
+<div class='finding'>
+  <strong>🟡 Advisory Leakage:</strong> <code>IsHTTPS</code> achieves
+  AUROC=0.7544. All legitimate records have IsHTTPS=1. Retained but
+  flagged for bias analysis.
+</div>
+<div class='finding'>
+  <strong>🔵 Correlation:</strong> 9 feature pairs with |r| ≥ 0.75
+  in the retained Track B feature set. All retained (tree models are robust).
+</div>
+<div class='finding'>
+  <strong>🌐 TLD Diversity:</strong> 695 unique TLDs with extreme
+  phishing-rate variation by TLD group — bias analysis required in M9.1.
+</div>
+<div class='finding'>
+  <strong>📊 Outliers:</strong> 14 count features have extreme right-skew
+  (max &gt; 100× median). Log1p transform required in preprocessing (M3.1).
+</div>
+
+<h2 id='s1'>1. Dataset Overview</h2>
+<div class='grid4'>
+  <div class='card'><div class='card-v'>235,370</div>
+    <div class='card-l'>Rows (post-dedup)</div></div>
+  <div class='card'><div class='card-v'>49</div>
+    <div class='card-l'>Features (Track B)</div></div>
+  <div class='card'><div class='card-v'>100,520</div>
+    <div class='card-l'>Phishing (label=0)</div></div>
+  <div class='card'><div class='card-v'>134,850</div>
+    <div class='card-l'>Legitimate (label=1)</div></div>
+</div>
+<table>
+  <tr><th>Metric</th><th>Value</th></tr>
+  <tr><td>Missing values</td><td>0</td></tr>
+  <tr><td>Memory usage</td><td>183.3 MB</td></tr>
+  <tr><td>Numeric features</td><td>48</td></tr>
+  <tr><td>Categorical features</td><td>1</td></tr>
+  <tr><td>Binary features</td><td>19</td></tr>
+  <tr><td>Phishing %</td><td>42.71%</td></tr>
+  <tr><td>Legitimate %</td><td>57.29%</td></tr>
+  <tr><td>Class imbalance ratio</td><td>0.7454</td></tr>
+</table>
+
+<h2 id='s2'>2. Leakage Analysis</h2>
+
+<h3>2a. URLSimilarityIndex — Critical Leakage</h3>
+<div class='alert'>
+  <strong>CRITICAL:</strong> All legitimate records (label=1) have
+  <code>URLSimilarityIndex = 100.0</code> exactly (std=0.0).
+  Confirmed: True.
+  AUC as separator: <strong>0.996090</strong>.
+  This feature is excluded from Track B entirely.
+</div>
+<figure><img src='../../outputs\plots\eda\leakage_urlsimilarity.png' alt='URLSimilarityIndex by class' loading='lazy'><figcaption style='font-size:11px;color:#888;margin-top:4px'>URLSimilarityIndex by class</figcaption></figure>
+<table>
+  <tr><th>Class</th><th>Min</th><th>Mean</th><th>Max</th><th>Std</th></tr>
+  <tr><td>Phishing (0)</td>
+      <td>0.16</td>
+      <td>49.65</td>
+      <td>100.00</td>
+      <td>22.58</td></tr>
+  <tr><td>Legitimate (1)</td>
+      <td>100.00</td>
+      <td>100.00</td>
+      <td>100.00</td>
+      <td>0.00</td></tr>
+</table>
+
+<h3>2b. IsHTTPS — Advisory Leakage</h3>
+<div class='alert-warn'>
+  <strong>ADVISORY:</strong> All legitimate records have IsHTTPS=1.
+  49.1% of phishing sites also use HTTPS.
+  AUC as separator: <strong>0.754387</strong>.
+  Retained in both tracks; flagged for bias analysis.
+</div>
+<figure><img src='../../outputs\plots\eda\leakage_https.png' alt='IsHTTPS by class' loading='lazy'><figcaption style='font-size:11px;color:#888;margin-top:4px'>IsHTTPS by class</figcaption></figure>
+
+<h2 id='s3'>3. Correlation Analysis</h2>
+<div class='img-grid'><figure><img src='../../outputs\plots\eda\correlation_heatmap_pearson.png' alt='Pearson correlation heatmap' loading='lazy'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Pearson correlation heatmap</figcaption></figure><figure><img src='../../outputs\plots\eda\correlation_heatmap_spearman.png' alt='Spearman correlation heatmap' loading='lazy'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Spearman correlation heatmap</figcaption></figure></div>
+
+<h3>Top Positive Correlations (Pearson)</h3>
+<table>
+  <tr><th>Feature A</th><th>Feature B</th><th>r</th></tr>
+  <tr><td><code>URLLength</code></td><td><code>NoOfLettersInURL</code></td><td>0.9560</td></tr><tr><td><code>URLLength</code></td><td><code>NoOfDegitsInURL</code></td><td>0.8360</td></tr><tr><td><code>NoOfDegitsInURL</code></td><td><code>NoOfEqualsInURL</code></td><td>0.8064</td></tr><tr><td><code>HasObfuscation</code></td><td><code>ObfuscationRatio</code></td><td>0.7988</td></tr><tr><td><code>NoOfAmpersandInURL</code></td><td><code>NoOfObfuscatedChar</code></td><td>0.7865</td></tr><tr><td><code>NoOfEqualsInURL</code></td><td><code>NoOfOtherSpecialCharsInURL</code></td><td>0.7854</td></tr><tr><td><code>URLLength</code></td><td><code>NoOfOtherSpecialCharsInURL</code></td><td>0.7826</td></tr><tr><td><code>NoOfDegitsInURL</code></td><td><code>NoOfOtherSpecialCharsInURL</code></td><td>0.7679</td></tr><tr><td><code>NoOfEqualsInURL</code></td><td><code>NoOfObfuscatedChar</code></td><td>0.7546</td></tr><tr><td><code>NoOfDegitsInURL</code></td><td><code>NoOfObfuscatedChar</code></td><td>0.7215</td></tr>
+</table>
+
+<h3>Top Negative Correlations (Pearson)</h3>
+<table>
+  <tr><th>Feature A</th><th>Feature B</th><th>r</th></tr>
+  <tr><td><code>CharContinuationRate</code></td><td><code>SpacialCharRatioInURL</code></td><td>-0.7117</td></tr><tr><td><code>URLCharProb</code></td><td><code>DegitRatioInURL</code></td><td>-0.7085</td></tr><tr><td><code>SpacialCharRatioInURL</code></td><td><code>DomainTitleMatchScore</code></td><td>-0.5875</td></tr><tr><td><code>DomainLength</code></td><td><code>CharContinuationRate</code></td><td>-0.5764</td></tr><tr><td><code>NoOfSubDomain</code></td><td><code>CharContinuationRate</code></td><td>-0.4826</td></tr><tr><td><code>SpacialCharRatioInURL</code></td><td><code>HasSocialNet</code></td><td>-0.4295</td></tr><tr><td><code>CharContinuationRate</code></td><td><code>NoOfOtherSpecialCharsInURL</code></td><td>-0.4251</td></tr><tr><td><code>URLCharProb</code></td><td><code>SpacialCharRatioInURL</code></td><td>-0.3970</td></tr><tr><td><code>SpacialCharRatioInURL</code></td><td><code>HasCopyrightInfo</code></td><td>-0.3843</td></tr><tr><td><code>SpacialCharRatioInURL</code></td><td><code>HasDescription</code></td><td>-0.3789</td></tr>
+</table>
+
+<h2 id='s4'>4. TLD Analysis</h2>
+<p>Total unique TLDs: <strong>695</strong></p>
+<figure><img src='../../outputs\plots\eda\tld_phishing_rate.png' alt='Phishing rate by TLD (top 30)' loading='lazy'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Phishing rate by TLD (top 30)</figcaption></figure>
+<table>
+  <tr><th>TLD</th><th>Total</th><th>Phishing</th><th>Phishing Rate</th></tr>
+  <tr><td><code>com</code></td><td>112,382</td><td>43,597</td><td>38.8%</td></tr><tr><td><code>org</code></td><td>18,792</td><td>2,268</td><td>12.1%</td></tr><tr><td><code>net</code></td><td>7,076</td><td>3,078</td><td>43.5%</td></tr><tr><td><code>app</code></td><td>6,467</td><td>6,327</td><td>97.8%</td></tr><tr><td><code>uk</code></td><td>6,395</td><td>322</td><td>5.0%</td></tr><tr><td><code>co</code></td><td>5,408</td><td>4,950</td><td>91.5%</td></tr><tr><td><code>io</code></td><td>4,174</td><td>3,742</td><td>89.7%</td></tr><tr><td><code>de</code></td><td>3,994</td><td>684</td><td>17.1%</td></tr><tr><td><code>ru</code></td><td>3,870</td><td>2,978</td><td>77.0%</td></tr><tr><td><code>au</code></td><td>2,979</td><td>373</td><td>12.5%</td></tr><tr><td><code>top</code></td><td>2,327</td><td>2,325</td><td>99.9%</td></tr><tr><td><code>dev</code></td><td>2,322</td><td>2,289</td><td>98.6%</td></tr><tr><td><code>jp</code></td><td>2,219</td><td>137</td><td>6.2%</td></tr><tr><td><code>it</code></td><td>1,887</td><td>218</td><td>11.6%</td></tr><tr><td><code>edu</code></td><td>1,861</td><td>5</td><td>0.3%</td></tr><tr><td><code>fr</code></td><td>1,857</td><td>491</td><td>26.4%</td></tr><tr><td><code>br</code></td><td>1,841</td><td>648</td><td>35.2%</td></tr><tr><td><code>nl</code></td><td>1,727</td><td>191</td><td>11.1%</td></tr><tr><td><code>ca</code></td><td>1,614</td><td>112</td><td>6.9%</td></tr><tr><td><code>info</code></td><td>1,565</td><td>892</td><td>57.0%</td></tr>
+</table>
+
+<h2 id='s5'>5. Outlier Analysis</h2>
+<figure><img src='../../outputs\plots\eda\outlier_boxplots.png' alt='Outlier boxplots for count features' loading='lazy'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Outlier boxplots for count features</figcaption></figure>
+<table>
+  <tr><th>Feature</th><th>Q1</th><th>Median</th><th>Q3</th><th>P99</th><th>Max</th></tr>
+  <tr><td><code>NoOfEmptyRef</code></td><td>0.0</td><td>0.0</td><td>1.0</td><td>31.0</td><td>4887.0</td></tr><tr><td><code>NoOfiFrame</code></td><td>0.0</td><td>0.0</td><td>1.0</td><td>21.0</td><td>1602.0</td></tr><tr><td><code>URLLength</code></td><td>23.0</td><td>27.0</td><td>34.0</td><td>144.0</td><td>6097.0</td></tr><tr><td><code>NoOfExternalRef</code></td><td>1.0</td><td>10.0</td><td>58.0</td><td>423.0</td><td>27516.0</td></tr><tr><td><code>NoOfLettersInURL</code></td><td>10.0</td><td>14.0</td><td>20.0</td><td>99.0</td><td>5191.0</td></tr><tr><td><code>LineOfCode</code></td><td>18.0</td><td>431.0</td><td>1279.0</td><td>10401.2</td><td>442666.0</td></tr><tr><td><code>NoOfImage</code></td><td>0.0</td><td>9.0</td><td>29.0</td><td>244.0</td><td>8956.0</td></tr><tr><td><code>NoOfCSS</code></td><td>0.0</td><td>2.0</td><td>8.0</td><td>51.0</td><td>35820.0</td></tr><tr><td><code>LargestLineLength</code></td><td>200.0</td><td>1091.0</td><td>8047.0</td><td>129251.0</td><td>13975732.0</td></tr><tr><td><code>NoOfSelfRef</code></td><td>0.0</td><td>12.0</td><td>88.0</td><td>517.0</td><td>27397.0</td></tr><tr><td><code>NoOfPopup</code></td><td>0.0</td><td>0.0</td><td>0.0</td><td>4.0</td><td>602.0</td></tr><tr><td><code>DomainLength</code></td><td>16.0</td><td>20.0</td><td>24.0</td><td>57.0</td><td>110.0</td></tr><tr><td><code>NoOfOtherSpecialCharsInURL</code></td><td>1.0</td><td>1.0</td><td>3.0</td><td>13.0</td><td>499.0</td></tr><tr><td><code>NoOfJS</code></td><td>0.0</td><td>6.0</td><td>15.0</td><td>64.0</td><td>6957.0</td></tr>
+</table>
+
+<h2 id='s6'>6. Feature Importance Pre-Screening</h2>
+<figure><img src='../../outputs\plots\eda\prescreening_mutual_info.png' alt='Mutual information scores (Track B)' loading='lazy'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Mutual information scores (Track B)</figcaption></figure>
+<table>
+  <tr><th>Feature</th><th>MI Score</th><th>ANOVA F</th><th>MI Rank</th></tr>
+  <tr><td><code>LineOfCode</code></td><td>0.598895</td><td>6912.14</td><td>1</td></tr><tr><td><code>NoOfExternalRef</code></td><td>0.559054</td><td>2854.05</td><td>2</td></tr><tr><td><code>NoOfImage</code></td><td>0.541486</td><td>4722.79</td><td>3</td></tr><tr><td><code>NoOfSelfRef</code></td><td>0.526191</td><td>5166.23</td><td>4</td></tr><tr><td><code>NoOfJS</code></td><td>0.498724</td><td>10546.41</td><td>5</td></tr><tr><td><code>LargestLineLength</code></td><td>0.474643</td><td>80.54</td><td>6</td></tr><tr><td><code>NoOfCSS</code></td><td>0.445404</td><td>11499.37</td><td>7</td></tr><tr><td><code>HasSocialNet</code></td><td>0.389937</td><td>78939.14</td><td>8</td></tr><tr><td><code>LetterRatioInURL</code></td><td>0.380879</td><td>8240.88</td><td>9</td></tr><tr><td><code>HasCopyrightInfo</code></td><td>0.324758</td><td>61392.19</td><td>10</td></tr><tr><td><code>HasDescription</code></td><td>0.279562</td><td>44653.87</td><td>11</td></tr><tr><td><code>NoOfOtherSpecialCharsInURL</code></td><td>0.238522</td><td>11638.90</td><td>12</td></tr><tr><td><code>IsHTTPS</code></td><td>0.231564</td><td>29396.21</td><td>13</td></tr><tr><td><code>SpacialCharRatioInURL</code></td><td>0.202617</td><td>19898.15</td><td>14</td></tr><tr><td><code>DomainTitleMatchScore</code></td><td>0.198416</td><td>26286.50</td><td>15</td></tr><tr><td><code>HasSubmitButton</code></td><td>0.188248</td><td>24833.26</td><td>16</td></tr><tr><td><code>TLDLegitimateProb</code></td><td>0.182815</td><td>457.64</td><td>17</td></tr><tr><td><code>DegitRatioInURL</code></td><td>0.175995</td><td>11594.02</td><td>18</td></tr><tr><td><code>NoOfDegitsInURL</code></td><td>0.170531</td><td>3116.13</td><td>19</td></tr><tr><td><code>NoOfEmptyRef</code></td><td>0.169043</td><td>882.88</td><td>20</td></tr>
+</table>
+
+<p class='footer'>M2.1 complete. Next: M3.1 — Preprocessing Pipeline.</p>
+</body>
+</html>

@@ -1,0 +1,13 @@
+metric,value
+mean,0.0
+median,0.0
+std,0.0
+min,0.0
+max,0.0
+n_samples,23.0
+n_high_disagree,23.0
+high_disagree_pct,100.0
+consistency_score,0.5
+n_shared_features,10.0
+n_shap_only_features,10.0
+n_lime_only_features,10.0

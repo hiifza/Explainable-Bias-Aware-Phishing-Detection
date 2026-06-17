@@ -1,0 +1,56 @@
+feature,category,dtype,nunique,missing_pct,top_value_pct,is_near_constant,abs_r_with_label,skewness,in_track_A,in_track_B,is_leakage,is_advisory,is_dropped,mean_phishing,mean_legitimate
+FILENAME,—,str,235370,0.0,0.0,False,,,False,False,False,False,True,,
+URL,—,str,235370,0.0,0.0,False,,,False,False,False,False,True,,
+URLLength,URL Structure,int64,482,0.0,6.61,False,0.23306,53.3466,True,True,False,False,False,45.7028,26.2286
+Domain,—,str,220086,0.0,0.51,False,,,False,False,False,False,True,,
+DomainLength,URL Structure,int64,101,0.0,7.06,False,0.282643,2.5136,True,True,False,False,False,24.4442,19.2286
+IsDomainIP,URL Structure,int64,2,0.0,99.73,True,0.060289,19.1595,True,True,False,False,False,0.0063,0.0
+TLD,URL Structure,str,695,0.0,47.75,False,,,True,True,False,False,False,,
+URLSimilarityIndex,URL Statistical,float64,36350,0.0,57.63,False,0.860342,0.9947,True,False,True,False,False,49.6515,100.0
+CharContinuationRate,URL Statistical,float64,898,0.0,59.43,False,0.467162,1.1319,True,True,False,False,False,0.7288,0.9332
+TLDLegitimateProb,URL Statistical,float64,465,0.0,47.75,False,0.097229,0.0725,True,True,False,False,False,0.2322,0.2816
+URLCharProb,URL Statistical,float64,227293,0.0,0.04,False,0.469521,1.0661,True,True,False,False,False,0.05,0.0601
+TLDLength,URL Structure,int64,12,0.0,66.57,False,0.078973,1.6655,True,True,False,False,False,2.8191,2.7234
+NoOfSubDomain,URL Structure,int64,10,0.0,75.69,False,0.006356,1.8128,True,True,False,False,False,1.1694,1.1617
+HasObfuscation,Obfuscation,int64,2,0.0,99.79,True,0.052522,22.0072,True,True,False,False,False,0.0048,0.0
+NoOfObfuscatedChar,Obfuscation,int64,20,0.0,99.79,True,0.015345,204.5064,True,True,False,False,False,0.0583,0.0
+ObfuscationRatio,Obfuscation,float64,146,0.0,99.79,True,0.041954,40.1406,True,True,False,False,False,0.0003,0.0
+NoOfLettersInURL,URL Character Composition,int64,421,0.0,6.44,False,0.257626,58.453,True,True,False,False,False,28.0887,12.9331
+LetterRatioInURL,URL Character Composition,float64,709,0.0,6.4,False,0.36697,0.0661,True,True,False,False,False,0.5681,0.4767
+NoOfDegitsInURL,URL Character Composition,int64,182,0.0,78.25,False,0.177755,94.908,True,True,False,False,False,4.3242,0.0506
+DegitRatioInURL,URL Character Composition,float64,575,0.0,78.25,False,0.431896,3.253,True,True,False,False,False,0.0639,0.0021
+NoOfEqualsInURL,URL Character Composition,int64,25,0.0,97.71,True,0.077165,114.8873,True,True,False,False,False,0.1459,0.0
+NoOfQMarkInURL,URL Character Composition,int64,5,0.0,97.4,True,0.176027,8.1596,True,True,False,False,False,0.0689,0.0
+NoOfAmpersandInURL,URL Character Composition,int64,31,0.0,99.62,True,0.034698,106.6277,True,True,False,False,False,0.0587,0.0
+NoOfOtherSpecialCharsInURL,URL Character Composition,int64,74,0.0,55.66,False,0.358268,47.5157,True,True,False,False,False,3.7998,1.2448
+SpacialCharRatioInURL,URL Character Composition,float64,240,0.0,4.65,False,0.533003,1.1874,True,True,False,False,False,0.0832,0.0484
+IsHTTPS,URL Structure,int64,2,0.0,78.27,False,0.610253,1.3711,True,True,False,True,False,0.4912,1.0
+LineOfCode,HTML Structure,int64,10738,0.0,11.17,False,0.27197,53.0365,True,True,False,False,False,65.6063,1947.4917
+LargestLineLength,HTML Structure,int64,26178,0.0,4.73,False,0.040974,47.8512,True,True,False,False,False,19711.9156,7375.9196
+HasTitle,HTML Structure,int64,2,0.0,86.14,False,0.460337,2.0924,True,True,False,False,False,0.6772,0.9988
+Title,—,str,197782,0.0,13.86,False,,,False,False,False,False,True,,
+DomainTitleMatchScore,HTML Structure,float64,152,0.0,48.67,False,0.584204,0.0121,True,True,False,False,False,16.6015,75.2709
+URLTitleMatchScore,—,float64,497,0.0,50.12,False,0.538844,0.0921,False,False,False,False,True,21.2432,75.2709
+HasFavicon,HTML Structure,int64,2,0.0,63.78,False,0.493607,0.5734,True,True,False,False,False,0.0874,0.567
+Robots,HTML Structure,int64,2,0.0,73.31,False,0.392461,1.0542,True,True,False,False,False,0.0658,0.4167
+IsResponsive,HTML Structure,int64,2,0.0,62.49,False,0.548977,0.5159,True,True,False,False,False,0.317,0.8544
+NoOfURLRedirect,Redirects & Navigation,int64,2,0.0,86.66,False,0.046398,2.1566,True,True,False,False,False,0.1517,0.1198
+NoOfSelfRedirect,Redirects & Navigation,int64,2,0.0,95.99,True,0.076774,4.6858,True,True,False,False,False,0.0576,0.0271
+HasDescription,HTML Structure,int64,2,0.0,55.91,False,0.690011,0.2383,True,True,False,False,False,0.0441,0.7366
+NoOfPopup,Redirects & Navigation,int64,115,0.0,94.3,False,0.047355,84.8799,True,True,False,False,False,0.0096,0.3805
+NoOfiFrame,Redirects & Navigation,int64,119,0.0,66.62,False,0.225567,97.6072,True,True,False,False,False,0.0846,2.7145
+HasExternalFormSubmit,Forms & Interaction,int64,2,0.0,95.59,True,0.167398,4.4434,True,True,False,False,False,0.0043,0.0737
+HasSocialNet,Content & Trust,int64,2,0.0,54.26,False,0.783882,0.171,True,True,False,False,False,0.0051,0.7946
+HasSubmitButton,Forms & Interaction,int64,2,0.0,58.53,False,0.578816,0.3464,True,True,False,False,False,0.0844,0.6609
+HasHiddenFields,Forms & Interaction,int64,2,0.0,62.18,False,0.507715,0.5023,True,True,False,False,False,0.093,0.5908
+HasPasswordField,Forms & Interaction,int64,2,0.0,89.79,False,0.139162,2.6282,True,True,False,False,False,0.0533,0.1385
+Bank,Content & Trust,int64,2,0.0,87.28,False,0.188886,2.2377,True,True,False,False,False,0.0543,0.1815
+Pay,Content & Trust,int64,2,0.0,76.28,False,0.359724,1.2353,True,True,False,False,False,0.06,0.3694
+Crypto,Content & Trust,int64,2,0.0,97.65,True,0.099656,6.2924,True,True,False,False,False,0.006,0.0365
+HasCopyrightInfo,Content & Trust,int64,2,0.0,51.25,False,0.743197,0.05,True,True,False,False,False,0.0572,0.8082
+NoOfImage,External Resources,int64,992,0.0,36.23,False,0.274365,28.2107,True,True,False,False,False,0.8642,44.9466
+NoOfCSS,External Resources,int64,209,0.0,35.47,False,0.068035,463.9923,True,True,False,False,False,0.4384,10.7448
+NoOfJS,External Resources,int64,253,0.0,33.59,False,0.373162,140.3753,True,True,False,False,False,0.888,17.7325
+NoOfSelfRef,External Resources,int64,1374,0.0,35.69,False,0.315867,60.3469,True,True,False,False,False,0.4962,113.4102
+NoOfEmptyRef,External Resources,int64,296,0.0,69.24,False,0.109138,106.7384,True,True,False,False,False,0.1492,4.0449
+NoOfExternalRef,External Resources,int64,1191,0.0,23.59,False,0.258339,65.8551,True,True,False,False,False,1.127,85.2946

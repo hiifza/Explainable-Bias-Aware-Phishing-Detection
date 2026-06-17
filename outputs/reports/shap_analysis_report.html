@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>M7.1 SHAP Analysis — Phishing Detection</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,sans-serif;font-size:14px;color:#1a1a1a;
+     max-width:1120px;margin:40px auto;padding:0 26px 80px}
+h1{font-size:22px;font-weight:700;border-bottom:3px solid #185FA5;
+   padding-bottom:12px;margin-bottom:6px}
+h2{font-size:16px;font-weight:600;color:#185FA5;margin:32px 0 10px;
+   border-left:4px solid #185FA5;padding-left:10px}
+h3{font-size:14px;font-weight:600;color:#333;margin:16px 0 8px}
+p{line-height:1.65;color:#444;margin-bottom:10px}
+p.meta{font-size:12px;color:#888;margin-bottom:22px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0 20px}
+th{background:#E6F1FB;padding:8px 12px;text-align:left;
+   border:1px solid #B5D4F4;font-weight:600;white-space:nowrap}
+td{padding:7px 12px;border:1px solid #ddd}
+tr:nth-child(even) td{background:#F8FBFF}
+code{font-family:monospace;font-size:12px;background:#F1F3F5;
+     padding:2px 5px;border-radius:3px}
+.card{border:1px solid #B5D4F4;border-radius:8px;padding:13px 17px;
+      background:#F0F7FF;margin:8px 0}
+.card-v{font-size:24px;font-weight:700;color:#185FA5}
+.card-l{font-size:12px;color:#666;margin-top:3px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:12px 0 20px}
+.alert{border-left:4px solid #E24B4A;background:#FCEBEB;
+       padding:10px 14px;border-radius:0 6px 6px 0;margin:10px 0}
+.info{border-left:4px solid #378ADD;background:#E6F1FB;
+      padding:10px 14px;border-radius:0 6px 6px 0;margin:10px 0}
+img{max-width:100%;border:1px solid #ddd;border-radius:6px;
+    margin:6px 0;display:block}
+.img2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.footer{font-size:12px;color:#aaa;margin-top:56px;
+        border-top:1px solid #eee;padding-top:16px}
+</style>
+</head>
+<body>
+<h1>Module M7.1 — SHAP Explainability Analysis</h1>
+<p class="meta">
+  Project: Explainable and Bias-Aware ML for Phishing Website Detection
+  &nbsp;|&nbsp; Generated: 2026-06-17 21:00:30
+  &nbsp;|&nbsp; Model: LogisticRegression
+  &nbsp;|&nbsp; Track B
+  &nbsp;|&nbsp; SHAP backend: native
+</p>
+
+<h2>1. Executive Summary</h2>
+<div class="grid3">
+  <div class="card">
+    <div class="card-v">56</div>
+    <div class="card-l">Features analysed</div>
+  </div>
+  <div class="card">
+    <div class="card-v">3,000</div>
+    <div class="card-l">Test samples explained</div>
+  </div>
+  <div class="card">
+    <div class="card-v">Native</div>
+    <div class="card-l">SHAP backend</div>
+  </div>
+</div>
+<div class="info">
+  <strong>Top-5 features (Track B):</strong> LetterRatioInURL, LineOfCode, IsHTTPS, NoOfDegitsInURL, DomainLength
+</div>
+<div class="alert">
+  <strong>URLSimilarityIndex</strong> contributed
+  <strong>17.8%</strong> of total Track A feature importance.
+  It is excluded from Track B — the deployment model.
+</div>
+<h2>2. Top Features — Track B</h2>
+<div class="img2">
+  <figure><img src='../../outputs\plots\shap\summary_beeswarm.png' alt='SHAP beeswarm summary'><figcaption style='font-size:11px;color:#888;margin-top:4px'>SHAP beeswarm summary</figcaption></figure>
+  <figure><img src='../../outputs\plots\shap\global_importance.png' alt='Mean |SHAP| importance bar'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Mean |SHAP| importance bar</figcaption></figure>
+</div>
+<table>
+  <tr><th>Rank</th><th>Feature</th><th>Mean |SHAP|</th><th>Relative importance</th></tr>
+  <tr><td>1</td><td><code>LetterRatioInURL</code></td><td>3.046976</td><td>10.51%</td></tr><tr><td>2</td><td><code>LineOfCode</code></td><td>3.032714</td><td>10.46%</td></tr><tr><td>3</td><td><code>IsHTTPS</code></td><td>2.683940</td><td>9.26%</td></tr><tr><td>4</td><td><code>NoOfDegitsInURL</code></td><td>2.508461</td><td>8.65%</td></tr><tr><td>5</td><td><code>DomainLength</code></td><td>2.054936</td><td>7.09%</td></tr><tr><td>6</td><td><code>NoOfSelfRef</code></td><td>1.532153</td><td>5.29%</td></tr><tr><td>7</td><td><code>NoOfOtherSpecialCharsInURL</code></td><td>1.313487</td><td>4.53%</td></tr><tr><td>8</td><td><code>LargestLineLength</code></td><td>1.305801</td><td>4.50%</td></tr><tr><td>9</td><td><code>NoOfExternalRef</code></td><td>1.179657</td><td>4.07%</td></tr><tr><td>10</td><td><code>SpacialCharRatioInURL</code></td><td>1.073625</td><td>3.70%</td></tr><tr><td>11</td><td><code>NoOfImage</code></td><td>0.929866</td><td>3.21%</td></tr><tr><td>12</td><td><code>ContentComplexityScore</code></td><td>0.717567</td><td>2.48%</td></tr><tr><td>13</td><td><code>NoOfJS</code></td><td>0.697170</td><td>2.40%</td></tr><tr><td>14</td><td><code>HasDescription</code></td><td>0.636376</td><td>2.20%</td></tr><tr><td>15</td><td><code>HasSocialNet</code></td><td>0.631110</td><td>2.18%</td></tr><tr><td>16</td><td><code>TrustBadgeScore</code></td><td>0.584203</td><td>2.02%</td></tr><tr><td>17</td><td><code>URLCharProb</code></td><td>0.552977</td><td>1.91%</td></tr><tr><td>18</td><td><code>DomainTitleMatchScore</code></td><td>0.413820</td><td>1.43%</td></tr><tr><td>19</td><td><code>SubdomainRatio</code></td><td>0.409869</td><td>1.41%</td></tr><tr><td>20</td><td><code>HasCopyrightInfo</code></td><td>0.382473</td><td>1.32%</td></tr>
+</table>
+<h2>3. Feature Interactions</h2>
+<div class="img2">
+  <figure><img src='../../outputs\plots\shap\interactions\interaction_heatmap.png' alt='Interaction heatmap'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Interaction heatmap</figcaption></figure>
+  <figure><img src='../../outputs\plots\shap\interactions\top_interaction_pairs.png' alt='Top interaction pairs'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Top interaction pairs</figcaption></figure>
+</div>
+<table>
+  <tr><th>Rank</th><th>Feature A</th><th>Feature B</th><th>Strength</th></tr>
+  <tr><td>1</td><td><code>IsHTTPS</code></td><td><code>LineOfCode</code></td><td>5.563998</td></tr><tr><td>2</td><td><code>LineOfCode</code></td><td><code>NoOfSelfRef</code></td><td>3.921805</td></tr><tr><td>3</td><td><code>DomainLength</code></td><td><code>LetterRatioInURL</code></td><td>3.239423</td></tr><tr><td>4</td><td><code>LineOfCode</code></td><td><code>NoOfExternalRef</code></td><td>2.986306</td></tr><tr><td>5</td><td><code>LineOfCode</code></td><td><code>LargestLineLength</code></td><td>2.770466</td></tr><tr><td>6</td><td><code>NoOfDegitsInURL</code></td><td><code>LineOfCode</code></td><td>2.694366</td></tr><tr><td>7</td><td><code>LineOfCode</code></td><td><code>NoOfImage</code></td><td>2.471982</td></tr><tr><td>8</td><td><code>IsHTTPS</code></td><td><code>NoOfSelfRef</code></td><td>2.274188</td></tr><tr><td>9</td><td><code>NoOfDegitsInURL</code></td><td><code>NoOfOtherSpecialCharsInURL</code></td><td>2.235903</td></tr><tr><td>10</td><td><code>LetterRatioInURL</code></td><td><code>LineOfCode</code></td><td>2.093168</td></tr>
+</table>
+<h2>4. Track A vs Track B — Leakage Impact</h2>
+<figure><img src='../../outputs\plots\shap\track_comparison_importance.png' alt='Importance shift Track A vs B'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Importance shift Track A vs B</figcaption></figure>
+<p><code>URLSimilarityIndex</code> dominates Track A with
+<strong>17.8%</strong> of total importance.
+Removing it (Track B) reshuffles all remaining features.</p>
+<table>
+  <tr><th>Feature</th><th>Rank B</th><th>Rank A</th><th>Shift</th></tr>
+  <tr><td><code>LetterRatioInURL</code></td><td>1</td><td>4</td><td style='color:#0F6E56'>+3</td></tr><tr><td><code>LineOfCode</code></td><td>2</td><td>3</td><td style='color:#333'>+1</td></tr><tr><td><code>IsHTTPS</code></td><td>3</td><td>2</td><td style='color:#333'>-1</td></tr><tr><td><code>NoOfDegitsInURL</code></td><td>4</td><td>5</td><td style='color:#333'>+1</td></tr><tr><td><code>DomainLength</code></td><td>5</td><td>8</td><td style='color:#0F6E56'>+3</td></tr><tr><td><code>NoOfSelfRef</code></td><td>6</td><td>6</td><td style='color:#333'>+0</td></tr><tr><td><code>LargestLineLength</code></td><td>7</td><td>9</td><td style='color:#333'>+2</td></tr><tr><td><code>NoOfOtherSpecialCharsInURL</code></td><td>8</td><td>17</td><td style='color:#0F6E56'>+9</td></tr><tr><td><code>NoOfExternalRef</code></td><td>9</td><td>10</td><td style='color:#333'>+1</td></tr><tr><td><code>SpacialCharRatioInURL</code></td><td>10</td><td>7</td><td style='color:#E24B4A'>-3</td></tr><tr><td><code>NoOfImage</code></td><td>11</td><td>11</td><td style='color:#333'>+0</td></tr><tr><td><code>ContentComplexityScore</code></td><td>12</td><td>12</td><td style='color:#333'>+0</td></tr><tr><td><code>NoOfJS</code></td><td>13</td><td>16</td><td style='color:#0F6E56'>+3</td></tr><tr><td><code>HasDescription</code></td><td>14</td><td>13</td><td style='color:#333'>-1</td></tr><tr><td><code>HasSocialNet</code></td><td>15</td><td>14</td><td style='color:#333'>-1</td></tr>
+</table><h2>5. Local Explanations (sample selection)</h2>
+<h3>True Positive (10 samples)</h3>
+<div class='img2'><figure><img src='../../outputs\plots\shap\waterfall\tp_00.png' alt='Waterfall'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Waterfall</figcaption></figure><figure><img src='../../outputs\plots\shap\force\tp_00.png' alt='Force'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Force</figcaption></figure></div><div class='img2'><figure><img src='../../outputs\plots\shap\waterfall\tp_01.png' alt='Waterfall'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Waterfall</figcaption></figure><figure><img src='../../outputs\plots\shap\force\tp_01.png' alt='Force'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Force</figcaption></figure></div>
+<h3>True Negative (10 samples)</h3>
+<div class='img2'><figure><img src='../../outputs\plots\shap\waterfall\tn_00.png' alt='Waterfall'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Waterfall</figcaption></figure><figure><img src='../../outputs\plots\shap\force\tn_00.png' alt='Force'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Force</figcaption></figure></div><div class='img2'><figure><img src='../../outputs\plots\shap\waterfall\tn_01.png' alt='Waterfall'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Waterfall</figcaption></figure><figure><img src='../../outputs\plots\shap\force\tn_01.png' alt='Force'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Force</figcaption></figure></div>
+<h3>False Positive (10 samples)</h3>
+<div class='img2'><figure><img src='../../outputs\plots\shap\waterfall\fp_00.png' alt='Waterfall'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Waterfall</figcaption></figure><figure><img src='../../outputs\plots\shap\force\fp_00.png' alt='Force'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Force</figcaption></figure></div><div class='img2'><figure><img src='../../outputs\plots\shap\waterfall\fp_01.png' alt='Waterfall'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Waterfall</figcaption></figure><figure><img src='../../outputs\plots\shap\force\fp_01.png' alt='Force'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Force</figcaption></figure></div>
+<h3>False Negative (10 samples)</h3>
+<div class='img2'><figure><img src='../../outputs\plots\shap\waterfall\fn_00.png' alt='Waterfall'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Waterfall</figcaption></figure><figure><img src='../../outputs\plots\shap\force\fn_00.png' alt='Force'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Force</figcaption></figure></div><div class='img2'><figure><img src='../../outputs\plots\shap\waterfall\fn_01.png' alt='Waterfall'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Waterfall</figcaption></figure><figure><img src='../../outputs\plots\shap\force\fn_01.png' alt='Force'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Force</figcaption></figure></div>
+<p class="footer">M7.1 complete. Next: M8.1 — LIME Explainability.</p>
+</body>
+</html>

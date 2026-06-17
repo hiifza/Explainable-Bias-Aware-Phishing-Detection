@@ -1,0 +1,413 @@
+"""
+generate_notebook_07.py
+-----------------------
+Run once from the project root to emit:
+    notebooks/07_shap_analysis.ipynb
+
+Usage
+-----
+    python generate_notebook_07.py
+"""
+
+import json
+from pathlib import Path
+
+
+def md(source: list[str], cid: str = "") -> dict:
+    return {"cell_type": "markdown",
+            "id": cid or source[0][:16].strip().replace(" ", "_").lower(),
+            "metadata": {}, "source": source}
+
+
+def code(source: list[str], cid: str = "") -> dict:
+    return {"cell_type": "code", "execution_count": None,
+            "id": cid or source[0][:16].strip().replace(" ", "_").lower(),
+            "metadata": {}, "outputs": [], "source": source}
+
+
+cells = [
+
+    # ── Title ──────────────────────────────────────────────────────────────────
+    md([
+        "# Module M7.1 — SHAP Explainability Analysis\n",
+        "\n",
+        "**Project:** Explainable and Bias-Aware ML for Phishing Website Detection  \n",
+        "**Roadmap ref:** Phase 7 → Module M7.1  \n",
+        "\n",
+        "### Analysis sections\n",
+        "1. Load FINAL_DEPLOYMENT_MODEL (Track B winner from M6.1)  \n",
+        "2. Compute SHAP values (native shap or fallback)  \n",
+        "3. Global explainability: beeswarm, importance bar, dependence plots  \n",
+        "4. Local explainability: TP / TN / FP / FN waterfall + force plots  \n",
+        "5. Interaction analysis: heatmap + top-20 pairs  \n",
+        "6. Track A vs Track B comparison: leakage impact quantification  \n",
+        "7. Export all reports and artefacts  \n",
+    ], "title"),
+
+    # ── 0. Setup ───────────────────────────────────────────────────────────────
+    md(["## 0. Environment Setup"], "md_setup"),
+
+    code([
+        "import sys\n",
+        "from pathlib import Path\n",
+        "\n",
+        "PROJECT_ROOT = Path().resolve().parent\n",
+        "if str(PROJECT_ROOT) not in sys.path:\n",
+        "    sys.path.insert(0, str(PROJECT_ROOT))\n",
+        "print(f'Project root: {PROJECT_ROOT}')\n",
+    ], "cell_root"),
+
+    code([
+        "import warnings\n",
+        "warnings.filterwarnings('ignore')\n",
+        "\n",
+        "import numpy  as np\n",
+        "import pandas as pd\n",
+        "import matplotlib.pyplot as plt\n",
+        "import seaborn as sns\n",
+        "\n",
+        "from src.utils.logger                  import get_logger\n",
+        "from src.explainability.shap_explainer import compute_shap_values\n",
+        "from src.explainability.shap_global    import run_global_analysis\n",
+        "from src.explainability.shap_local     import run_local_analysis\n",
+        "from src.explainability.shap_interactions import run_interaction_analysis\n",
+        "from src.explainability.shap_report    import (\n",
+        "    run_track_comparison, generate_shap_report\n",
+        ")\n",
+        "from src.training.model_saver          import load_all_models\n",
+        "\n",
+        "logger = get_logger('notebook.07_shap')\n",
+        "sns.set_theme(style='whitegrid', font_scale=1.05)\n",
+        "plt.rcParams['figure.dpi'] = 120\n",
+        "print('Imports OK ✓')\n",
+    ], "cell_imports"),
+
+    # ── 1. Paths ───────────────────────────────────────────────────────────────
+    md(["## 1. Path Configuration"], "md_paths"),
+
+    code([
+        "MODELS_DIR    = PROJECT_ROOT / 'outputs' / 'models'\n",
+        "PROCESSED_DIR = PROJECT_ROOT / 'data'    / 'processed'\n",
+        "REPORTS_DIR   = PROJECT_ROOT / 'outputs' / 'reports'\n",
+        "PLOTS_SHAP    = PROJECT_ROOT / 'outputs' / 'plots'   / 'shap'\n",
+        "LOCAL_REPORTS = REPORTS_DIR  / 'shap_local_explanations'\n",
+        "\n",
+        "for p in [REPORTS_DIR, PLOTS_SHAP, LOCAL_REPORTS,\n",
+        "          PLOTS_SHAP/'dependence', PLOTS_SHAP/'waterfall',\n",
+        "          PLOTS_SHAP/'force', PLOTS_SHAP/'interactions']:\n",
+        "    p.mkdir(parents=True, exist_ok=True)\n",
+        "\n",
+        "print('Paths configured ✓')\n",
+    ], "cell_paths"),
+
+    # ── 2. Load final model and data ──────────────────────────────────────────
+    md(["## 2. Load FINAL_DEPLOYMENT_MODEL and Data"], "md_load"),
+
+    code([
+        "# Load best Track B model (determined in M6.1)\n",
+        "import pandas as pd\n",
+        "bench = pd.read_csv(REPORTS_DIR / 'evaluation_metrics.csv')\n",
+        "best_B_name = bench[bench.track=='B'].sort_values('roc_auc', ascending=False).iloc[0]['model']\n",
+        "print(f'FINAL_DEPLOYMENT_MODEL: {best_B_name}')\n",
+        "\n",
+        "from src.training.model_registry import MODEL_DISPLAY_NAMES\n",
+        "id_map = {v:k for k,v in MODEL_DISPLAY_NAMES.items()}\n",
+        "best_B_id = id_map.get(best_B_name, best_B_name.lower().replace(' ','_'))\n",
+        "\n",
+        "models_B = load_all_models(MODELS_DIR, 'B')\n",
+        "models_A = load_all_models(MODELS_DIR, 'A')\n",
+        "\n",
+        "FINAL_DEPLOYMENT_MODEL = models_B[best_B_id]\n",
+        "print(f'Type: {type(FINAL_DEPLOYMENT_MODEL).__name__}')\n",
+    ], "cell_load_model"),
+
+    code([
+        "# Load data\n",
+        "X_train_B = pd.read_csv(PROCESSED_DIR / 'track_B' / 'X_train.csv')\n",
+        "X_test_B  = pd.read_csv(PROCESSED_DIR / 'track_B' / 'X_test.csv')\n",
+        "X_train_A = pd.read_csv(PROCESSED_DIR / 'track_A' / 'X_train.csv')\n",
+        "X_test_A  = pd.read_csv(PROCESSED_DIR / 'track_A' / 'X_test.csv')\n",
+        "y_test    = pd.read_csv(PROCESSED_DIR / 'y_test.csv')['label']\n",
+        "\n",
+        "SHAP_feature_names = list(X_test_B.columns)\n",
+        "\n",
+        "print(f'X_train_B   : {X_train_B.shape}')\n",
+        "print(f'X_test_B    : {X_test_B.shape}')\n",
+        "print(f'feature_names_B: {len(SHAP_feature_names)} features')\n",
+        "print(f'y_test      : {len(y_test):,} labels')\n",
+    ], "cell_load_data"),
+
+    # ── 3. Compute SHAP Values ────────────────────────────────────────────────
+    md(["## 3. Compute SHAP Values"], "md_shap"),
+
+    code([
+        "# Compute SHAP values on a representative test subset\n",
+        "# Uses native shap (if installed) or fallback explainer\n",
+        "print('Computing SHAP values ...')\n",
+        "\n",
+        "SHAP_result = compute_shap_values(\n",
+        "    model        = FINAL_DEPLOYMENT_MODEL,\n",
+        "    X_background = X_train_B,\n",
+        "    X_explain    = X_test_B,\n",
+        "    feature_names= SHAP_feature_names,\n",
+        "    sample_n     = 3000,\n",
+        "    random_state = 42,\n",
+        ")\n",
+        "\n",
+        "print(f'SHAP values shape    : {SHAP_result.shap_values.shape}')\n",
+        "print(f'Expected value       : {SHAP_result.expected_value:.6f}')\n",
+        "print(f'Is native SHAP       : {SHAP_result.is_native_shap}')\n",
+        "print(f'Model type           : {SHAP_result.model_type}')\n",
+        "print(f'Model class          : {SHAP_result.model_class}')\n",
+        "\n",
+        "# Quick sanity: additive property check\n",
+        "predicted = SHAP_result.expected_value + SHAP_result.shap_values.sum(axis=1)\n",
+        "diff = np.abs(predicted - SHAP_result.y_proba).max()\n",
+        "print(f'Additive property max error: {diff:.2e}  (should be < 1e-3)')\n",
+    ], "cell_shap"),
+
+    code([
+        "# Feature ranking preview\n",
+        "ranking_df = SHAP_result.get_feature_ranking()\n",
+        "print('Top 15 features by mean |SHAP|:')\n",
+        "display(ranking_df.head(15))\n",
+    ], "cell_ranking_preview"),
+
+    # ── 4. Global Explainability ──────────────────────────────────────────────
+    md(["## 4. Global Explainability"], "md_global"),
+
+    code([
+        "global_results = run_global_analysis(\n",
+        "    result      = SHAP_result,\n",
+        "    plots_dir   = PLOTS_SHAP,\n",
+        "    reports_dir = REPORTS_DIR,\n",
+        "    max_display = 20,\n",
+        "    top_dep_n   = 10,\n",
+        ")\n",
+        "print(f'Beeswarm      : {global_results[\"beeswarm_path\"].name}')\n",
+        "print(f'Importance bar: {global_results[\"importance_path\"].name}')\n",
+        "print(f'Dependence    : {len(global_results[\"dependence_paths\"])} plots')\n",
+        "print(f'Ranking CSV   : {global_results[\"ranking_csv_path\"].name}')\n",
+    ], "cell_global"),
+
+    code([
+        "from IPython.display import Image\n",
+        "display(Image(str(global_results['beeswarm_path'])))\n",
+    ], "cell_beeswarm_show"),
+
+    code([
+        "display(Image(str(global_results['importance_path'])))\n",
+    ], "cell_importance_show"),
+
+    code([
+        "# Show top 3 dependence plots\n",
+        "for p in global_results['dependence_paths'][:3]:\n",
+        "    print(f'  {p.name}')\n",
+        "    display(Image(str(p)))\n",
+    ], "cell_dep_show"),
+
+    # ── 5. Local Explainability ───────────────────────────────────────────────
+    md(["## 5. Local Explainability (TP / TN / FP / FN)"], "md_local"),
+
+    code([
+        "# y_true must be aligned with SHAP_result.X_explained (subsampled)\n",
+        "# Use the subsampled indices stored in X_explained index\n",
+        "# Since we reset index, re-predict y_pred on X_explained and compare with y_test\n",
+        "import numpy as np\n",
+        "\n",
+        "# Get y_true for the subsampled rows via matching predictions\n",
+        "# SHAP_result.X_explained has reset index; use y_test subsample\n",
+        "n_shap = len(SHAP_result.X_explained)\n",
+        "y_test_sub = y_test.values[:n_shap]  # first n_shap rows of y_test\n",
+        "\n",
+        "local_results = run_local_analysis(\n",
+        "    result       = SHAP_result,\n",
+        "    y_true       = y_test_sub,\n",
+        "    n_per_class  = 10,\n",
+        "    plots_dir    = PLOTS_SHAP,\n",
+        "    reports_dir  = LOCAL_REPORTS,\n",
+        ")\n",
+        "\n",
+        "print('Sample selection:')\n",
+        "for cat, cnt in local_results['category_counts'].items():\n",
+        "    print(f'  {cat.upper()}: {cnt} samples')\n",
+    ], "cell_local"),
+
+    code([
+        "# Display one waterfall per category\n",
+        "for cat in ['tp','tn','fp','fn']:\n",
+        "    wf_list = local_results['waterfall_paths'].get(cat, [])\n",
+        "    if wf_list:\n",
+        "        print(f'\\n{cat.upper()} — Waterfall example:')\n",
+        "        display(Image(str(wf_list[0])))\n",
+    ], "cell_local_show"),
+
+    code([
+        "# Display one force plot per category\n",
+        "for cat in ['tp','tn','fp','fn']:\n",
+        "    fo_list = local_results['force_paths'].get(cat, [])\n",
+        "    if fo_list:\n",
+        "        print(f'\\n{cat.upper()} — Force plot example:')\n",
+        "        display(Image(str(fo_list[0])))\n",
+    ], "cell_force_show"),
+
+    # ── 6. Interaction Analysis ───────────────────────────────────────────────
+    md(["## 6. SHAP Interaction Analysis"], "md_interaction"),
+
+    code([
+        "interaction_results = run_interaction_analysis(\n",
+        "    result       = SHAP_result,\n",
+        "    X_background = X_train_B,\n",
+        "    plots_dir    = PLOTS_SHAP / 'interactions',\n",
+        "    reports_dir  = REPORTS_DIR,\n",
+        "    sample_n     = 500,\n",
+        "    top_n_pairs  = 20,\n",
+        ")\n",
+        "\n",
+        "print(f'Interaction matrix shape: {interaction_results[\"interaction_matrix\"].shape}')\n",
+        "print(f'Top 10 interaction pairs:')\n",
+        "display(interaction_results['top_pairs_df'].head(10))\n",
+    ], "cell_interactions"),
+
+    code([
+        "display(Image(str(interaction_results['heatmap_path'])))\n",
+    ], "cell_heatmap_show"),
+
+    # ── 7. Track Comparison ───────────────────────────────────────────────────
+    md(["## 7. Track A vs Track B — Leakage Impact"], "md_track_comp"),
+
+    code([
+        "# Best Track A model for comparison\n",
+        "best_A_name = bench[bench.track=='A'].sort_values('roc_auc', ascending=False).iloc[0]['model']\n",
+        "best_A_id   = id_map.get(best_A_name, best_A_name.lower().replace(' ','_'))\n",
+        "TRACK_A_MODEL = models_A[best_A_id]\n",
+        "print(f'Track A model: {best_A_name} ({type(TRACK_A_MODEL).__name__})')\n",
+        "\n",
+        "feature_names_A = list(X_test_A.columns)\n",
+        "print(f'Track A features: {len(feature_names_A)}')\n",
+        "print(f'Track B features: {len(SHAP_feature_names)}')\n",
+        "print(f'URLSimilarityIndex in Track A: {\"URLSimilarityIndex\" in feature_names_A}')\n",
+    ], "cell_track_comp_setup"),
+
+    code([
+        "track_comp = run_track_comparison(\n",
+        "    model_A        = TRACK_A_MODEL,\n",
+        "    model_B        = FINAL_DEPLOYMENT_MODEL,\n",
+        "    X_train_A      = X_train_A,\n",
+        "    X_train_B      = X_train_B,\n",
+        "    X_test_A       = X_test_A,\n",
+        "    X_test_B       = X_test_B,\n",
+        "    feature_names_A= feature_names_A,\n",
+        "    feature_names_B= SHAP_feature_names,\n",
+        "    plots_dir      = PLOTS_SHAP,\n",
+        "    sample_n       = 2000,\n",
+        ")\n",
+        "\n",
+        "print(f\"URLSimilarityIndex Track A contribution: {track_comp['usi_contribution_pct']:.2f}%\")\n",
+        "print(f\"Track A SHAP computed: {track_comp['result_A'].n_samples:,} samples\")\n",
+        "print(f\"Track B SHAP computed: {track_comp['result_B'].n_samples:,} samples\")\n",
+    ], "cell_track_comp"),
+
+    code([
+        "print('Top-15 importance shift (Track B rank → Track A rank):')\n",
+        "shift = track_comp['importance_shift_df']\n",
+        "display(shift[['feature','rank_B','rank_A','rank_shift']].head(15))\n",
+    ], "cell_track_comp_table"),
+
+    code([
+        "if track_comp.get('comparison_plot_path'):\n",
+        "    display(Image(str(track_comp['comparison_plot_path'])))\n",
+    ], "cell_comp_plot"),
+
+    # ── 8. Export Reports ─────────────────────────────────────────────────────
+    md(["## 8. Export SHAP Analysis Report"], "md_report"),
+
+    code([
+        "report_path = generate_shap_report(\n",
+        "    global_r      = global_results,\n",
+        "    local_r       = local_results,\n",
+        "    interaction_r = interaction_results,\n",
+        "    track_comp    = track_comp,\n",
+        "    shap_result   = SHAP_result,\n",
+        "    output_path   = REPORTS_DIR / 'shap_analysis_report.html',\n",
+        "    plots_dir     = PLOTS_SHAP,\n",
+        ")\n",
+        "print(f'SHAP report saved: {report_path}')\n",
+    ], "cell_report"),
+
+    code([
+        "print('Verifying M7.1 artefacts:')\n",
+        "artifacts = [\n",
+        "    'outputs/reports/shap_feature_ranking.csv',\n",
+        "    'outputs/reports/shap_interaction_pairs.csv',\n",
+        "    'outputs/reports/shap_analysis_report.html',\n",
+        "    'outputs/plots/shap/summary_beeswarm.png',\n",
+        "    'outputs/plots/shap/global_importance.png',\n",
+        "    'outputs/plots/shap/interactions/interaction_heatmap.png',\n",
+        "    'outputs/plots/shap/track_comparison_importance.png',\n",
+        "]\n",
+        "import pathlib\n",
+        "for rel in artifacts:\n",
+        "    p = PROJECT_ROOT / rel\n",
+        "    print(f\"  {'✓' if p.exists() else '✗'}  {rel}\")\n",
+    ], "cell_verify"),
+
+    # ── 9. Downstream Interface ───────────────────────────────────────────────
+    md(["## 9. Downstream Module Interface"], "md_interface"),
+
+    code([
+        "print('=' * 65)\n",
+        "print('M7.1 COMPLETE — DOWNSTREAM INTERFACE')\n",
+        "print('=' * 65)\n",
+        "print()\n",
+        "print('A. Top-20 SHAP features object:')\n",
+        "top_20_shap_features = global_results['feature_ranking_df'].head(20)\n",
+        "print(f'   top_20_shap_features: DataFrame {top_20_shap_features.shape}')\n",
+        "print(f'   Top feature: {top_20_shap_features.iloc[0][\"feature\"]}')\n",
+        "print()\n",
+        "print('B. SHAP values object (for M8.1 LIME, M9, M10):')\n",
+        "print(f'   SHAP_result.shap_values  : np.ndarray {SHAP_result.shap_values.shape}')\n",
+        "print(f'   SHAP_result.feature_names: list of {len(SHAP_result.feature_names)}')\n",
+        "print()\n",
+        "print('C. Interaction values:')\n",
+        "print(f'   interaction_matrix       : np.ndarray {interaction_results[\"interaction_matrix\"].shape}')\n",
+        "print(f'   top_pairs_df             : DataFrame {interaction_results[\"top_pairs_df\"].shape}')\n",
+        "print()\n",
+        "print('D. Selected sample indices (TP/TN/FP/FN):')\n",
+        "for cat, idx in local_results['selected_indices'].items():\n",
+        "    print(f'   {cat.upper()}: {len(idx)} indices = {idx[:3].tolist()}...')\n",
+        "print()\n",
+        "print('E. For M8.1 LIME:')\n",
+        "print(f'   FINAL_DEPLOYMENT_MODEL.predict_proba (callable)')\n",
+        "print(f'   X_train_B.values  : {X_train_B.shape}')\n",
+        "print(f'   X_test_B.values   : {X_test_B.shape}')\n",
+        "print(f'   SHAP_feature_names: list of 56 names')\n",
+        "print(f'   top_20_shap_features: used to focus LIME on key features')\n",
+        "print()\n",
+        "print('F. For M9 Bias Analysis:')\n",
+        "print(f'   SHAP_result.shap_values: SHAP attributions for error sub-groups')\n",
+        "print(f'   global_results[\"feature_ranking_df\"]: top features for group comparison')\n",
+        "print()\n",
+        "print('G. For M10 Blind Spot Analysis:')\n",
+        "print(f'   local_results[\"selected_indices\"]: FP/FN indices for deep-dive')\n",
+        "print(f'   SHAP_result: SHAP attributions for FP/FN sub-group analysis')\n",
+        "print()\n",
+        "print('Next: M8.1 — LIME Explainability')\n",
+    ], "cell_interface"),
+]
+
+
+notebook = {
+    "nbformat": 4, "nbformat_minor": 5,
+    "metadata": {
+        "kernelspec": {"display_name": "Python 3",
+                       "language": "python", "name": "python3"},
+        "language_info": {"name": "python", "version": "3.11.0"},
+    },
+    "cells": cells,
+}
+
+out = Path(__file__).resolve().parent / "notebooks" / "07_shap_analysis.ipynb"
+out.parent.mkdir(parents=True, exist_ok=True)
+out.write_text(json.dumps(notebook, indent=1), encoding="utf-8")
+print(f"Notebook written → {out}")

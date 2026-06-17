@@ -1,0 +1,16 @@
+feature,skewness_before,skewness_after,reduction_pct
+URLLength,7.9182,2.2128,72.05
+DomainLength,2.4665,0.4084,83.44
+LineOfCode,5.6081,-0.4791,91.46
+LargestLineLength,16.6863,0.0914,99.45
+NoOfLettersInURL,6.653,0.9509,85.71
+NoOfDegitsInURL,8.3937,2.2032,73.75
+NoOfOtherSpecialCharsInURL,5.1566,1.5672,69.61
+NoOfImage,7.9008,0.1559,98.03
+NoOfCSS,3.7328,0.4942,86.76
+NoOfJS,2.6245,0.0414,98.42
+NoOfSelfRef,4.6007,0.1179,97.44
+NoOfEmptyRef,14.8555,2.0355,86.3
+NoOfExternalRef,5.0984,0.1823,96.42
+NoOfPopup,15.0522,6.2914,58.2
+NoOfiFrame,4.3336,1.7871,58.76

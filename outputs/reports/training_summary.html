@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>M5 Model Training Report — Phishing Detection</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,sans-serif;font-size:14px;color:#1a1a1a;
+     max-width:1100px;margin:40px auto;padding:0 24px 80px}
+h1{font-size:22px;font-weight:700;border-bottom:3px solid #185FA5;
+   padding-bottom:12px;margin-bottom:6px}
+h2{font-size:16px;font-weight:600;color:#185FA5;margin:32px 0 10px;
+   border-left:4px solid #185FA5;padding-left:10px}
+h3{font-size:14px;font-weight:600;color:#333;margin:16px 0 8px}
+p.meta{font-size:12px;color:#888;margin-bottom:22px}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0 20px}
+th{background:#E6F1FB;padding:8px 12px;text-align:left;
+   border:1px solid #B5D4F4;font-weight:600;white-space:nowrap}
+td{padding:7px 12px;border:1px solid #ddd}
+tr:nth-child(even) td{background:#F8FBFF}
+.best{background:#E1F5EE!important;font-weight:600}
+code{font-family:monospace;font-size:12px;background:#F1F3F5;
+     padding:2px 5px;border-radius:3px}
+.card{border:1px solid #B5D4F4;border-radius:8px;padding:14px 18px;
+      background:#F0F7FF;margin:8px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0}
+.pass{background:#E1F5EE;color:#0F6E56;padding:2px 8px;border-radius:4px;
+      font-size:12px;font-weight:600}
+img{max-width:100%;border:1px solid #ddd;border-radius:6px;margin:8px 0}
+.footer{font-size:12px;color:#aaa;margin-top:56px;
+        border-top:1px solid #eee;padding-top:16px}
+</style>
+</head>
+<body>
+<h1>Module M5.1 / M5.2 — Model Training &amp; Benchmarking</h1>
+<p class="meta">
+  Project: Explainable and Bias-Aware ML for Phishing Website Detection
+  &nbsp;|&nbsp; Generated: 2026-06-17 20:51:03
+  &nbsp;|&nbsp; 4 models × 2 tracks = 8 experiments
+</p>
+
+<h2>1. Best Model Selection</h2>
+<div class="grid2">
+  <div class="card">
+    <strong>Track A Winner</strong> (with URLSimilarityIndex)<br>
+    <span style="font-size:18px;font-weight:700;color:#E24B4A">
+      Random Forest</span><br>
+    ROC AUC: <strong>1.000000</strong> &nbsp;
+    F1: <strong>1.000000</strong>
+  </div>
+  <div class="card" style="background:#E1F5EE;border-color:#1D9E75">
+    <strong>Track B Winner</strong> (leakage-aware primary model)<br>
+    <span style="font-size:18px;font-weight:700;color:#0F6E56">
+      Logistic Regression</span><br>
+    ROC AUC: <strong>1.000000</strong> &nbsp;
+    F1: <strong>0.999936</strong>
+  </div>
+</div>
+<p>
+  Selection rule: primary = ROC AUC, tie-breaker = F1.
+  Track B winner is the <strong>primary model</strong> used for all
+  SHAP, LIME, bias, and blind-spot analysis in downstream modules.
+</p>
+
+<h2>2. Full Benchmark Table</h2>
+<p>Highlighted rows = winners. Track A uses 57 features (includes URLSimilarityIndex).
+   Track B uses 56 features (deployment-realistic).</p>
+
+<table>
+  <thead><tr><th>model</th><th>track</th><th>accuracy</th><th>precision</th><th>recall</th><th>f1</th><th>roc_auc</th><th>cv_mean_roc_auc</th><th>cv_std_roc_auc</th><th>training_time_s</th></tr></thead>
+  <tbody><tr><td>Logistic Regression</td><td>A</td><td>0.999958</td><td>0.999958</td><td>0.999958</td><td>0.999958</td><td>1.000000</td><td>0.999999</td><td>0.000002</td><td>2.311000</td></tr>
+<tr class='best'><td>Random Forest</td><td>A</td><td>1.000000</td><td>1.000000</td><td>1.000000</td><td>1.000000</td><td>1.000000</td><td>1.000000</td><td>0.000000</td><td>20.486000</td></tr>
+<tr><td>XGBoost</td><td>A</td><td>0.999958</td><td>0.999958</td><td>0.999958</td><td>0.999958</td><td>1.000000</td><td>1.000000</td><td>0.000000</td><td>4.474000</td></tr>
+<tr><td>LightGBM</td><td>A</td><td>1.000000</td><td>1.000000</td><td>1.000000</td><td>1.000000</td><td>1.000000</td><td>1.000000</td><td>0.000000</td><td>2.774000</td></tr>
+<tr class='best'><td>Logistic Regression</td><td>B</td><td>0.999936</td><td>0.999936</td><td>0.999936</td><td>0.999936</td><td>1.000000</td><td>0.999993</td><td>0.000007</td><td>2.891000</td></tr>
+<tr><td>Random Forest</td><td>B</td><td>0.999851</td><td>0.999851</td><td>0.999851</td><td>0.999851</td><td>1.000000</td><td>0.999999</td><td>0.000001</td><td>29.625000</td></tr>
+<tr><td>XGBoost</td><td>B</td><td>0.999894</td><td>0.999894</td><td>0.999894</td><td>0.999894</td><td>1.000000</td><td>0.999999</td><td>0.000002</td><td>7.949000</td></tr>
+<tr><td>LightGBM</td><td>B</td><td>0.999936</td><td>0.999936</td><td>0.999936</td><td>0.999936</td><td>1.000000</td><td>1.000000</td><td>0.000000</td><td>4.214000</td></tr>
+</tbody>
+</table>
+
+<h2>3. Visualisations</h2>
+<div class="grid2">
+  <figure style='margin:8px 0'><img src='../../outputs\plots\training\benchmark_roc_auc.png' alt='ROC AUC comparison'><figcaption style='font-size:11px;color:#888;margin-top:4px'>ROC AUC comparison</figcaption></figure>
+  <figure style='margin:8px 0'><img src='../../outputs\plots\training\benchmark_f1.png' alt='F1 Score comparison'><figcaption style='font-size:11px;color:#888;margin-top:4px'>F1 Score comparison</figcaption></figure>
+  <figure style='margin:8px 0'><img src='../../outputs\plots\training\benchmark_cv_roc_auc.png' alt='5-fold CV ROC AUC'><figcaption style='font-size:11px;color:#888;margin-top:4px'>5-fold CV ROC AUC</figcaption></figure>
+  <figure style='margin:8px 0'><img src='../../outputs\plots\training\benchmark_training_time.png' alt='Training time (seconds)'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Training time (seconds)</figcaption></figure>
+</div>
+
+<h2>4. Leakage Impact (Track A − Track B ROC AUC)</h2>
+<p>
+  Positive delta = URLSimilarityIndex inflated Track A performance.
+  Large delta (&gt;0.01) indicates heavy reliance on the leaky feature.
+</p>
+<table>
+  <tr><th>Model</th><th>Track A AUC</th><th>Track B AUC</th><th>Delta (leakage)</th></tr>
+  <tr><td>Logistic Regression</td><td>1.0000</td><td>1.0000</td><td style='color:#0F6E56'>+0.0000</td></tr>
+<tr><td>Random Forest</td><td>1.0000</td><td>1.0000</td><td style='color:#0F6E56'>+0.0000</td></tr>
+<tr><td>XGBoost</td><td>1.0000</td><td>1.0000</td><td style='color:#0F6E56'>+0.0000</td></tr>
+<tr><td>LightGBM</td><td>1.0000</td><td>1.0000</td><td style='color:#0F6E56'>+0.0000</td></tr>
+
+</table>
+
+<h2>5. Library Status</h2>
+<table>
+  <tr><th>Model</th><th>Backend library</th></tr>
+  <tr><td>logistic_regression</td><td><code>sklearn</code></td></tr><tr><td>random_forest</td><td><code>sklearn</code></td></tr><tr><td>xgboost</td><td><code>xgboost</code></td></tr><tr><td>lightgbm</td><td><code>lightgbm</code></td></tr>
+</table>
+
+<h2>6. Downstream Interface</h2>
+<table>
+  <tr><th>Module</th><th>Object passed in</th><th>Description</th></tr>
+  <tr><td>M6.1 Evaluation</td><td><code>all_models_A, all_models_B, benchmark_df</code></td><td>All fitted models + benchmark for comparison</td></tr>
+  <tr><td>M7.1 SHAP</td><td><code>best_model_B, X_train_B, X_test_B, feature_names_B</code></td><td>Track B winner + data for TreeExplainer</td></tr>
+  <tr><td>M8.1 LIME</td><td><code>best_model_B, X_train_B.values, X_test_B.values, feature_names_B</code></td><td>Track B winner + numpy arrays for LIME</td></tr>
+  <tr><td>M9 Bias</td><td><code>best_model_B, X_test_B, y_test, df_test_meta</code></td><td>Track B winner + test set + metadata (TLD, IsHTTPS, URLLength)</td></tr>
+  <tr><td>M10 Blindspot</td><td><code>best_model_B, X_test_B, y_test, y_pred_B</code></td><td>Track B winner + predictions for FP/FN analysis</td></tr>
+</table>
+
+<p class="footer">M5 complete. Next: M6.1 — Model Evaluation.</p>
+</body>
+</html>

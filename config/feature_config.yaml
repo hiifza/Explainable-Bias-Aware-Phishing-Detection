@@ -1,0 +1,274 @@
+# =============================================================================
+# config/feature_config.yaml
+# Feature Configuration — Single Source of Truth
+# Project: Explainable and Bias-Aware ML for Phishing Website Detection
+# Module: M1.2 — Column Removal & Feature Set Finalization
+#
+# IMPORTANT: This file is the authoritative reference for every downstream
+# module (EDA, preprocessing, model training, SHAP, LIME, bias analysis).
+# Never modify feature lists without updating this file and re-running M1.2.
+# =============================================================================
+
+dataset:
+  raw_path:   "data/raw/PhiUSIIL_Phishing_URL_Dataset.csv"
+  clean_path: "data/processed/clean_df.csv"
+  total_raw_columns: 56
+  total_raw_rows: 235795
+  deduplicated_rows: 235370
+  target_column: "label"
+  label_encoding:
+    0: "phishing"
+    1: "legitimate"
+
+# ── Columns removed before any modelling ─────────────────────────────────────
+drop:
+  identifiers:
+    - FILENAME        # internal file reference — no predictive value
+    - URL             # raw string identifier used only for deduplication
+    - Domain          # raw domain string directly derived from URL
+    - Title           # free multilingual text — not a structured feature
+
+  multicollinear:
+    - URLTitleMatchScore   # r=0.961 with DomainTitleMatchScore — redundant
+
+  # Total columns dropped: 5  →  51 feature columns remain (excl. label)
+
+# ── Leakage-flagged features ──────────────────────────────────────────────────
+leakage:
+  critical:
+    - name: URLSimilarityIndex
+      reason: >
+        ALL label=1 (legitimate) records have URLSimilarityIndex = 100.0 exactly.
+        Zero variance in the legitimate class. This feature encodes the label
+        directly. Included in Track A (upper-bound experiment) only; excluded
+        from Track B (deployment-realistic model).
+  advisory:
+    - name: IsHTTPS
+      reason: >
+        ALL label=1 (legitimate) records have IsHTTPS = 1. Perfect separation
+        for legitimate class. Phishing sites increasingly use HTTPS (49.2% in
+        this dataset), making this feature temporally unstable. Retained in
+        both tracks but flagged for bias analysis.
+
+# ── Experimental track definitions ───────────────────────────────────────────
+tracks:
+  track_A:
+    description: "Full feature set including URLSimilarityIndex (ceiling experiment)"
+    feature_count: 50
+    includes_leakage: true
+
+  track_B:
+    description: "Leakage-aware model — URLSimilarityIndex removed (primary benchmark)"
+    feature_count: 49
+    includes_leakage: false
+
+# ── Feature categories (Track B — 49 features) ───────────────────────────────
+categories:
+
+  url_structure:
+    label: "URL Structure"
+    count: 7
+    features:
+      - URLLength         # Total URL character count — skewed (max 6097), log-transform
+      - DomainLength      # Domain name character count
+      - TLDLength         # TLD character count
+      - TLD               # Top-level domain — 695 unique, frequency-encode
+      - IsDomainIP        # Domain is raw IP address (99.73% zeros — sparse but valid)
+      - NoOfSubDomain     # Subdomain depth count
+      - IsHTTPS           # Uses HTTPS (advisory leakage flag — see above)
+
+  url_statistical:
+    label: "URL Statistical / Entropy"
+    count: 3
+    features:
+      - CharContinuationRate  # Sequential same-char run rate — r=0.47 with label
+      - TLDLegitimateProb     # Statistical legitimacy of TLD — low signal (r=0.097)
+      - URLCharProb           # Character probability in URL — r=0.47
+
+  url_character_composition:
+    label: "URL Character Composition"
+    count: 9
+    features:
+      - NoOfLettersInURL         # Count of alpha chars
+      - LetterRatioInURL         # Fraction of alpha chars — r=0.37
+      - NoOfDegitsInURL          # Count of digit chars (note: typo in original name)
+      - DegitRatioInURL          # Fraction of digits — r=0.43
+      - NoOfEqualsInURL          # Count of '=' chars — near-constant (97.7% zero)
+      - NoOfQMarkInURL           # Count of '?' chars — near-constant (97.4% zero)
+      - NoOfAmpersandInURL       # Count of '&' chars — near-constant (99.6% zero)
+      - NoOfOtherSpecialCharsInURL  # Other special char count — skewed
+      - SpacialCharRatioInURL    # Special char fraction — r=0.53
+
+  obfuscation:
+    label: "Obfuscation"
+    count: 3
+    features:
+      - HasObfuscation      # Binary: obfuscated chars present (99.79% zeros — sparse)
+      - NoOfObfuscatedChar  # Count of obfuscated chars — extremely skewed
+      - ObfuscationRatio    # Obfuscated char fraction — extremely sparse
+
+  html_structure:
+    label: "HTML Page Structure"
+    count: 8
+    features:
+      - LineOfCode           # Total HTML line count — extreme outliers, log-transform
+      - LargestLineLength    # Longest HTML line in chars — extreme outliers
+      - HasTitle             # Page has <title> tag — r=0.46
+      - DomainTitleMatchScore  # Domain–title overlap score — r=0.58
+      - HasFavicon           # Has favicon link — r=0.49
+      - Robots               # Has robots.txt — r=0.39
+      - IsResponsive         # Uses responsive design — r=0.55
+      - HasDescription       # Has meta description tag — r=0.69
+
+  redirects_navigation:
+    label: "Redirects & Navigation"
+    count: 4
+    features:
+      - NoOfURLRedirect    # Has URL redirects — effectively binary (only 0/1 values)
+      - NoOfSelfRedirect   # Has self-redirects — effectively binary (only 0/1 values)
+      - NoOfPopup          # Popup trigger count — 115 unique values, max 602
+      - NoOfiFrame         # iFrame count — 119 unique values, max 1602
+
+  forms_interaction:
+    label: "Forms & Interaction"
+    count: 4
+    features:
+      - HasExternalFormSubmit  # Form submits to external domain (95.6% zeros)
+      - HasSubmitButton        # Page has submit button — r=0.58
+      - HasHiddenFields        # Page has hidden form fields — r=0.51
+      - HasPasswordField       # Page has password input — r=0.14
+
+  content_trust:
+    label: "Content & Trust Signals"
+    count: 5
+    features:
+      - HasSocialNet      # Social media links present — r=0.78
+      - HasCopyrightInfo  # Copyright notice present — r=0.74
+      - Bank              # Banking keyword present — r=0.19
+      - Pay               # Payment keyword present — r=0.36
+      - Crypto            # Cryptocurrency keyword (97.6% zeros) — r=0.10
+
+  external_resources:
+    label: "External Resources"
+    count: 6
+    features:
+      - NoOfImage       # Image element count — extreme outliers
+      - NoOfCSS         # CSS file count — extreme outliers (skew=464)
+      - NoOfJS          # JavaScript file count — extreme outliers
+      - NoOfSelfRef     # Internal link count — extreme outliers
+      - NoOfEmptyRef    # Empty/null link count
+      - NoOfExternalRef # External link count — r=0.26
+
+# ── Full Track A feature list (50 features) ──────────────────────────────────
+track_A_features:
+  - URLLength
+  - DomainLength
+  - IsDomainIP
+  - TLD
+  - URLSimilarityIndex
+  - CharContinuationRate
+  - TLDLegitimateProb
+  - URLCharProb
+  - TLDLength
+  - NoOfSubDomain
+  - HasObfuscation
+  - NoOfObfuscatedChar
+  - ObfuscationRatio
+  - NoOfLettersInURL
+  - LetterRatioInURL
+  - NoOfDegitsInURL
+  - DegitRatioInURL
+  - NoOfEqualsInURL
+  - NoOfQMarkInURL
+  - NoOfAmpersandInURL
+  - NoOfOtherSpecialCharsInURL
+  - SpacialCharRatioInURL
+  - IsHTTPS
+  - LineOfCode
+  - LargestLineLength
+  - HasTitle
+  - DomainTitleMatchScore
+  - HasFavicon
+  - Robots
+  - IsResponsive
+  - NoOfURLRedirect
+  - NoOfSelfRedirect
+  - HasDescription
+  - NoOfPopup
+  - NoOfiFrame
+  - HasExternalFormSubmit
+  - HasSocialNet
+  - HasSubmitButton
+  - HasHiddenFields
+  - HasPasswordField
+  - Bank
+  - Pay
+  - Crypto
+  - HasCopyrightInfo
+  - NoOfImage
+  - NoOfCSS
+  - NoOfJS
+  - NoOfSelfRef
+  - NoOfEmptyRef
+  - NoOfExternalRef
+
+# ── Full Track B feature list (49 features) ──────────────────────────────────
+track_B_features:
+  - URLLength
+  - DomainLength
+  - IsDomainIP
+  - TLD
+  - CharContinuationRate
+  - TLDLegitimateProb
+  - URLCharProb
+  - TLDLength
+  - NoOfSubDomain
+  - HasObfuscation
+  - NoOfObfuscatedChar
+  - ObfuscationRatio
+  - NoOfLettersInURL
+  - LetterRatioInURL
+  - NoOfDegitsInURL
+  - DegitRatioInURL
+  - NoOfEqualsInURL
+  - NoOfQMarkInURL
+  - NoOfAmpersandInURL
+  - NoOfOtherSpecialCharsInURL
+  - SpacialCharRatioInURL
+  - IsHTTPS
+  - LineOfCode
+  - LargestLineLength
+  - HasTitle
+  - DomainTitleMatchScore
+  - HasFavicon
+  - Robots
+  - IsResponsive
+  - NoOfURLRedirect
+  - NoOfSelfRedirect
+  - HasDescription
+  - NoOfPopup
+  - NoOfiFrame
+  - HasExternalFormSubmit
+  - HasSocialNet
+  - HasSubmitButton
+  - HasHiddenFields
+  - HasPasswordField
+  - Bank
+  - Pay
+  - Crypto
+  - HasCopyrightInfo
+  - NoOfImage
+  - NoOfCSS
+  - NoOfJS
+  - NoOfSelfRef
+  - NoOfEmptyRef
+  - NoOfExternalRef
+
+# ── Correlation thresholds used during audit ─────────────────────────────────
+correlation_thresholds:
+  high:   0.75   # pairs flagged as high multicollinearity
+  medium: 0.50   # pairs reviewed but retained
+  low:    0.30   # informational only
+
+# ── Near-constant variance threshold ─────────────────────────────────────────
+near_constant_threshold: 0.95   # features where top value > 95% of samples

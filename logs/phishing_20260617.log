@@ -1139,3 +1139,230 @@
 2026-06-17 20:51:03 | INFO     | src.training.model_registry              |   XGBoost                   : xgboost
 2026-06-17 20:51:03 | INFO     | src.training.model_registry              |   LightGBM                  : lightgbm
 2026-06-17 20:51:03 | INFO     | src.training.benchmark                   | Training report saved: C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\reports\training_summary.html
+2026-06-17 20:58:29 | DEBUG    | src.models.xgboost_model                 | xgboost library found — using XGBClassifier
+2026-06-17 20:58:29 | DEBUG    | src.models.lightgbm_model                | lightgbm library found — using LGBMClassifier
+2026-06-17 20:58:29 | INFO     | src.evaluation.evaluator                 | Loading trained models ...
+2026-06-17 20:58:29 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_A\logistic_regression.pkl
+2026-06-17 20:58:29 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_A\random_forest.pkl
+2026-06-17 20:58:29 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_A\xgboost.pkl
+2026-06-17 20:58:29 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_A\lightgbm.pkl
+2026-06-17 20:58:29 | INFO     | src.training.model_saver                 | Loaded 4/4 Track A models
+2026-06-17 20:58:29 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\logistic_regression.pkl
+2026-06-17 20:58:29 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\random_forest.pkl
+2026-06-17 20:58:29 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\xgboost.pkl
+2026-06-17 20:58:29 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\lightgbm.pkl
+2026-06-17 20:58:29 | INFO     | src.training.model_saver                 | Loaded 4/4 Track B models
+2026-06-17 20:58:29 | INFO     | src.evaluation.evaluator                 |   Track A: 4 models  Track B: 4 models
+2026-06-17 20:58:29 | INFO     | src.evaluation.evaluator                 | Loading test data ...
+2026-06-17 20:58:30 | INFO     | src.evaluation.evaluator                 |   X_test_A: (47074, 57)  X_test_B: (47074, 56)  y_test: 47,074
+2026-06-17 20:58:31 | INFO     | src.evaluation.evaluator                 | =======================================================
+2026-06-17 20:58:31 | INFO     | src.evaluation.evaluator                 | M6.1 — FULL MODEL EVALUATION
+2026-06-17 20:58:31 | INFO     | src.evaluation.evaluator                 | =======================================================
+2026-06-17 20:58:31 | INFO     | src.evaluation.evaluator                 | Loading trained models ...
+2026-06-17 20:58:31 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_A\logistic_regression.pkl
+2026-06-17 20:58:31 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_A\random_forest.pkl
+2026-06-17 20:58:31 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_A\xgboost.pkl
+2026-06-17 20:58:31 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_A\lightgbm.pkl
+2026-06-17 20:58:31 | INFO     | src.training.model_saver                 | Loaded 4/4 Track A models
+2026-06-17 20:58:31 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\logistic_regression.pkl
+2026-06-17 20:58:31 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\random_forest.pkl
+2026-06-17 20:58:31 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\xgboost.pkl
+2026-06-17 20:58:31 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\lightgbm.pkl
+2026-06-17 20:58:31 | INFO     | src.training.model_saver                 | Loaded 4/4 Track B models
+2026-06-17 20:58:31 | INFO     | src.evaluation.evaluator                 |   Track A: 4 models  Track B: 4 models
+2026-06-17 20:58:31 | INFO     | src.evaluation.evaluator                 | Loading test data ...
+2026-06-17 20:58:32 | INFO     | src.evaluation.evaluator                 |   X_test_A: (47074, 57)  X_test_B: (47074, 56)  y_test: 47,074
+2026-06-17 20:58:32 | INFO     | src.evaluation.evaluator                 | Evaluating: Logistic Regression | Track A
+2026-06-17 20:58:32 | INFO     | src.evaluation.metrics                   | [Track A] Logistic Regression        AUC=1.0000  MCC=0.9999  Brier=0.0000  FPR=0.0001  FNR=0.0000
+2026-06-17 20:58:32 | INFO     | src.evaluation.evaluator                 | Evaluating: Random Forest | Track A
+2026-06-17 20:58:32 | INFO     | src.evaluation.metrics                   | [Track A] Random Forest              AUC=1.0000  MCC=1.0000  Brier=0.0000  FPR=0.0000  FNR=0.0000
+2026-06-17 20:58:32 | INFO     | src.evaluation.evaluator                 | Evaluating: XGBoost | Track A
+2026-06-17 20:58:32 | INFO     | src.evaluation.metrics                   | [Track A] XGBoost                    AUC=1.0000  MCC=0.9999  Brier=0.0000  FPR=0.0001  FNR=0.0000
+2026-06-17 20:58:32 | INFO     | src.evaluation.evaluator                 | Evaluating: LightGBM | Track A
+2026-06-17 20:58:33 | INFO     | src.evaluation.metrics                   | [Track A] LightGBM                   AUC=1.0000  MCC=1.0000  Brier=0.0000  FPR=0.0000  FNR=0.0000
+2026-06-17 20:58:33 | INFO     | src.evaluation.evaluator                 | Evaluating: Logistic Regression | Track B
+2026-06-17 20:58:33 | INFO     | src.evaluation.metrics                   | [Track B] Logistic Regression        AUC=1.0000  MCC=0.9999  Brier=0.0001  FPR=0.0001  FNR=0.0000
+2026-06-17 20:58:33 | INFO     | src.evaluation.evaluator                 | Evaluating: Random Forest | Track B
+2026-06-17 20:58:33 | INFO     | src.evaluation.metrics                   | [Track B] Random Forest              AUC=1.0000  MCC=0.9997  Brier=0.0004  FPR=0.0002  FNR=0.0001
+2026-06-17 20:58:33 | INFO     | src.evaluation.evaluator                 | Evaluating: XGBoost | Track B
+2026-06-17 20:58:33 | INFO     | src.evaluation.metrics                   | [Track B] XGBoost                    AUC=1.0000  MCC=0.9998  Brier=0.0001  FPR=0.0001  FNR=0.0001
+2026-06-17 20:58:33 | INFO     | src.evaluation.evaluator                 | Evaluating: LightGBM | Track B
+2026-06-17 20:58:34 | INFO     | src.evaluation.metrics                   | [Track B] LightGBM                   AUC=1.0000  MCC=0.9999  Brier=0.0001  FPR=0.0001  FNR=0.0000
+2026-06-17 20:58:34 | INFO     | src.evaluation.evaluator                 | Evaluated 8 models
+2026-06-17 20:58:34 | INFO     | src.evaluation.evaluator                 | Saved: evaluation_metrics.csv
+2026-06-17 20:58:34 | INFO     | src.evaluation.evaluator                 | Saved: error_analysis.csv
+2026-06-17 20:58:34 | INFO     | src.evaluation.evaluator                 | Generating confusion matrix plots ...
+2026-06-17 20:58:35 | DEBUG    | src.evaluation.confusion_analysis        | Saved: cm_logistic_regression_trackA.png
+2026-06-17 20:58:35 | DEBUG    | src.evaluation.confusion_analysis        | Saved: cm_random_forest_trackA.png
+2026-06-17 20:58:36 | DEBUG    | src.evaluation.confusion_analysis        | Saved: cm_xgboost_trackA.png
+2026-06-17 20:58:36 | DEBUG    | src.evaluation.confusion_analysis        | Saved: cm_lightgbm_trackA.png
+2026-06-17 20:58:37 | DEBUG    | src.evaluation.confusion_analysis        | Saved: cm_logistic_regression_trackB.png
+2026-06-17 20:58:37 | DEBUG    | src.evaluation.confusion_analysis        | Saved: cm_random_forest_trackB.png
+2026-06-17 20:58:38 | DEBUG    | src.evaluation.confusion_analysis        | Saved: cm_xgboost_trackB.png
+2026-06-17 20:58:38 | DEBUG    | src.evaluation.confusion_analysis        | Saved: cm_lightgbm_trackB.png
+2026-06-17 20:58:38 | INFO     | src.evaluation.confusion_analysis        | Confusion matrices saved: 8 figures → C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\plots\evaluation\confusion_matrices
+2026-06-17 20:58:39 | INFO     | src.evaluation.confusion_analysis        | Saved: cm_grid_trackA.png
+2026-06-17 20:58:40 | INFO     | src.evaluation.confusion_analysis        | Saved: cm_grid_trackB.png
+2026-06-17 20:58:40 | INFO     | src.evaluation.evaluator                 | Generating ROC plots ...
+2026-06-17 20:58:40 | INFO     | src.evaluation.roc_analysis              | Saved: roc_trackA.png
+2026-06-17 20:58:41 | INFO     | src.evaluation.roc_analysis              | Saved: roc_trackB.png
+2026-06-17 20:58:41 | INFO     | src.evaluation.roc_analysis              | Saved: roc_all_tracks.png
+2026-06-17 20:58:42 | INFO     | src.evaluation.roc_analysis              | Saved: auc_ranking.png
+2026-06-17 20:58:42 | INFO     | src.evaluation.evaluator                 | Generating PR curve plots ...
+2026-06-17 20:58:42 | INFO     | src.evaluation.roc_analysis              | Saved: pr_trackA.png
+2026-06-17 20:58:42 | INFO     | src.evaluation.roc_analysis              | Saved: pr_trackB.png
+2026-06-17 20:58:42 | INFO     | src.evaluation.evaluator                 | Generating calibration plots ...
+2026-06-17 20:58:43 | INFO     | src.evaluation.calibration_analysis      | Saved: calibration_trackA.png
+2026-06-17 20:58:45 | INFO     | src.evaluation.calibration_analysis      | Saved: prob_dist_trackA.png
+2026-06-17 20:58:46 | INFO     | src.evaluation.calibration_analysis      | Saved: calibration_trackB.png
+2026-06-17 20:58:47 | INFO     | src.evaluation.calibration_analysis      | Saved: prob_dist_trackB.png
+2026-06-17 20:58:47 | INFO     | src.evaluation.calibration_analysis      | Saved: calibration_comparison.png
+2026-06-17 20:58:47 | INFO     | src.evaluation.evaluator                 | =======================================================
+2026-06-17 20:58:47 | INFO     | src.evaluation.evaluator                 | EVALUATION COMPLETE
+2026-06-17 20:58:47 | INFO     | src.evaluation.evaluator                 | =======================================================
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            | Best Track A: LightGBM
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            |   ROC AUC  : 1.000000
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            |   F1 Score : 1.000000
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            |   Calibrat : 0.999993
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            |   Rationale: Highest ROC AUC on Track A test set: 1.000000 | Tie-broke by F1: 1.000000 | Calibration quality: 1.0000
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            | Best Track B: Logistic Regression
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            |   ROC AUC  : 1.000000
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            |   F1 Score : 0.999936
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            |   Calibrat : 0.828821
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            |   Rationale: Highest ROC AUC on Track B test set: 1.000000 | Tie-broke by F1: 0.999936 | Calibration quality: 0.8288
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            | =======================================================
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            | FINAL DEPLOYMENT MODEL SELECTION
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            | =======================================================
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            |   Track A winner : LightGBM
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            |   Track B winner : Logistic Regression  ← FINAL_DEPLOYMENT_MODEL
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            |   Leakage impact : +0.000000 AUC (Track A − Track B)
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            | =======================================================
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            | ───────────────────────────────────────────────────────
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            | MODEL SELECTION REPORT
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            | ───────────────────────────────────────────────────────
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            | Track A: LightGBM
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            |   Primary   ROC AUC   : 1.000000
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            |   Secondary F1        : 1.000000
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            |   Tertiary  Calibrat  : 0.999993
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            |   Full rank           : ['LightGBM', 'Random Forest', 'XGBoost', 'Logistic Regression']
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            |   Rationale           : Highest ROC AUC on Track A test set: 1.000000 | Tie-broke by F1: 1.000000 | Calibration quality: 1.0000
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            | Track B: Logistic Regression
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            |   Primary   ROC AUC   : 1.000000
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            |   Secondary F1        : 0.999936
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            |   Tertiary  Calibrat  : 0.828821
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            |   Full rank           : ['Logistic Regression', 'LightGBM', 'XGBoost', 'Random Forest']
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            |   Rationale           : Highest ROC AUC on Track B test set: 1.000000 | Tie-broke by F1: 0.999936 | Calibration quality: 0.8288
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            | Leakage impact (A-B AUC) : +0.000000
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            | FINAL_DEPLOYMENT_MODEL   : Logistic Regression
+2026-06-17 20:58:48 | INFO     | src.evaluation.model_selector            | ───────────────────────────────────────────────────────
+2026-06-17 20:58:50 | INFO     | src.evaluation.model_selector            | Deployment interface assembled:
+2026-06-17 20:58:50 | INFO     | src.evaluation.model_selector            |   FINAL_DEPLOYMENT_MODEL : Logistic Regression
+2026-06-17 20:58:50 | INFO     | src.evaluation.model_selector            |   feature_names_B        : 56 features
+2026-06-17 20:58:50 | INFO     | src.evaluation.model_selector            |   SHAP_X_train shape     : (188296, 56)
+2026-06-17 20:58:50 | INFO     | src.evaluation.model_selector            |   SHAP_X_test  shape     : (47074, 56)
+2026-06-17 20:58:50 | INFO     | src.evaluation.evaluation_report         | Evaluation report saved: C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\reports\model_evaluation_report.html
+2026-06-17 20:59:41 | INFO     | src.explainability.shap_explainer        | shap 0.51.0 available — using native SHAP
+2026-06-17 20:59:41 | DEBUG    | src.models.xgboost_model                 | xgboost library found — using XGBClassifier
+2026-06-17 20:59:41 | DEBUG    | src.models.lightgbm_model                | lightgbm library found — using LGBMClassifier
+2026-06-17 20:59:42 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\logistic_regression.pkl
+2026-06-17 20:59:42 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\random_forest.pkl
+2026-06-17 20:59:42 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\xgboost.pkl
+2026-06-17 20:59:42 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\lightgbm.pkl
+2026-06-17 20:59:42 | INFO     | src.training.model_saver                 | Loaded 4/4 Track B models
+2026-06-17 20:59:42 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_A\logistic_regression.pkl
+2026-06-17 20:59:42 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_A\random_forest.pkl
+2026-06-17 20:59:42 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_A\xgboost.pkl
+2026-06-17 20:59:42 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_A\lightgbm.pkl
+2026-06-17 20:59:42 | INFO     | src.training.model_saver                 | Loaded 4/4 Track A models
+2026-06-17 20:59:47 | INFO     | src.explainability.shap_explainer        | SHAP subsampled: 47,074 → 3,000 test rows
+2026-06-17 20:59:47 | INFO     | src.explainability.shap_explainer        | Native SHAP: linear explainer for LogisticRegression on 3,000 samples …
+2026-06-17 20:59:47 | INFO     | src.explainability.shap_explainer        | Native SHAP complete: shap_values shape=(3000, 56)  expected_value=1.643425
+2026-06-17 20:59:47 | INFO     | src.explainability.shap_global           | =======================================================
+2026-06-17 20:59:47 | INFO     | src.explainability.shap_global           | M7.1 — GLOBAL SHAP ANALYSIS
+2026-06-17 20:59:47 | INFO     | src.explainability.shap_global           | =======================================================
+2026-06-17 20:59:48 | INFO     | src.explainability.shap_global           | Saved: summary_beeswarm.png
+2026-06-17 20:59:49 | INFO     | src.explainability.shap_global           | Saved: global_importance.png
+2026-06-17 20:59:49 | DEBUG    | src.explainability.shap_global           | Dependence saved: letterratioinurl.png
+2026-06-17 20:59:50 | DEBUG    | src.explainability.shap_global           | Dependence saved: lineofcode.png
+2026-06-17 20:59:50 | DEBUG    | src.explainability.shap_global           | Dependence saved: ishttps.png
+2026-06-17 20:59:50 | DEBUG    | src.explainability.shap_global           | Dependence saved: noofdegitsinurl.png
+2026-06-17 20:59:51 | DEBUG    | src.explainability.shap_global           | Dependence saved: domainlength.png
+2026-06-17 20:59:51 | DEBUG    | src.explainability.shap_global           | Dependence saved: noofselfref.png
+2026-06-17 20:59:51 | DEBUG    | src.explainability.shap_global           | Dependence saved: noofotherspecialcharsinurl.png
+2026-06-17 20:59:51 | DEBUG    | src.explainability.shap_global           | Dependence saved: largestlinelength.png
+2026-06-17 20:59:52 | DEBUG    | src.explainability.shap_global           | Dependence saved: noofexternalref.png
+2026-06-17 20:59:52 | DEBUG    | src.explainability.shap_global           | Dependence saved: spacialcharratioinurl.png
+2026-06-17 20:59:52 | INFO     | src.explainability.shap_global           | Dependence plots saved: 10
+2026-06-17 20:59:52 | INFO     | src.explainability.shap_global           | Saved: shap_feature_ranking.csv  (56 features)
+2026-06-17 20:59:52 | INFO     | src.explainability.shap_global           | Global analysis complete: beeswarm + importance bar + 10 dependence plots
+2026-06-17 20:59:52 | INFO     | src.explainability.shap_local            | =======================================================
+2026-06-17 20:59:52 | INFO     | src.explainability.shap_local            | M7.1 — LOCAL SHAP ANALYSIS
+2026-06-17 20:59:52 | INFO     | src.explainability.shap_local            | =======================================================
+2026-06-17 20:59:52 | INFO     | src.explainability.shap_local            |   TP: 1,001 available → 10 selected
+2026-06-17 20:59:52 | INFO     | src.explainability.shap_local            |   TN: 526 available → 10 selected
+2026-06-17 20:59:52 | INFO     | src.explainability.shap_local            |   FP: 730 available → 10 selected
+2026-06-17 20:59:52 | INFO     | src.explainability.shap_local            |   FN: 743 available → 10 selected
+2026-06-17 20:59:52 | INFO     | src.explainability.shap_local            | Local analysis: 40 samples selected (TP/TN/FP/FN)
+2026-06-17 20:59:59 | INFO     | src.explainability.shap_local            |   TP: 10 samples → 10 waterfall + force + JSON
+2026-06-17 21:00:10 | INFO     | src.explainability.shap_local            |   TN: 10 samples → 10 waterfall + force + JSON
+2026-06-17 21:00:19 | INFO     | src.explainability.shap_local            |   FP: 10 samples → 10 waterfall + force + JSON
+2026-06-17 21:00:28 | INFO     | src.explainability.shap_local            |   FN: 10 samples → 10 waterfall + force + JSON
+2026-06-17 21:00:28 | INFO     | src.explainability.shap_local            | Local analysis complete: 40 waterfall + 40 force plots
+2026-06-17 21:00:28 | INFO     | src.explainability.shap_interactions     | =======================================================
+2026-06-17 21:00:28 | INFO     | src.explainability.shap_interactions     | M7.1 — SHAP INTERACTION ANALYSIS
+2026-06-17 21:00:28 | INFO     | src.explainability.shap_interactions     | =======================================================
+2026-06-17 21:00:28 | INFO     | src.explainability.shap_interactions     | SHAP interaction values: fallback outer-product approximation ✓
+2026-06-17 21:00:28 | INFO     | src.explainability.shap_interactions     | Saved: shap_interaction_pairs.csv  (20 rows)
+2026-06-17 21:00:29 | INFO     | src.explainability.shap_interactions     | Saved: interaction_heatmap.png
+2026-06-17 21:00:30 | INFO     | src.explainability.shap_interactions     | Saved: top_interaction_pairs.png
+2026-06-17 21:00:30 | INFO     | src.explainability.shap_interactions     | Interaction analysis complete
+2026-06-17 21:00:30 | INFO     | src.explainability.shap_report           | Computing SHAP values for Track A …
+2026-06-17 21:00:30 | INFO     | src.explainability.shap_explainer        | SHAP subsampled: 47,074 → 2,000 test rows
+2026-06-17 21:00:30 | INFO     | src.explainability.shap_explainer        | Native SHAP: linear explainer for LogisticRegression on 2,000 samples …
+2026-06-17 21:00:30 | INFO     | src.explainability.shap_explainer        | Native SHAP complete: shap_values shape=(2000, 57)  expected_value=1.945357
+2026-06-17 21:00:30 | INFO     | src.explainability.shap_report           | Computing SHAP values for Track B …
+2026-06-17 21:00:30 | INFO     | src.explainability.shap_explainer        | SHAP subsampled: 47,074 → 2,000 test rows
+2026-06-17 21:00:30 | INFO     | src.explainability.shap_explainer        | Native SHAP: linear explainer for LogisticRegression on 2,000 samples …
+2026-06-17 21:00:30 | INFO     | src.explainability.shap_explainer        | Native SHAP complete: shap_values shape=(2000, 56)  expected_value=2.953499
+2026-06-17 21:00:30 | INFO     | src.explainability.shap_report           | Saved: track_comparison_importance.png
+2026-06-17 21:00:30 | INFO     | src.explainability.shap_report           | Track comparison: URLSimilarityIndex = 17.77% of Track A importance
+2026-06-17 21:00:30 | INFO     | src.explainability.shap_report           | SHAP report saved: C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\reports\shap_analysis_report.html
+2026-06-17 21:01:04 | DEBUG    | src.models.xgboost_model                 | xgboost library found — using XGBClassifier
+2026-06-17 21:01:04 | DEBUG    | src.models.lightgbm_model                | lightgbm library found — using LGBMClassifier
+2026-06-17 21:01:05 | INFO     | src.explainability.shap_explainer        | shap 0.51.0 available — using native SHAP
+2026-06-17 21:01:05 | INFO     | src.explainability.lime_explainer        | lime library available — using native LimeTabularExplainer
+2026-06-17 21:01:05 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\logistic_regression.pkl
+2026-06-17 21:01:05 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\random_forest.pkl
+2026-06-17 21:01:05 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\xgboost.pkl
+2026-06-17 21:01:05 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\lightgbm.pkl
+2026-06-17 21:01:05 | INFO     | src.training.model_saver                 | Loaded 4/4 Track B models
+2026-06-17 21:01:08 | INFO     | src.explainability.shap_explainer        | SHAP subsampled: 47,074 → 500 test rows
+2026-06-17 21:01:09 | INFO     | src.explainability.shap_explainer        | Native SHAP: linear explainer for LogisticRegression on 500 samples …
+2026-06-17 21:01:09 | INFO     | src.explainability.shap_explainer        | Native SHAP complete: shap_values shape=(500, 56)  expected_value=-0.178819
+2026-06-17 21:01:12 | INFO     | src.explainability.lime_explainer        | LimeTabularExplainer (native) built on 188,296 background rows
+2026-06-17 21:01:12 | INFO     | src.explainability.lime_local            | =======================================================
+2026-06-17 21:01:12 | INFO     | src.explainability.lime_local            | M8.1 — LOCAL LIME ANALYSIS
+2026-06-17 21:01:12 | INFO     | src.explainability.lime_local            | =======================================================
+2026-06-17 21:01:12 | INFO     | src.explainability.lime_local            |   LIME TP: 26,970 available → 10 selected
+2026-06-17 21:01:12 | INFO     | src.explainability.lime_local            |   LIME TN: 20,101 available → 10 selected
+2026-06-17 21:01:12 | INFO     | src.explainability.lime_local            |   LIME FP: 0 available → 0 selected
+2026-06-17 21:01:12 | INFO     | src.explainability.lime_local            |   LIME FN: 3 available → 3 selected
+2026-06-17 21:01:17 | INFO     | src.explainability.lime_local            |   TP: 10 samples → 10 explanations
+2026-06-17 21:01:22 | INFO     | src.explainability.lime_local            |   TN: 10 samples → 10 explanations
+2026-06-17 21:01:22 | INFO     | src.explainability.lime_local            |   FP: 0 samples → 0 explanations
+2026-06-17 21:01:23 | INFO     | src.explainability.lime_local            |   FN: 3 samples → 3 explanations
+2026-06-17 21:01:23 | INFO     | src.explainability.lime_local            | Local LIME complete: 23 explanations generated
+2026-06-17 21:01:23 | INFO     | src.explainability.shap_lime_comparator  | =======================================================
+2026-06-17 21:01:23 | INFO     | src.explainability.shap_lime_comparator  | M8.1 — SHAP vs LIME AGREEMENT ANALYSIS
+2026-06-17 21:01:23 | INFO     | src.explainability.shap_lime_comparator  | =======================================================
+2026-06-17 21:01:23 | INFO     | src.explainability.shap_lime_comparator  | Per-sample agreement computed: 23 samples  mean=0.0000  min=0.0000
+2026-06-17 21:01:23 | INFO     | src.explainability.shap_lime_comparator  | Saved: shap_lime_agreement.csv
+2026-06-17 21:01:23 | INFO     | src.explainability.shap_lime_comparator  | Saved: high_disagreement_cases.csv  (23 cases)
+2026-06-17 21:01:23 | INFO     | src.explainability.shap_lime_comparator  | Agreement summary: mean=0.0000  high-disagree=23
+2026-06-17 21:01:23 | INFO     | src.explainability.shap_lime_comparator  | Feature consistency: shared=10/20  SHAP-only=10  LIME-only=10  score=0.5000
+2026-06-17 21:01:23 | INFO     | src.explainability.shap_lime_comparator  | Saved: lime_feature_ranking.csv
+2026-06-17 21:01:23 | INFO     | src.explainability.shap_lime_comparator  | Saved: lime_summary.csv
+2026-06-17 21:01:24 | INFO     | src.explainability.shap_lime_comparator  | Saved: shap_lime_agreement.png
+2026-06-17 21:01:25 | INFO     | src.explainability.shap_lime_comparator  | Saved: feature_consistency.png
+2026-06-17 21:01:25 | INFO     | src.explainability.shap_lime_comparator  | SHAP vs LIME comparison complete
+2026-06-17 21:01:25 | INFO     | src.explainability.lime_report           | LIME report saved: C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\reports\lime_analysis_report.html

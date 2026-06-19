@@ -1,0 +1,36 @@
+metric,dimension,best_group,best_value,worst_group,worst_value,disparity
+accuracy,url_length,Long (>31),1.0,Short (≤25),0.999887,0.000113
+precision,url_length,Long (>31),1.0,Short (≤25),0.999887,0.000113
+recall,url_length,Long (>31),1.0,Short (≤25),0.999887,0.000113
+f1,url_length,Long (>31),1.0,Short (≤25),0.999887,0.000113
+roc_auc,url_length,Long (>31),1.0,Long (>31),1.0,0.0
+fpr,url_length,Long (>31),0.0,Short (≤25),0.000405,0.000405
+fnr,url_length,Long (>31),0.0,Long (>31),0.0,0.0
+accuracy,https,Non-HTTPS,1.0,HTTPS,0.999919,8.1e-05
+precision,https,Non-HTTPS,1.0,HTTPS,0.999919,8.1e-05
+recall,https,Non-HTTPS,1.0,HTTPS,0.999919,8.1e-05
+f1,https,Non-HTTPS,1.0,HTTPS,0.999919,8.1e-05
+roc_auc,https,HTTPS,1.0,HTTPS,1.0,0.0
+fpr,https,Non-HTTPS,0.0,HTTPS,0.000303,0.000303
+fnr,https,HTTPS,0.0,HTTPS,0.0,0.0
+accuracy,tld,app,1.0,top,0.996008,0.003992
+precision,tld,app,1.0,com,0.999956,4.4e-05
+recall,tld,app,1.0,top,0.996008,0.003992
+f1,tld,app,1.0,top,0.998,0.002
+roc_auc,tld,app,1.0,app,1.0,0.0
+fpr,tld,app,0.0,top,0.003992,0.003992
+fnr,tld,app,0.0,app,0.0,0.0
+accuracy,domain_length,Long (>23),1.0,Short (≤17),0.999879,0.000121
+precision,domain_length,Long (>23),1.0,Short (≤17),0.999879,0.000121
+recall,domain_length,Long (>23),1.0,Short (≤17),0.999879,0.000121
+f1,domain_length,Long (>23),1.0,Short (≤17),0.999879,0.000121
+roc_auc,domain_length,Long (>23),1.0,Long (>23),1.0,0.0
+fpr,domain_length,Long (>23),0.0,Short (≤17),0.000332,0.000332
+fnr,domain_length,Long (>23),0.0,Long (>23),0.0,0.0
+accuracy,ext_resources,High (>34),1.0,Low (≤1),0.999873,0.000127
+precision,ext_resources,High (>34),1.0,Low (≤1),0.999874,0.000126
+recall,ext_resources,High (>34),1.0,Low (≤1),0.999873,0.000127
+f1,ext_resources,High (>34),1.0,Low (≤1),0.999873,0.000127
+roc_auc,ext_resources,High (>34),1.0,Low (≤1),0.999999,1e-06
+fpr,ext_resources,High (>34),0.0,Medium (1-34),0.000217,0.000217
+fnr,ext_resources,High (>34),0.0,High (>34),0.0,0.0

@@ -1,0 +1,541 @@
+dimension,group,feature,global_rank,group_rank,rank_shift,mean_abs_shap
+url_length,Long (>31),LetterRatioInURL,1,1,0,3.0768426966416347
+url_length,Long (>31),LineOfCode,2,2,0,3.0684658179653024
+url_length,Long (>31),IsHTTPS,3,3,0,2.879801498469779
+url_length,Long (>31),NoOfDegitsInURL,4,4,0,2.259614366168635
+url_length,Long (>31),DomainLength,5,5,0,2.1046421473456314
+url_length,Long (>31),NoOfSelfRef,6,6,0,1.5217187589428411
+url_length,Long (>31),LargestLineLength,8,7,1,1.3609644078443435
+url_length,Long (>31),NoOfOtherSpecialCharsInURL,7,8,-1,1.3053782541552872
+url_length,Long (>31),NoOfExternalRef,9,9,0,1.1683667854032038
+url_length,Long (>31),SpacialCharRatioInURL,10,10,0,1.027006390777411
+url_length,Long (>31),NoOfImage,11,11,0,0.9449849994214469
+url_length,Long (>31),ContentComplexityScore,12,12,0,0.7408486954216146
+url_length,Long (>31),NoOfJS,13,13,0,0.707951695481299
+url_length,Long (>31),HasSocialNet,15,14,1,0.622151075800576
+url_length,Long (>31),HasDescription,14,15,-1,0.6155834804557446
+url_length,Long (>31),TrustBadgeScore,16,16,0,0.6030486140532049
+url_length,Long (>31),URLCharProb,17,17,0,0.5465443977617668
+url_length,Long (>31),DomainTitleMatchScore,18,18,0,0.4149705604958091
+url_length,Long (>31),SubdomainRatio,19,19,0,0.3808979244832919
+url_length,Long (>31),HasCopyrightInfo,20,20,0,0.37963472630308615
+url_length,Medium (25-31),LetterRatioInURL,1,1,0,3.330149938232052
+url_length,Medium (25-31),LineOfCode,2,2,0,3.1626659242814794
+url_length,Medium (25-31),IsHTTPS,3,3,0,2.927542469244528
+url_length,Medium (25-31),NoOfDegitsInURL,4,4,0,2.419436938904483
+url_length,Medium (25-31),DomainLength,5,5,0,2.15712368124603
+url_length,Medium (25-31),NoOfSelfRef,6,6,0,1.5552509224220012
+url_length,Medium (25-31),NoOfOtherSpecialCharsInURL,7,7,0,1.327393257982722
+url_length,Medium (25-31),LargestLineLength,8,8,0,1.2401963872472552
+url_length,Medium (25-31),NoOfExternalRef,9,9,0,1.1525131257132133
+url_length,Medium (25-31),SpacialCharRatioInURL,10,10,0,1.0515404453023451
+url_length,Medium (25-31),NoOfImage,11,11,0,0.921939384322206
+url_length,Medium (25-31),ContentComplexityScore,12,12,0,0.7299173795509887
+url_length,Medium (25-31),NoOfJS,13,13,0,0.7031711507175578
+url_length,Medium (25-31),HasSocialNet,15,14,1,0.6263073823529763
+url_length,Medium (25-31),HasDescription,14,15,-1,0.6249877890216627
+url_length,Medium (25-31),TrustBadgeScore,16,16,0,0.5833989316012873
+url_length,Medium (25-31),URLCharProb,17,17,0,0.5626927593074089
+url_length,Medium (25-31),SubdomainRatio,19,18,1,0.4236696956382163
+url_length,Medium (25-31),DomainTitleMatchScore,18,19,-1,0.41511790839939655
+url_length,Medium (25-31),HasCopyrightInfo,20,20,0,0.38258225424879944
+url_length,Short (≤25),LineOfCode,2,1,1,3.1456391023802186
+url_length,Short (≤25),LetterRatioInURL,1,2,-1,2.9357741417263004
+url_length,Short (≤25),IsHTTPS,3,3,0,2.6512269204429915
+url_length,Short (≤25),NoOfDegitsInURL,4,4,0,2.3682650757554717
+url_length,Short (≤25),DomainLength,5,5,0,2.081980999677056
+url_length,Short (≤25),NoOfSelfRef,6,6,0,1.5492156204733465
+url_length,Short (≤25),NoOfOtherSpecialCharsInURL,7,7,0,1.296869460879904
+url_length,Short (≤25),LargestLineLength,8,8,0,1.2727394052867549
+url_length,Short (≤25),NoOfExternalRef,9,9,0,1.1718881255048985
+url_length,Short (≤25),SpacialCharRatioInURL,10,10,0,1.0508495602997117
+url_length,Short (≤25),NoOfImage,11,11,0,0.9652227637757652
+url_length,Short (≤25),ContentComplexityScore,12,12,0,0.7425517981941809
+url_length,Short (≤25),NoOfJS,13,13,0,0.6952078228530811
+url_length,Short (≤25),HasSocialNet,15,14,1,0.630851180578023
+url_length,Short (≤25),HasDescription,14,15,-1,0.6258934786760451
+url_length,Short (≤25),TrustBadgeScore,16,16,0,0.5697052746758552
+url_length,Short (≤25),URLCharProb,17,17,0,0.5394611301527461
+url_length,Short (≤25),SubdomainRatio,19,18,1,0.44081994043025635
+url_length,Short (≤25),DomainTitleMatchScore,18,19,-1,0.4163254016095935
+url_length,Short (≤25),HasCopyrightInfo,20,20,0,0.38610735962653336
+https,HTTPS,LineOfCode,2,1,1,3.1290457581337945
+https,HTTPS,LetterRatioInURL,1,2,-1,3.0460236352702434
+https,HTTPS,IsHTTPS,3,3,0,2.791731518271158
+https,HTTPS,NoOfDegitsInURL,4,4,0,2.365827859927783
+https,HTTPS,DomainLength,5,5,0,2.0517172705206486
+https,HTTPS,NoOfSelfRef,6,6,0,1.5423634484492812
+https,HTTPS,NoOfOtherSpecialCharsInURL,7,7,0,1.3132490387430285
+https,HTTPS,LargestLineLength,8,8,0,1.2923751372497991
+https,HTTPS,NoOfExternalRef,9,9,0,1.1477222764795718
+https,HTTPS,SpacialCharRatioInURL,10,10,0,1.0521533182359617
+https,HTTPS,NoOfImage,11,11,0,0.9405755278022983
+https,HTTPS,ContentComplexityScore,12,12,0,0.7328020233036223
+https,HTTPS,NoOfJS,13,13,0,0.6984810029828298
+https,HTTPS,HasSocialNet,15,14,1,0.6261636670987563
+https,HTTPS,HasDescription,14,15,-1,0.6243708784664871
+https,HTTPS,TrustBadgeScore,16,16,0,0.5807759459292119
+https,HTTPS,URLCharProb,17,17,0,0.5395765470930195
+https,HTTPS,SubdomainRatio,19,18,1,0.4161510358180417
+https,HTTPS,DomainTitleMatchScore,18,19,-1,0.4158702793687236
+https,HTTPS,HasCopyrightInfo,20,20,0,0.38277600104161624
+https,Non-HTTPS,LetterRatioInURL,1,1,0,3.3160580971357505
+https,Non-HTTPS,LineOfCode,2,2,0,3.116050996786217
+https,Non-HTTPS,IsHTTPS,3,3,0,2.8817816285559497
+https,Non-HTTPS,DomainLength,5,4,1,2.3321427731384285
+https,Non-HTTPS,NoOfDegitsInURL,4,5,-1,2.290728332767705
+https,Non-HTTPS,NoOfSelfRef,6,6,0,1.5419999818650718
+https,Non-HTTPS,NoOfOtherSpecialCharsInURL,7,7,0,1.2946078326354775
+https,Non-HTTPS,LargestLineLength,8,8,0,1.285338376669702
+https,Non-HTTPS,NoOfExternalRef,9,9,0,1.2254825926176285
+https,Non-HTTPS,SpacialCharRatioInURL,10,10,0,1.0120593849236446
+https,Non-HTTPS,NoOfImage,11,11,0,0.9614926492119951
+https,Non-HTTPS,ContentComplexityScore,12,12,0,0.7568197822330007
+https,Non-HTTPS,NoOfJS,13,13,0,0.7137015898330691
+https,Non-HTTPS,HasSocialNet,15,14,1,0.6283105808741761
+https,Non-HTTPS,HasDescription,14,15,-1,0.6148695217204512
+https,Non-HTTPS,TrustBadgeScore,16,16,0,0.5988142439171116
+https,Non-HTTPS,URLCharProb,17,17,0,0.5829391320324036
+https,Non-HTTPS,SubdomainRatio,19,18,1,0.4163747084260159
+https,Non-HTTPS,DomainTitleMatchScore,18,19,-1,0.4142237902648017
+https,Non-HTTPS,HasCopyrightInfo,20,20,0,0.3834492129658291
+tld,app,IsHTTPS,3,1,2,3.1376812972246375
+tld,app,LetterRatioInURL,1,2,-1,3.1055226405198453
+tld,app,LineOfCode,2,3,-1,2.930159932071728
+tld,app,NoOfDegitsInURL,4,4,0,1.9399454239226543
+tld,app,DomainLength,5,5,0,1.9116255845887729
+tld,app,NoOfSelfRef,6,6,0,1.51071300513601
+tld,app,LargestLineLength,8,7,1,1.454588548469569
+tld,app,NoOfExternalRef,9,8,1,1.1398310018367506
+tld,app,NoOfOtherSpecialCharsInURL,7,9,-2,1.1381121976856101
+tld,app,SpacialCharRatioInURL,10,10,0,1.1343270535067946
+tld,app,NoOfImage,11,11,0,0.8335645835023386
+tld,app,NoOfJS,13,12,1,0.755349513710006
+tld,app,ContentComplexityScore,12,13,-1,0.7075584406382845
+tld,app,HasDescription,14,14,0,0.6662969055341122
+tld,app,HasSocialNet,15,15,0,0.630160593626104
+tld,app,URLCharProb,17,16,1,0.4976114919813125
+tld,app,TrustBadgeScore,16,17,-1,0.46245396476523404
+tld,app,DomainTitleMatchScore,18,18,0,0.39324525056223714
+tld,app,HasCopyrightInfo,20,19,1,0.3744098632966676
+tld,app,SubdomainRatio,19,20,-1,0.3682187412213772
+tld,au,LineOfCode,2,1,1,3.7793723876577103
+tld,au,IsHTTPS,3,2,1,3.617561966211934
+tld,au,LetterRatioInURL,1,3,-2,2.5664336106237533
+tld,au,DomainLength,5,4,1,2.1535143399244165
+tld,au,NoOfDegitsInURL,4,5,-1,1.8649408813709347
+tld,au,NoOfSelfRef,6,6,0,1.6297786037124644
+tld,au,NoOfOtherSpecialCharsInURL,7,7,0,1.406620464662416
+tld,au,SpacialCharRatioInURL,10,8,2,1.2498603645121165
+tld,au,NoOfImage,11,9,2,1.1274903097449436
+tld,au,NoOfExternalRef,9,10,-1,1.0799608165286412
+tld,au,LargestLineLength,8,11,-3,0.8726026923654766
+tld,au,ContentComplexityScore,12,12,0,0.8032591805106793
+tld,au,HasSocialNet,15,13,2,0.630160593626104
+tld,au,NoOfJS,13,14,-1,0.594067180665408
+tld,au,HasDescription,14,15,-1,0.5880794427105426
+tld,au,SubdomainRatio,19,16,3,0.46104977527846147
+tld,au,TrustBadgeScore,16,17,-1,0.45597960925852077
+tld,au,NoOfSubDomain,23,18,5,0.4230976581993649
+tld,au,CharContinuationRate,21,19,2,0.4204571324889715
+tld,au,DomainTitleMatchScore,18,20,-2,0.4168515702549277
+tld,co,LineOfCode,2,1,1,3.4859471381195486
+tld,co,LetterRatioInURL,1,2,-1,2.901201281755211
+tld,co,IsHTTPS,3,3,0,2.7454711350715573
+tld,co,NoOfDegitsInURL,4,4,0,2.021622452859721
+tld,co,DomainLength,5,5,0,1.8539507493001106
+tld,co,NoOfSelfRef,6,6,0,1.8147169223507167
+tld,co,NoOfOtherSpecialCharsInURL,7,7,0,1.276336240221749
+tld,co,NoOfExternalRef,9,8,1,1.224942469153065
+tld,co,LargestLineLength,8,9,-1,1.1359927855284822
+tld,co,SpacialCharRatioInURL,10,10,0,1.1078450591427158
+tld,co,NoOfImage,11,11,0,0.985719977848155
+tld,co,ContentComplexityScore,12,12,0,0.7474869670372707
+tld,co,HasDescription,14,13,1,0.6863526652324634
+tld,co,NoOfJS,13,14,-1,0.6505632928410255
+tld,co,HasSocialNet,15,15,0,0.6340385049714953
+tld,co,TrustBadgeScore,16,16,0,0.5563676929944815
+tld,co,URLCharProb,17,17,0,0.5344142759259247
+tld,co,SubdomainRatio,19,18,1,0.43660801752975825
+tld,co,DomainTitleMatchScore,18,19,-1,0.4262985614623717
+tld,co,HasCopyrightInfo,20,20,0,0.3902418593155099
+tld,com,LetterRatioInURL,1,1,0,3.1621841132819313
+tld,com,LineOfCode,2,2,0,3.0673509714067397
+tld,com,IsHTTPS,3,3,0,2.838374282031509
+tld,com,NoOfDegitsInURL,4,4,0,2.3912490513543583
+tld,com,DomainLength,5,5,0,2.158308489672999
+tld,com,NoOfSelfRef,6,6,0,1.5405446526794306
+tld,com,LargestLineLength,8,7,1,1.332061601308606
+tld,com,NoOfOtherSpecialCharsInURL,7,8,-1,1.2972340348476534
+tld,com,NoOfExternalRef,9,9,0,1.1475770130906668
+tld,com,SpacialCharRatioInURL,10,10,0,1.014373567716161
+tld,com,NoOfImage,11,11,0,0.935114514596976
+tld,com,ContentComplexityScore,12,12,0,0.7387245624394958
+tld,com,NoOfJS,13,13,0,0.7177317695085809
+tld,com,HasSocialNet,15,14,1,0.6250673368693728
+tld,com,HasDescription,14,15,-1,0.6170078084713184
+tld,com,TrustBadgeScore,16,16,0,0.5856955625918444
+tld,com,URLCharProb,17,17,0,0.5428290988290057
+tld,com,DomainTitleMatchScore,18,18,0,0.4148323524963655
+tld,com,SubdomainRatio,19,19,0,0.4076697013441148
+tld,com,HasCopyrightInfo,20,20,0,0.3823463501800772
+tld,country_code,LineOfCode,2,1,1,3.3137615947540398
+tld,country_code,LetterRatioInURL,1,2,-1,3.1960609679756575
+tld,country_code,NoOfDegitsInURL,4,3,1,2.8514891188605493
+tld,country_code,IsHTTPS,3,4,-1,2.837755879107576
+tld,country_code,DomainLength,5,5,0,2.025601845173918
+tld,country_code,NoOfSelfRef,6,6,0,1.5477229282045175
+tld,country_code,NoOfOtherSpecialCharsInURL,7,7,0,1.4855064659362376
+tld,country_code,LargestLineLength,8,8,0,1.3616263453962727
+tld,country_code,NoOfExternalRef,9,9,0,1.298198798716511
+tld,country_code,NoOfImage,11,10,1,1.0869845971360323
+tld,country_code,SpacialCharRatioInURL,10,11,-1,1.0823954137114733
+tld,country_code,ContentComplexityScore,12,12,0,0.8439751369731715
+tld,country_code,NoOfJS,13,13,0,0.772773056566552
+tld,country_code,HasDescription,14,14,0,0.6337062960242916
+tld,country_code,URLCharProb,17,15,2,0.6271179790381974
+tld,country_code,TrustBadgeScore,16,16,0,0.6253038252147058
+tld,country_code,HasSocialNet,15,17,-2,0.622958758270377
+tld,country_code,DomainTitleMatchScore,18,18,0,0.4314719137902578
+tld,country_code,HasCopyrightInfo,20,19,1,0.3875470514825155
+tld,country_code,SubdomainRatio,19,20,-1,0.35320904328339386
+tld,de,LetterRatioInURL,1,1,0,3.1992385342397687
+tld,de,LineOfCode,2,2,0,2.758114958051907
+tld,de,NoOfDegitsInURL,4,3,1,2.3606096815914746
+tld,de,IsHTTPS,3,4,-1,2.1589773012637017
+tld,de,DomainLength,5,5,0,1.8333009432216345
+tld,de,NoOfSelfRef,6,6,0,1.6227157601909739
+tld,de,NoOfExternalRef,9,7,2,1.4925176778781872
+tld,de,LargestLineLength,8,8,0,1.4626162331520387
+tld,de,NoOfOtherSpecialCharsInURL,7,9,-2,1.1515805304348878
+tld,de,NoOfImage,11,10,1,0.9358451839299162
+tld,de,SpacialCharRatioInURL,10,11,-1,0.8177620960791351
+tld,de,ContentComplexityScore,12,12,0,0.7654220636420838
+tld,de,NoOfJS,13,13,0,0.716329079876646
+tld,de,TrustBadgeScore,16,14,2,0.6569280267901931
+tld,de,HasSocialNet,15,15,0,0.6381205169140127
+tld,de,HasDescription,14,16,-2,0.6156956960320222
+tld,de,URLCharProb,17,17,0,0.5370435599393969
+tld,de,DomainTitleMatchScore,18,18,0,0.4188486324334881
+tld,de,SubdomainRatio,19,19,0,0.38956600105093964
+tld,de,HasCopyrightInfo,20,20,0,0.3815546498538832
+tld,dev,LetterRatioInURL,1,1,0,4.530056149010501
+tld,dev,LineOfCode,2,2,0,3.6453344811447717
+tld,dev,DomainLength,5,3,2,3.14891780215931
+tld,dev,IsHTTPS,3,4,-1,2.701426143599821
+tld,dev,NoOfDegitsInURL,4,5,-1,2.0959907245678453
+tld,dev,NoOfSelfRef,6,6,0,1.4667661016925593
+tld,dev,NoOfImage,11,7,4,1.2697639689895597
+tld,dev,NoOfOtherSpecialCharsInURL,7,8,-1,1.1203260231613514
+tld,dev,LargestLineLength,8,9,-1,1.1086190639448132
+tld,dev,NoOfExternalRef,9,10,-1,0.942965285830888
+tld,dev,SpacialCharRatioInURL,10,11,-1,0.9097319943715644
+tld,dev,ContentComplexityScore,12,12,0,0.8467521281859599
+tld,dev,HasDescription,14,13,1,0.6855549929717335
+tld,dev,HasSocialNet,15,14,1,0.6347435797615665
+tld,dev,NoOfJS,13,15,-2,0.6314371196598793
+tld,dev,TrustBadgeScore,16,16,0,0.6184270746996903
+tld,dev,URLCharProb,17,17,0,0.5612911199537064
+tld,dev,SubdomainRatio,19,18,1,0.49876309245424616
+tld,dev,DomainTitleMatchScore,18,19,-1,0.4165114815610327
+tld,dev,HasCopyrightInfo,20,20,0,0.3915280175994393
+tld,fr,LineOfCode,2,1,1,3.980193713125948
+tld,fr,IsHTTPS,3,2,1,3.337631575969344
+tld,fr,NoOfDegitsInURL,4,3,1,2.192171488026559
+tld,fr,LetterRatioInURL,1,4,-3,2.1628501287460535
+tld,fr,DomainLength,5,5,0,1.918459773484524
+tld,fr,NoOfSelfRef,6,6,0,1.7526341888452386
+tld,fr,NoOfOtherSpecialCharsInURL,7,7,0,1.4474274559190772
+tld,fr,NoOfExternalRef,9,8,1,1.3482434979933566
+tld,fr,LargestLineLength,8,9,-1,1.3136495228729597
+tld,fr,SpacialCharRatioInURL,10,10,0,1.1034987205196845
+tld,fr,NoOfImage,11,11,0,0.9461151372641042
+tld,fr,ContentComplexityScore,12,12,0,0.747486537634983
+tld,fr,NoOfJS,13,13,0,0.6243003971294285
+tld,fr,HasSocialNet,15,14,1,0.6217584523777558
+tld,fr,HasDescription,14,15,-1,0.5956839182628341
+tld,fr,TrustBadgeScore,16,16,0,0.5395296255594397
+tld,fr,DomainTitleMatchScore,18,17,1,0.4032059162886197
+tld,fr,URLCharProb,17,18,-1,0.3873108613063511
+tld,fr,HasCopyrightInfo,20,19,1,0.3831679887538996
+tld,fr,CharContinuationRate,21,20,1,0.30923866859831345
+tld,io,LetterRatioInURL,1,1,0,5.244210270438167
+tld,io,DomainLength,5,2,3,3.5594847010564656
+tld,io,LineOfCode,2,3,-1,3.1979073915540357
+tld,io,NoOfDegitsInURL,4,4,0,3.070134360054009
+tld,io,IsHTTPS,3,5,-2,3.0429680072929335
+tld,io,NoOfOtherSpecialCharsInURL,7,6,1,1.8845380317076883
+tld,io,NoOfSelfRef,6,7,-1,1.5065368591138564
+tld,io,LargestLineLength,8,8,0,1.1612399465029473
+tld,io,NoOfExternalRef,9,9,0,1.147638826102075
+tld,io,SpacialCharRatioInURL,10,10,0,1.0985184834291217
+tld,io,NoOfImage,11,11,0,0.8929056756630082
+tld,io,ContentComplexityScore,12,12,0,0.7704150284254091
+tld,io,URLCharProb,17,13,4,0.7629546808648632
+tld,io,NoOfJS,13,14,-1,0.701358596893305
+tld,io,HasSocialNet,15,15,0,0.6115874392876506
+tld,io,HasDescription,14,16,-2,0.6036886293705092
+tld,io,TrustBadgeScore,16,17,-1,0.5668712020727527
+tld,io,DomainTitleMatchScore,18,18,0,0.41900614719697626
+tld,io,CharContinuationRate,21,19,2,0.3902588827029457
+tld,io,NoOfSubDomain,23,20,3,0.3841281370494234
+tld,net,LetterRatioInURL,1,1,0,3.1386124383096754
+tld,net,LineOfCode,2,2,0,2.927116506495984
+tld,net,IsHTTPS,3,3,0,2.754443262963948
+tld,net,NoOfDegitsInURL,4,4,0,2.6100564931235493
+tld,net,DomainLength,5,5,0,2.161186505342163
+tld,net,NoOfSelfRef,6,6,0,1.4500185932591183
+tld,net,LargestLineLength,8,7,1,1.1896552372269795
+tld,net,NoOfOtherSpecialCharsInURL,7,8,-1,1.098605609068399
+tld,net,NoOfExternalRef,9,9,0,1.04398293598019
+tld,net,NoOfImage,11,10,1,0.9112687864932079
+tld,net,SpacialCharRatioInURL,10,11,-1,0.8380055058357383
+tld,net,ContentComplexityScore,12,12,0,0.6674436890416493
+tld,net,NoOfJS,13,13,0,0.6376405089629743
+tld,net,HasDescription,14,14,0,0.6146951071435632
+tld,net,HasSocialNet,15,15,0,0.6105555973799582
+tld,net,URLCharProb,17,16,1,0.5655862530693205
+tld,net,TrustBadgeScore,16,17,-1,0.5361896802583572
+tld,net,SubdomainRatio,19,18,1,0.4548714963581305
+tld,net,DomainTitleMatchScore,18,19,-1,0.4077544676107225
+tld,net,HasCopyrightInfo,20,20,0,0.37295017572046224
+tld,new_generic,LineOfCode,2,1,1,3.3217754768572445
+tld,new_generic,LetterRatioInURL,1,2,-1,2.8934644887125835
+tld,new_generic,IsHTTPS,3,3,0,2.5839728330085245
+tld,new_generic,NoOfDegitsInURL,4,4,0,2.2498207373367523
+tld,new_generic,DomainLength,5,5,0,2.094472574728004
+tld,new_generic,NoOfSelfRef,6,6,0,1.6097393689564865
+tld,new_generic,LargestLineLength,8,7,1,1.4943269374948769
+tld,new_generic,SpacialCharRatioInURL,10,8,2,1.144291464945482
+tld,new_generic,NoOfExternalRef,9,9,0,1.1088876887551882
+tld,new_generic,NoOfImage,11,10,1,0.9721937861864032
+tld,new_generic,URLCharProb,17,11,6,0.8633732257448782
+tld,new_generic,NoOfOtherSpecialCharsInURL,7,12,-5,0.8531027816169683
+tld,new_generic,ContentComplexityScore,12,13,-1,0.6962830876694007
+tld,new_generic,NoOfJS,13,14,-1,0.6470327068145415
+tld,new_generic,HasSocialNet,15,15,0,0.6262826822807125
+tld,new_generic,HasDescription,14,16,-2,0.6249319011562628
+tld,new_generic,TrustBadgeScore,16,17,-1,0.5232844478228148
+tld,new_generic,SubdomainRatio,19,18,1,0.4813999648088875
+tld,new_generic,DomainTitleMatchScore,18,19,-1,0.42629856146237166
+tld,new_generic,HasCopyrightInfo,20,20,0,0.3808100319000295
+tld,org,LetterRatioInURL,1,1,0,3.31946650050966
+tld,org,LineOfCode,2,2,0,3.18657267200488
+tld,org,IsHTTPS,3,3,0,2.7527024023281115
+tld,org,DomainLength,5,4,1,2.301311851542854
+tld,org,NoOfDegitsInURL,4,5,-1,2.169393662809487
+tld,org,NoOfSelfRef,6,6,0,1.5919049258278422
+tld,org,NoOfOtherSpecialCharsInURL,7,7,0,1.2344849733718457
+tld,org,NoOfExternalRef,9,8,1,1.2300393787611665
+tld,org,LargestLineLength,8,9,-1,1.1682762776908249
+tld,org,SpacialCharRatioInURL,10,10,0,1.0530722825374257
+tld,org,NoOfImage,11,11,0,0.9933474441096646
+tld,org,ContentComplexityScore,12,12,0,0.7679936504263263
+tld,org,NoOfJS,13,13,0,0.6903923696132581
+tld,org,TrustBadgeScore,16,14,2,0.6368750347595248
+tld,org,HasSocialNet,15,15,0,0.6354276075429789
+tld,org,HasDescription,14,16,-2,0.6251938233911303
+tld,org,URLCharProb,17,17,0,0.51429279991895
+tld,org,SubdomainRatio,19,18,1,0.5122214807694236
+tld,org,DomainTitleMatchScore,18,19,-1,0.41088196223447004
+tld,org,HasCopyrightInfo,20,20,0,0.3845405308031676
+tld,rare,LineOfCode,2,1,1,3.0536606464104668
+tld,rare,LetterRatioInURL,1,2,-1,2.7813800610956156
+tld,rare,IsHTTPS,3,3,0,2.628218943162779
+tld,rare,NoOfDegitsInURL,4,4,0,2.042350480844689
+tld,rare,DomainLength,5,5,0,1.7889277782317468
+tld,rare,NoOfSelfRef,6,6,0,1.50497647554248
+tld,rare,NoOfOtherSpecialCharsInURL,7,7,0,1.3495516321098648
+tld,rare,LargestLineLength,8,8,0,1.3386076774913056
+tld,rare,NoOfExternalRef,9,9,0,1.1806472016130771
+tld,rare,SpacialCharRatioInURL,10,10,0,1.1057834355740421
+tld,rare,NoOfImage,11,11,0,0.9447037819543037
+tld,rare,ContentComplexityScore,12,12,0,0.7227882729052891
+tld,rare,NoOfJS,13,13,0,0.6951268050682229
+tld,rare,HasSocialNet,15,14,1,0.6336135283857004
+tld,rare,HasDescription,14,15,-1,0.6290186056153461
+tld,rare,TrustBadgeScore,16,16,0,0.5868097363863517
+tld,rare,URLCharProb,17,17,0,0.5316497142002929
+tld,rare,DomainTitleMatchScore,18,18,0,0.4213173141581914
+tld,rare,SubdomainRatio,19,19,0,0.3916341352756626
+tld,rare,HasCopyrightInfo,20,20,0,0.38568744950186945
+tld,ru,LineOfCode,2,1,1,3.4310470065338534
+tld,ru,IsHTTPS,3,2,1,3.1729666405325267
+tld,ru,LetterRatioInURL,1,3,-2,3.1490528530999975
+tld,ru,DomainLength,5,4,1,2.1576589821700987
+tld,ru,NoOfDegitsInURL,4,5,-1,2.0090379392311717
+tld,ru,NoOfSelfRef,6,6,0,1.4620289370996489
+tld,ru,NoOfExternalRef,9,7,2,1.255909637164784
+tld,ru,NoOfOtherSpecialCharsInURL,7,8,-1,1.0136736452689659
+tld,ru,SpacialCharRatioInURL,10,9,1,0.9552950421568963
+tld,ru,LargestLineLength,8,10,-2,0.9530886806437697
+tld,ru,NoOfImage,11,11,0,0.924645202374138
+tld,ru,ContentComplexityScore,12,12,0,0.7291308732134998
+tld,ru,NoOfJS,13,13,0,0.6453868321987349
+tld,ru,HasSocialNet,15,14,1,0.62719513200904
+tld,ru,HasDescription,14,15,-1,0.6269964646546226
+tld,ru,TrustBadgeScore,16,16,0,0.6139756461618431
+tld,ru,SubdomainRatio,19,17,2,0.5606757423711228
+tld,ru,URLCharProb,17,18,-1,0.5262517556481701
+tld,ru,DomainTitleMatchScore,18,19,-1,0.4192596268372173
+tld,ru,HasCopyrightInfo,20,20,0,0.3777585583244328
+tld,top,LetterRatioInURL,1,1,0,3.892193166747051
+tld,top,LineOfCode,2,2,0,3.450270969547798
+tld,top,IsHTTPS,3,3,0,3.197666380848049
+tld,top,NoOfDegitsInURL,4,4,0,2.585133106851958
+tld,top,DomainLength,5,5,0,2.246522313372621
+tld,top,NoOfOtherSpecialCharsInURL,7,6,1,2.0719818141104844
+tld,top,NoOfSelfRef,6,7,-1,1.6695978498303952
+tld,top,LargestLineLength,8,8,0,1.3531223979475002
+tld,top,SpacialCharRatioInURL,10,9,1,1.329916780016814
+tld,top,NoOfExternalRef,9,10,-1,1.2553437971485628
+tld,top,NoOfImage,11,11,0,0.9090542993205009
+tld,top,ContentComplexityScore,12,12,0,0.8311327392721062
+tld,top,NoOfJS,13,13,0,0.8081723092511952
+tld,top,TrustBadgeScore,16,14,2,0.6742578806277111
+tld,top,HasSocialNet,15,15,0,0.5999128851320509
+tld,top,HasDescription,14,16,-2,0.5652660160536681
+tld,top,SubdomainRatio,19,17,2,0.5221926114040225
+tld,top,URLCharProb,17,18,-1,0.45636453716964426
+tld,top,DomainTitleMatchScore,18,19,-1,0.37591460835600377
+tld,top,HasCopyrightInfo,20,20,0,0.3709066131137749
+tld,uk,LineOfCode,2,1,1,3.073152974922147
+tld,uk,IsHTTPS,3,2,1,3.0146349718432788
+tld,uk,LetterRatioInURL,1,3,-2,2.9361049505748524
+tld,uk,NoOfDegitsInURL,4,4,0,2.765402386249095
+tld,uk,DomainLength,5,5,0,2.068351625323634
+tld,uk,NoOfSelfRef,6,6,0,1.4963695542730993
+tld,uk,NoOfOtherSpecialCharsInURL,7,7,0,1.4881656038690863
+tld,uk,LargestLineLength,8,8,0,1.296389103148935
+tld,uk,SpacialCharRatioInURL,10,9,1,1.2213735185973102
+tld,uk,NoOfExternalRef,9,10,-1,1.1389481164455513
+tld,uk,NoOfImage,11,11,0,0.845340230381797
+tld,uk,NoOfJS,13,12,1,0.6733547763596256
+tld,uk,ContentComplexityScore,12,13,-1,0.6505474216360135
+tld,uk,HasSocialNet,15,14,1,0.6133563111294078
+tld,uk,HasDescription,14,15,-1,0.6073831114202062
+tld,uk,URLCharProb,17,16,1,0.5643090293109511
+tld,uk,TrustBadgeScore,16,17,-1,0.5083436274227072
+tld,uk,SubdomainRatio,19,18,1,0.4148609673917286
+tld,uk,DomainTitleMatchScore,18,19,-1,0.41105511350886165
+tld,uk,HasCopyrightInfo,20,20,0,0.3745221469563757
+domain_length,Long (>23),LineOfCode,2,1,1,3.1691966323518703
+domain_length,Long (>23),LetterRatioInURL,1,2,-1,3.1031556735298476
+domain_length,Long (>23),IsHTTPS,3,3,0,2.933608332320243
+domain_length,Long (>23),NoOfDegitsInURL,4,4,0,2.324918718796568
+domain_length,Long (>23),DomainLength,5,5,0,2.1143058791047173
+domain_length,Long (>23),NoOfSelfRef,6,6,0,1.5487730719149917
+domain_length,Long (>23),LargestLineLength,8,7,1,1.3725429456852185
+domain_length,Long (>23),NoOfOtherSpecialCharsInURL,7,8,-1,1.3339470322122544
+domain_length,Long (>23),NoOfExternalRef,9,9,0,1.1805863437197008
+domain_length,Long (>23),SpacialCharRatioInURL,10,10,0,1.0506878180481887
+domain_length,Long (>23),NoOfImage,11,11,0,0.9633525705922275
+domain_length,Long (>23),ContentComplexityScore,12,12,0,0.7460458619995594
+domain_length,Long (>23),NoOfJS,13,13,0,0.705540437305071
+domain_length,Long (>23),HasSocialNet,15,14,1,0.6202859121589739
+domain_length,Long (>23),HasDescription,14,15,-1,0.6129311824020506
+domain_length,Long (>23),TrustBadgeScore,16,16,0,0.5982819385400938
+domain_length,Long (>23),URLCharProb,17,17,0,0.540639219844949
+domain_length,Long (>23),DomainTitleMatchScore,18,18,0,0.41204430668811276
+domain_length,Long (>23),SubdomainRatio,19,19,0,0.3930223671721223
+domain_length,Long (>23),HasCopyrightInfo,20,20,0,0.3786384427700057
+domain_length,Medium (17-23),LetterRatioInURL,1,1,0,3.214001417858535
+domain_length,Medium (17-23),LineOfCode,2,2,0,3.0577684944859698
+domain_length,Medium (17-23),IsHTTPS,3,3,0,2.888269633737808
+domain_length,Medium (17-23),NoOfDegitsInURL,4,4,0,2.3565760963867426
+domain_length,Medium (17-23),DomainLength,5,5,0,2.149329024141911
+domain_length,Medium (17-23),NoOfSelfRef,6,6,0,1.559461281713999
+domain_length,Medium (17-23),NoOfOtherSpecialCharsInURL,7,7,0,1.3017543976510035
+domain_length,Medium (17-23),LargestLineLength,8,8,0,1.2401707281698704
+domain_length,Medium (17-23),NoOfExternalRef,9,9,0,1.1627046766359557
+domain_length,Medium (17-23),SpacialCharRatioInURL,10,10,0,1.0422812162539647
+domain_length,Medium (17-23),NoOfImage,11,11,0,0.9110658917273085
+domain_length,Medium (17-23),ContentComplexityScore,12,12,0,0.7191543544463858
+domain_length,Medium (17-23),NoOfJS,13,13,0,0.6994026710337424
+domain_length,Medium (17-23),HasSocialNet,15,14,1,0.6261806319821492
+domain_length,Medium (17-23),HasDescription,14,15,-1,0.6259017026943058
+domain_length,Medium (17-23),TrustBadgeScore,16,16,0,0.5754144305797297
+domain_length,Medium (17-23),URLCharProb,17,17,0,0.545250048512798
+domain_length,Medium (17-23),SubdomainRatio,19,18,1,0.42597034886200325
+domain_length,Medium (17-23),DomainTitleMatchScore,18,19,-1,0.4155722522527747
+domain_length,Medium (17-23),HasCopyrightInfo,20,20,0,0.38284532097389734
+domain_length,Short (≤17),LineOfCode,2,1,1,3.1672481831032315
+domain_length,Short (≤17),LetterRatioInURL,1,2,-1,2.980402152503038
+domain_length,Short (≤17),IsHTTPS,3,3,0,2.614407163488487
+domain_length,Short (≤17),NoOfDegitsInURL,4,4,0,2.362935863860556
+domain_length,Short (≤17),DomainLength,5,5,0,2.0694285413310882
+domain_length,Short (≤17),NoOfSelfRef,6,6,0,1.516705050928114
+domain_length,Short (≤17),NoOfOtherSpecialCharsInURL,7,7,0,1.2958662563235244
+domain_length,Short (≤17),LargestLineLength,8,8,0,1.2771010624449508
+domain_length,Short (≤17),NoOfExternalRef,9,9,0,1.1528742317737664
+domain_length,Short (≤17),SpacialCharRatioInURL,10,10,0,1.038285177949394
+domain_length,Short (≤17),NoOfImage,11,11,0,0.9683733233157942
+domain_length,Short (≤17),ContentComplexityScore,12,12,0,0.7527656359231798
+domain_length,Short (≤17),NoOfJS,13,13,0,0.7012577771051272
+domain_length,Short (≤17),HasSocialNet,15,14,1,0.6327655127973245
+domain_length,Short (≤17),HasDescription,14,15,-1,0.6264254151763514
+domain_length,Short (≤17),TrustBadgeScore,16,16,0,0.5834369822343628
+domain_length,Short (≤17),URLCharProb,17,17,0,0.5608162893618919
+domain_length,Short (≤17),SubdomainRatio,19,18,1,0.4254150608873297
+domain_length,Short (≤17),DomainTitleMatchScore,18,19,-1,0.4185075855372993
+domain_length,Short (≤17),HasCopyrightInfo,20,20,0,0.3868016791031783
+ext_resources,High (>34),LineOfCode,2,1,1,3.118843053781389
+ext_resources,High (>34),LetterRatioInURL,1,2,-1,2.8938680894079836
+ext_resources,High (>34),IsHTTPS,3,3,0,2.8259763309640036
+ext_resources,High (>34),NoOfDegitsInURL,4,4,0,2.3947448393140127
+ext_resources,High (>34),DomainLength,5,5,0,2.014491731464596
+ext_resources,High (>34),NoOfSelfRef,6,6,0,1.5364358620256107
+ext_resources,High (>34),NoOfOtherSpecialCharsInURL,7,7,0,1.315829357470673
+ext_resources,High (>34),LargestLineLength,8,8,0,1.246170286521133
+ext_resources,High (>34),NoOfExternalRef,9,9,0,1.162287502582625
+ext_resources,High (>34),SpacialCharRatioInURL,10,10,0,1.0386504243526729
+ext_resources,High (>34),NoOfImage,11,11,0,0.9354759113223372
+ext_resources,High (>34),ContentComplexityScore,12,12,0,0.7274891428495054
+ext_resources,High (>34),NoOfJS,13,13,0,0.7049526653451488
+ext_resources,High (>34),HasSocialNet,15,14,1,0.627571414147761
+ext_resources,High (>34),HasDescription,14,15,-1,0.6230232714568714
+ext_resources,High (>34),TrustBadgeScore,16,16,0,0.5709979180057496
+ext_resources,High (>34),URLCharProb,17,17,0,0.5581365112756291
+ext_resources,High (>34),DomainTitleMatchScore,18,18,0,0.4155903105957042
+ext_resources,High (>34),SubdomainRatio,19,19,0,0.41256663028957646
+ext_resources,High (>34),HasCopyrightInfo,20,20,0,0.3828901630218741
+ext_resources,Low (≤1),LetterRatioInURL,1,1,0,3.2636483235879172
+ext_resources,Low (≤1),LineOfCode,2,2,0,3.0985653183101474
+ext_resources,Low (≤1),IsHTTPS,3,3,0,2.780323352234095
+ext_resources,Low (≤1),NoOfDegitsInURL,4,4,0,2.3216348219268537
+ext_resources,Low (≤1),DomainLength,5,5,0,2.2583217679782477
+ext_resources,Low (≤1),NoOfSelfRef,6,6,0,1.505214123202468
+ext_resources,Low (≤1),NoOfOtherSpecialCharsInURL,7,7,0,1.324774205607724
+ext_resources,Low (≤1),LargestLineLength,8,8,0,1.3170500912433256
+ext_resources,Low (≤1),NoOfExternalRef,9,9,0,1.1883791609107175
+ext_resources,Low (≤1),SpacialCharRatioInURL,10,10,0,1.0234865849214196
+ext_resources,Low (≤1),NoOfImage,11,11,0,0.9677194385513405
+ext_resources,Low (≤1),ContentComplexityScore,12,12,0,0.757802350569795
+ext_resources,Low (≤1),NoOfJS,13,13,0,0.7084994158852315
+ext_resources,Low (≤1),HasSocialNet,15,14,1,0.628168596612818
+ext_resources,Low (≤1),HasDescription,14,15,-1,0.6208780773874455
+ext_resources,Low (≤1),TrustBadgeScore,16,16,0,0.6124211790533874
+ext_resources,Low (≤1),URLCharProb,17,17,0,0.5637212402430639
+ext_resources,Low (≤1),DomainTitleMatchScore,18,18,0,0.417890477355628
+ext_resources,Low (≤1),SubdomainRatio,19,19,0,0.400841429924508
+ext_resources,Low (≤1),HasCopyrightInfo,20,20,0,0.38437921887032683
+ext_resources,Medium (1-34),LineOfCode,2,1,1,3.1601407636304355
+ext_resources,Medium (1-34),LetterRatioInURL,1,2,-1,3.1567073879484164
+ext_resources,Medium (1-34),IsHTTPS,3,3,0,2.8271702761152073
+ext_resources,Medium (1-34),NoOfDegitsInURL,4,4,0,2.332287543470628
+ext_resources,Medium (1-34),DomainLength,5,5,0,2.0678394273873577
+ext_resources,Medium (1-34),NoOfSelfRef,6,6,0,1.5838485172642442
+ext_resources,Medium (1-34),LargestLineLength,8,7,1,1.3089684664287908
+ext_resources,Medium (1-34),NoOfOtherSpecialCharsInURL,7,8,-1,1.2876324260113323
+ext_resources,Medium (1-34),NoOfExternalRef,9,9,0,1.1440591708917363
+ext_resources,Medium (1-34),SpacialCharRatioInURL,10,10,0,1.0673307760999955
+ext_resources,Medium (1-34),NoOfImage,11,11,0,0.9326859951133141
+ext_resources,Medium (1-34),ContentComplexityScore,12,12,0,0.7291823974399285
+ext_resources,Medium (1-34),NoOfJS,13,13,0,0.692245443707939
+ext_resources,Medium (1-34),HasSocialNet,15,14,1,0.6242296703919759
+ext_resources,Medium (1-34),HasDescription,14,15,-1,0.6229705658328194
+ext_resources,Medium (1-34),TrustBadgeScore,16,16,0,0.5712394591826542
+ext_resources,Medium (1-34),URLCharProb,17,17,0,0.5259474039341313
+ext_resources,Medium (1-34),SubdomainRatio,19,18,1,0.4345982687516686
+ext_resources,Medium (1-34),DomainTitleMatchScore,18,19,-1,0.41313230849084437
+ext_resources,Medium (1-34),HasCopyrightInfo,20,20,0,0.381545159625061

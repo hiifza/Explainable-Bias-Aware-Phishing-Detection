@@ -1,0 +1,108 @@
+2026-06-19 11:18:27 | DEBUG    | src.models.xgboost_model                 | xgboost library found — using XGBClassifier
+2026-06-19 11:18:27 | DEBUG    | src.models.lightgbm_model                | lightgbm library found — using LGBMClassifier
+2026-06-19 11:20:13 | DEBUG    | src.models.xgboost_model                 | xgboost library found — using XGBClassifier
+2026-06-19 11:20:13 | DEBUG    | src.models.lightgbm_model                | lightgbm library found — using LGBMClassifier
+2026-06-19 11:20:15 | INFO     | src.explainability.shap_explainer        | shap 0.51.0 available — using native SHAP
+2026-06-19 11:20:15 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\logistic_regression.pkl
+2026-06-19 11:20:15 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\random_forest.pkl
+2026-06-19 11:20:15 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\xgboost.pkl
+2026-06-19 11:20:15 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\lightgbm.pkl
+2026-06-19 11:20:15 | INFO     | src.training.model_saver                 | Loaded 4/4 Track B models
+2026-06-19 11:20:15 | INFO     | src.bias.bias_analyzer                   | BIAS_model: Logistic Regression (LogisticRegression)
+2026-06-19 11:20:18 | INFO     | src.explainability.shap_explainer        | SHAP subsampled: 47,074 → 1,000 test rows
+2026-06-19 11:20:18 | INFO     | src.explainability.shap_explainer        | Native SHAP: linear explainer for LogisticRegression on 1,000 samples …
+2026-06-19 11:20:18 | INFO     | src.explainability.shap_explainer        | Native SHAP complete: shap_values shape=(1000, 56)  expected_value=0.468059
+2026-06-19 11:20:18 | INFO     | src.bias.group_evaluator                 | URL length groups: Q33=25 Q67=31
+2026-06-19 11:20:18 | INFO     | src.bias.group_evaluator                 | TLD groups: top-20 + 5 categories
+2026-06-19 11:20:18 | INFO     | src.bias.group_evaluator                 | URL length groups: Q33=25 Q67=31
+2026-06-19 11:20:18 | INFO     | src.bias.fairness_metrics                | [url_length] 3 groups  n_total=47,074
+2026-06-19 11:20:18 | INFO     | src.bias.fairness_metrics                | [https] 2 groups  n_total=47,074
+2026-06-19 11:20:18 | INFO     | src.bias.group_evaluator                 | TLD groups: top-20 + 5 categories
+2026-06-19 11:20:19 | INFO     | src.bias.fairness_metrics                | [tld] 25 groups  n_total=47,074
+2026-06-19 11:20:19 | INFO     | src.bias.fairness_metrics                | [domain_length] 3 groups  n_total=47,074
+2026-06-19 11:20:19 | INFO     | src.bias.fairness_metrics                | [ext_resources] 3 groups  n_total=47,074
+2026-06-19 11:20:26 | INFO     | src.bias.bias_analyzer                   | Saved: fpr_fnr_disparity.png
+2026-06-19 11:20:27 | INFO     | src.bias.bias_analyzer                   | Saved: accuracy_heatmap.png
+2026-06-19 11:20:27 | INFO     | src.bias.bias_analyzer                   | Saved: tld_fairness.png
+2026-06-19 11:20:28 | INFO     | src.bias.shap_bias_analysis              | Saved: shap_url_length.png
+2026-06-19 11:20:28 | INFO     | src.bias.shap_bias_analysis              | Saved: shap_https.png
+2026-06-19 11:20:31 | INFO     | src.bias.shap_bias_analysis              | Saved: shap_tld.png
+2026-06-19 11:20:31 | INFO     | src.bias.shap_bias_analysis              | Saved: shap_domain_length.png
+2026-06-19 11:20:32 | INFO     | src.bias.shap_bias_analysis              | Saved: shap_ext_resources.png
+2026-06-19 11:20:32 | INFO     | src.bias.shap_bias_analysis              | Saved: shap_bias_analysis.csv (540 rows)
+2026-06-19 11:20:32 | INFO     | src.bias.performance_investigator        | =======================================================
+2026-06-19 11:20:32 | INFO     | src.bias.performance_investigator        | M9 — NEAR-PERFECT PERFORMANCE INVESTIGATION
+2026-06-19 11:20:32 | INFO     | src.bias.performance_investigator        | =======================================================
+2026-06-19 11:20:32 | INFO     | src.bias.performance_investigator        |   Top-1  feature : 10.8% of importance
+2026-06-19 11:20:32 | INFO     | src.bias.performance_investigator        |   Top-3  features: 31.1%
+2026-06-19 11:20:32 | INFO     | src.bias.performance_investigator        |   Top-5  features: 46.4%
+2026-06-19 11:20:32 | INFO     | src.bias.performance_investigator        |   Top-10 features: 68.3%
+2026-06-19 11:20:32 | INFO     | src.bias.performance_investigator        |   Features for 80% importance: 15
+2026-06-19 11:20:32 | INFO     | src.bias.performance_investigator        |   Features for 95% importance: 29
+2026-06-19 11:20:33 | INFO     | src.bias.performance_investigator        | Saved: top_feature_dominance.png
+2026-06-19 11:20:39 | INFO     | src.bias.performance_investigator        | Saved: dataset_separability.png
+2026-06-19 11:20:39 | INFO     | src.bias.performance_investigator        | Saved: dominance_vs_remaining.png
+2026-06-19 11:20:39 | INFO     | src.bias.performance_investigator        | Saved: cumulative_shap_curve.png
+2026-06-19 11:20:40 | INFO     | src.bias.performance_investigator        | Saved: contribution_distribution.png
+2026-06-19 11:24:37 | INFO     | src.bias.performance_investigator        | =======================================================
+2026-06-19 11:24:37 | INFO     | src.bias.performance_investigator        | M9 — NEAR-PERFECT PERFORMANCE INVESTIGATION
+2026-06-19 11:24:37 | INFO     | src.bias.performance_investigator        | =======================================================
+2026-06-19 11:24:37 | INFO     | src.bias.performance_investigator        |   Top-1  feature : 10.8% of importance
+2026-06-19 11:24:37 | INFO     | src.bias.performance_investigator        |   Top-3  features: 31.1%
+2026-06-19 11:24:37 | INFO     | src.bias.performance_investigator        |   Top-5  features: 46.4%
+2026-06-19 11:24:37 | INFO     | src.bias.performance_investigator        |   Top-10 features: 68.3%
+2026-06-19 11:24:37 | INFO     | src.bias.performance_investigator        |   Features for 80% importance: 15
+2026-06-19 11:24:37 | INFO     | src.bias.performance_investigator        |   Features for 95% importance: 29
+2026-06-19 11:24:37 | INFO     | src.bias.performance_investigator        | Saved: top_feature_dominance.png
+2026-06-19 11:24:43 | INFO     | src.bias.performance_investigator        | Saved: dataset_separability.png
+2026-06-19 11:24:43 | INFO     | src.bias.performance_investigator        | Saved: dominance_vs_remaining.png
+2026-06-19 11:24:43 | INFO     | src.bias.performance_investigator        | Saved: cumulative_shap_curve.png
+2026-06-19 11:24:44 | INFO     | src.bias.performance_investigator        | Saved: contribution_distribution.png
+2026-06-19 11:24:54 | DEBUG    | src.models.xgboost_model                 | xgboost library found — using XGBClassifier
+2026-06-19 11:24:54 | DEBUG    | src.models.lightgbm_model                | lightgbm library found — using LGBMClassifier
+2026-06-19 11:24:54 | INFO     | src.explainability.shap_explainer        | shap 0.51.0 available — using native SHAP
+2026-06-19 11:24:54 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\logistic_regression.pkl
+2026-06-19 11:24:55 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\random_forest.pkl
+2026-06-19 11:24:55 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\xgboost.pkl
+2026-06-19 11:24:55 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\lightgbm.pkl
+2026-06-19 11:24:55 | INFO     | src.training.model_saver                 | Loaded 4/4 Track B models
+2026-06-19 11:24:55 | INFO     | src.bias.bias_analyzer                   | BIAS_model: Logistic Regression (LogisticRegression)
+2026-06-19 11:24:58 | INFO     | src.explainability.shap_explainer        | SHAP subsampled: 47,074 → 1,000 test rows
+2026-06-19 11:24:58 | INFO     | src.explainability.shap_explainer        | Native SHAP: linear explainer for LogisticRegression on 1,000 samples …
+2026-06-19 11:24:58 | INFO     | src.explainability.shap_explainer        | Native SHAP complete: shap_values shape=(1000, 56)  expected_value=0.468059
+2026-06-19 11:24:58 | INFO     | src.bias.group_evaluator                 | URL length groups: Q33=25 Q67=31
+2026-06-19 11:24:58 | INFO     | src.bias.group_evaluator                 | TLD groups: top-20 + 5 categories
+2026-06-19 11:24:58 | INFO     | src.bias.group_evaluator                 | URL length groups: Q33=25 Q67=31
+2026-06-19 11:24:58 | INFO     | src.bias.fairness_metrics                | [url_length] 3 groups  n_total=47,074
+2026-06-19 11:24:58 | INFO     | src.bias.fairness_metrics                | [https] 2 groups  n_total=47,074
+2026-06-19 11:24:58 | INFO     | src.bias.group_evaluator                 | TLD groups: top-20 + 5 categories
+2026-06-19 11:24:58 | INFO     | src.bias.fairness_metrics                | [tld] 25 groups  n_total=47,074
+2026-06-19 11:24:59 | INFO     | src.bias.fairness_metrics                | [domain_length] 3 groups  n_total=47,074
+2026-06-19 11:24:59 | INFO     | src.bias.fairness_metrics                | [ext_resources] 3 groups  n_total=47,074
+2026-06-19 11:25:05 | INFO     | src.bias.bias_analyzer                   | Saved: fpr_fnr_disparity.png
+2026-06-19 11:25:06 | INFO     | src.bias.bias_analyzer                   | Saved: accuracy_heatmap.png
+2026-06-19 11:25:06 | INFO     | src.bias.bias_analyzer                   | Saved: tld_fairness.png
+2026-06-19 11:25:07 | INFO     | src.bias.shap_bias_analysis              | Saved: shap_url_length.png
+2026-06-19 11:25:07 | INFO     | src.bias.shap_bias_analysis              | Saved: shap_https.png
+2026-06-19 11:25:10 | INFO     | src.bias.shap_bias_analysis              | Saved: shap_tld.png
+2026-06-19 11:25:11 | INFO     | src.bias.shap_bias_analysis              | Saved: shap_domain_length.png
+2026-06-19 11:25:11 | INFO     | src.bias.shap_bias_analysis              | Saved: shap_ext_resources.png
+2026-06-19 11:25:11 | INFO     | src.bias.shap_bias_analysis              | Saved: shap_bias_analysis.csv (540 rows)
+2026-06-19 11:25:12 | INFO     | src.bias.performance_investigator        | =======================================================
+2026-06-19 11:25:12 | INFO     | src.bias.performance_investigator        | M9 — NEAR-PERFECT PERFORMANCE INVESTIGATION
+2026-06-19 11:25:12 | INFO     | src.bias.performance_investigator        | =======================================================
+2026-06-19 11:25:12 | INFO     | src.bias.performance_investigator        |   Top-1  feature : 10.8% of importance
+2026-06-19 11:25:12 | INFO     | src.bias.performance_investigator        |   Top-3  features: 31.1%
+2026-06-19 11:25:12 | INFO     | src.bias.performance_investigator        |   Top-5  features: 46.4%
+2026-06-19 11:25:12 | INFO     | src.bias.performance_investigator        |   Top-10 features: 68.3%
+2026-06-19 11:25:12 | INFO     | src.bias.performance_investigator        |   Features for 80% importance: 15
+2026-06-19 11:25:12 | INFO     | src.bias.performance_investigator        |   Features for 95% importance: 29
+2026-06-19 11:25:12 | INFO     | src.bias.performance_investigator        | Saved: top_feature_dominance.png
+2026-06-19 11:25:18 | INFO     | src.bias.performance_investigator        | Saved: dataset_separability.png
+2026-06-19 11:25:18 | INFO     | src.bias.performance_investigator        | Saved: dominance_vs_remaining.png
+2026-06-19 11:25:19 | INFO     | src.bias.performance_investigator        | Saved: cumulative_shap_curve.png
+2026-06-19 11:25:20 | INFO     | src.bias.performance_investigator        | Saved: contribution_distribution.png
+2026-06-19 11:25:20 | INFO     | src.bias.performance_investigator        | Saved: usi_impact.png
+2026-06-19 11:25:21 | INFO     | src.bias.performance_investigator        | Saved: https_impact.png
+2026-06-19 11:25:21 | INFO     | src.bias.performance_investigator        | Performance investigation plots saved: 7
+2026-06-19 11:25:21 | INFO     | src.bias.bias_report                     | Bias report saved: C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\reports\bias_analysis_report.html

@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<title>M9 Bias Analysis — Phishing Detection</title><style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,sans-serif;font-size:14px;color:#1a1a1a;
+     max-width:1140px;margin:40px auto;padding:0 26px 80px}
+h1{font-size:22px;font-weight:700;border-bottom:3px solid #185FA5;padding-bottom:12px;margin-bottom:6px}
+h2{font-size:16px;font-weight:600;color:#185FA5;margin:32px 0 10px;border-left:4px solid #185FA5;padding-left:10px}
+h3{font-size:14px;font-weight:600;color:#333;margin:16px 0 8px}
+p{line-height:1.65;color:#444;margin-bottom:10px}
+p.meta{font-size:12px;color:#888;margin-bottom:22px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0 20px}
+th{background:#E6F1FB;padding:8px 12px;text-align:left;border:1px solid #B5D4F4;font-weight:600;white-space:nowrap}
+td{padding:7px 12px;border:1px solid #ddd}
+tr:nth-child(even) td{background:#F8FBFF}
+code{font-family:monospace;font-size:12px;background:#F1F3F5;padding:2px 5px;border-radius:3px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:12px 0 20px}
+.card{border:1px solid #B5D4F4;border-radius:8px;padding:13px 17px;background:#F0F7FF}
+.card-v{font-size:24px;font-weight:700;color:#185FA5}.card-l{font-size:12px;color:#666;margin-top:3px}
+.alert{border-left:4px solid #E24B4A;background:#FCEBEB;padding:10px 14px;border-radius:0 6px 6px 0;margin:10px 0}
+.warn{border-left:4px solid #EF9F27;background:#FAEEDA;padding:10px 14px;border-radius:0 6px 6px 0;margin:10px 0}
+.ok{border-left:4px solid #1D9E75;background:#E1F5EE;padding:10px 14px;border-radius:0 6px 6px 0;margin:10px 0}
+.info{border-left:4px solid #378ADD;background:#E6F1FB;padding:10px 14px;border-radius:0 6px 6px 0;margin:10px 0}
+.perf{border:2px solid #185FA5;background:#F0F7FF;border-radius:8px;padding:16px 20px;margin:16px 0}
+img{max-width:100%;border:1px solid #ddd;border-radius:6px;margin:6px 0;display:block}
+.img2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.footer{font-size:12px;color:#aaa;margin-top:56px;border-top:1px solid #eee;padding-top:16px}
+</style></head><body>
+<h1>Module M9.1–M9.3 — Bias &amp; Fairness Analysis</h1>
+<p class="meta">Project: Explainable and Bias-Aware ML | Generated: 2026-06-19 11:36:18 | Test samples: 47,074</p>
+<h2>1. Executive Summary</h2>
+<div class="grid3">
+  <div class="card"><div class="card-v">47,074</div><div class="card-l">Test samples</div></div>
+  <div class="card"><div class="card-v">5</div><div class="card-l">Bias dimensions</div></div>
+  <div class="card"><div class="card-v">0.0040</div><div class="card-l">Max FPR disparity</div></div>
+</div>
+<div class="ok">
+<strong>Most biased:</strong> tld (FPR disp=0.0040, worst=top)</div>
+<div class="ok"><strong>Least biased:</strong> ext_resources (FPR disp=0.0002)</div>
+<table><tr><th>Finding</th><th>Group</th><th>Dimension</th><th>Value</th></tr>
+<tr><td>Highest FPR</td><td><code>top</code></td><td>tld</td><td>0.0040</td></tr>
+<tr><td>Highest FNR</td><td><code>Long (>31)</code></td><td>url_length</td><td>0.0000</td></tr>
+</table>
+<figure><img src='../../outputs\plots\bias\disparity\accuracy_heatmap.png' alt='Mean metric heatmap'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Mean metric heatmap</figcaption></figure><figure><img src='../../outputs\plots\bias\disparity\fpr_fnr_disparity.png' alt='FPR/FNR disparity'><figcaption style='font-size:11px;color:#888;margin-top:4px'>FPR/FNR disparity</figcaption></figure>
+<h2>2. URL Length Group Analysis</h2><figure><img src='../../outputs\plots\bias\url_length\url_length_fpr.png' alt='FPR by URL length'><figcaption style='font-size:11px;color:#888;margin-top:4px'>FPR by URL length</figcaption></figure><table><thead><tr><th>group</th><th>n</th><th>accuracy</th><th>f1</th><th>roc_auc</th><th>fpr</th><th>fnr</th></tr></thead><tbody><tr><td>Long (>31)</td><td>15030</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>Medium (25-31)</td><td>14411</td><td>0.9999</td><td>0.9999</td><td>1.0000</td><td>0.0003</td><td>0.0000</td></tr>
+<tr><td>Short (≤25)</td><td>17633</td><td>0.9999</td><td>0.9999</td><td>1.0000</td><td>0.0004</td><td>0.0000</td></tr>
+</tbody></table>
+<h2>3. HTTPS Group Analysis</h2><figure><img src='../../outputs\plots\bias\https\https_fpr.png' alt='FPR by HTTPS group'><figcaption style='font-size:11px;color:#888;margin-top:4px'>FPR by HTTPS group</figcaption></figure><table><thead><tr><th>group</th><th>n</th><th>accuracy</th><th>f1</th><th>roc_auc</th><th>fpr</th><th>fnr</th></tr></thead><tbody><tr><td>Non-HTTPS</td><td>10194</td><td>1.0000</td><td>1.0000</td><td>nan</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>HTTPS</td><td>36880</td><td>0.9999</td><td>0.9999</td><td>1.0000</td><td>0.0003</td><td>0.0000</td></tr>
+</tbody></table>
+<h2>4. TLD Group Fairness</h2><figure><img src='../../outputs\plots\bias\tld\tld_fairness.png' alt='TLD fairness'><figcaption style='font-size:11px;color:#888;margin-top:4px'>TLD fairness</figcaption></figure><table><thead><tr><th>group</th><th>n</th><th>accuracy</th><th>f1</th><th>roc_auc</th><th>fpr</th><th>fnr</th></tr></thead><tbody><tr><td>app</td><td>1271</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>au</td><td>562</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>br</td><td>369</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>co</td><td>1113</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>commercial</td><td>94</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>country_code</td><td>1180</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>de</td><td>785</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>dev</td><td>491</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>info</td><td>312</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>edu</td><td>380</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>fr</td><td>410</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>gov/edu</td><td>340</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>it</td><td>343</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>io</td><td>844</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>jp</td><td>442</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>net</td><td>1349</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>rare</td><td>6964</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>new_generic</td><td>361</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>nl</td><td>323</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>org</td><td>3733</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>site</td><td>298</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>ru</td><td>792</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>uk</td><td>1267</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>com</td><td>22550</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0001</td><td>0.0000</td></tr>
+<tr><td>top</td><td>501</td><td>0.9960</td><td>0.9980</td><td>nan</td><td>0.0040</td><td>0.0000</td></tr>
+</tbody></table>
+<h2>5. Domain Length Analysis</h2><figure><img src='../../outputs\plots\bias\domain_length\domain_length_fpr.png' alt='FPR by domain length'><figcaption style='font-size:11px;color:#888;margin-top:4px'>FPR by domain length</figcaption></figure><table><thead><tr><th>group</th><th>n</th><th>accuracy</th><th>f1</th><th>roc_auc</th><th>fpr</th><th>fnr</th></tr></thead><tbody><tr><td>Long (>23)</td><td>13607</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>Medium (17-23)</td><td>16954</td><td>0.9999</td><td>0.9999</td><td>1.0000</td><td>0.0002</td><td>0.0000</td></tr>
+<tr><td>Short (≤17)</td><td>16513</td><td>0.9999</td><td>0.9999</td><td>1.0000</td><td>0.0003</td><td>0.0000</td></tr>
+</tbody></table>
+<h2>6. External Resource Analysis</h2><figure><img src='../../outputs\plots\bias\ext_resources\ext_resources_fpr.png' alt='FPR by external resources'><figcaption style='font-size:11px;color:#888;margin-top:4px'>FPR by external resources</figcaption></figure><table><thead><tr><th>group</th><th>n</th><th>accuracy</th><th>f1</th><th>roc_auc</th><th>fpr</th><th>fnr</th></tr></thead><tbody><tr><td>High (>34)</td><td>15360</td><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>0.0000</td><td>0.0000</td></tr>
+<tr><td>Low (≤1)</td><td>15748</td><td>0.9999</td><td>0.9999</td><td>1.0000</td><td>0.0001</td><td>0.0000</td></tr>
+<tr><td>Medium (1-34)</td><td>15966</td><td>0.9999</td><td>0.9999</td><td>1.0000</td><td>0.0002</td><td>0.0000</td></tr>
+</tbody></table>
+<h2>7. Full Disparity Table</h2><table><thead><tr><th>metric</th><th>dimension</th><th>best_group</th><th>best_value</th><th>worst_group</th><th>worst_value</th><th>disparity</th></tr></thead><tbody><tr><td>accuracy</td><td>url_length</td><td>Long (>31)</td><td>1.0</td><td>Short (≤25)</td><td>0.9999</td><td>0.0001</td></tr><tr><td>precision</td><td>url_length</td><td>Long (>31)</td><td>1.0</td><td>Short (≤25)</td><td>0.9999</td><td>0.0001</td></tr><tr><td>recall</td><td>url_length</td><td>Long (>31)</td><td>1.0</td><td>Short (≤25)</td><td>0.9999</td><td>0.0001</td></tr><tr><td>f1</td><td>url_length</td><td>Long (>31)</td><td>1.0</td><td>Short (≤25)</td><td>0.9999</td><td>0.0001</td></tr><tr><td>roc_auc</td><td>url_length</td><td>Long (>31)</td><td>1.0</td><td>Long (>31)</td><td>1.0</td><td>0.0</td></tr><tr><td>fpr</td><td>url_length</td><td>Long (>31)</td><td>0.0</td><td>Short (≤25)</td><td>0.0004</td><td>0.0004</td></tr><tr><td>fnr</td><td>url_length</td><td>Long (>31)</td><td>0.0</td><td>Long (>31)</td><td>0.0</td><td>0.0</td></tr><tr><td>accuracy</td><td>https</td><td>Non-HTTPS</td><td>1.0</td><td>HTTPS</td><td>0.9999</td><td>0.0001</td></tr><tr><td>precision</td><td>https</td><td>Non-HTTPS</td><td>1.0</td><td>HTTPS</td><td>0.9999</td><td>0.0001</td></tr><tr><td>recall</td><td>https</td><td>Non-HTTPS</td><td>1.0</td><td>HTTPS</td><td>0.9999</td><td>0.0001</td></tr><tr><td>f1</td><td>https</td><td>Non-HTTPS</td><td>1.0</td><td>HTTPS</td><td>0.9999</td><td>0.0001</td></tr><tr><td>roc_auc</td><td>https</td><td>HTTPS</td><td>1.0</td><td>HTTPS</td><td>1.0</td><td>0.0</td></tr><tr><td>fpr</td><td>https</td><td>Non-HTTPS</td><td>0.0</td><td>HTTPS</td><td>0.0003</td><td>0.0003</td></tr><tr><td>fnr</td><td>https</td><td>HTTPS</td><td>0.0</td><td>HTTPS</td><td>0.0</td><td>0.0</td></tr><tr><td>accuracy</td><td>tld</td><td>app</td><td>1.0</td><td>top</td><td>0.996</td><td>0.004</td></tr><tr><td>precision</td><td>tld</td><td>app</td><td>1.0</td><td>com</td><td>1.0</td><td>0.0</td></tr><tr><td>recall</td><td>tld</td><td>app</td><td>1.0</td><td>top</td><td>0.996</td><td>0.004</td></tr><tr><td>f1</td><td>tld</td><td>app</td><td>1.0</td><td>top</td><td>0.998</td><td>0.002</td></tr><tr><td>roc_auc</td><td>tld</td><td>app</td><td>1.0</td><td>app</td><td>1.0</td><td>0.0</td></tr><tr><td>fpr</td><td>tld</td><td>app</td><td>0.0</td><td>top</td><td>0.004</td><td>0.004</td></tr><tr><td>fnr</td><td>tld</td><td>app</td><td>0.0</td><td>app</td><td>0.0</td><td>0.0</td></tr><tr><td>accuracy</td><td>domain_length</td><td>Long (>23)</td><td>1.0</td><td>Short (≤17)</td><td>0.9999</td><td>0.0001</td></tr><tr><td>precision</td><td>domain_length</td><td>Long (>23)</td><td>1.0</td><td>Short (≤17)</td><td>0.9999</td><td>0.0001</td></tr><tr><td>recall</td><td>domain_length</td><td>Long (>23)</td><td>1.0</td><td>Short (≤17)</td><td>0.9999</td><td>0.0001</td></tr><tr><td>f1</td><td>domain_length</td><td>Long (>23)</td><td>1.0</td><td>Short (≤17)</td><td>0.9999</td><td>0.0001</td></tr><tr><td>roc_auc</td><td>domain_length</td><td>Long (>23)</td><td>1.0</td><td>Long (>23)</td><td>1.0</td><td>0.0</td></tr><tr><td>fpr</td><td>domain_length</td><td>Long (>23)</td><td>0.0</td><td>Short (≤17)</td><td>0.0003</td><td>0.0003</td></tr><tr><td>fnr</td><td>domain_length</td><td>Long (>23)</td><td>0.0</td><td>Long (>23)</td><td>0.0</td><td>0.0</td></tr><tr><td>accuracy</td><td>ext_resources</td><td>High (>34)</td><td>1.0</td><td>Low (≤1)</td><td>0.9999</td><td>0.0001</td></tr><tr><td>precision</td><td>ext_resources</td><td>High (>34)</td><td>1.0</td><td>Low (≤1)</td><td>0.9999</td><td>0.0001</td></tr><tr><td>recall</td><td>ext_resources</td><td>High (>34)</td><td>1.0</td><td>Low (≤1)</td><td>0.9999</td><td>0.0001</td></tr><tr><td>f1</td><td>ext_resources</td><td>High (>34)</td><td>1.0</td><td>Low (≤1)</td><td>0.9999</td><td>0.0001</td></tr><tr><td>roc_auc</td><td>ext_resources</td><td>High (>34)</td><td>1.0</td><td>Low (≤1)</td><td>1.0</td><td>0.0</td></tr><tr><td>fpr</td><td>ext_resources</td><td>High (>34)</td><td>0.0</td><td>Medium (1-34)</td><td>0.0002</td><td>0.0002</td></tr><tr><td>fnr</td><td>ext_resources</td><td>High (>34)</td><td>0.0</td><td>High (>34)</td><td>0.0</td><td>0.0</td></tr></tbody></table>
+<h2>8. SHAP-Based Bias Analysis</h2><figure><img src='../../outputs\plots\bias\shap_groups\shap_url_length.png' alt='SHAP importance — Url Length'><figcaption style='font-size:11px;color:#888;margin-top:4px'>SHAP importance — Url Length</figcaption></figure><figure><img src='../../outputs\plots\bias\shap_groups\shap_https.png' alt='SHAP importance — Https'><figcaption style='font-size:11px;color:#888;margin-top:4px'>SHAP importance — Https</figcaption></figure><figure><img src='../../outputs\plots\bias\shap_groups\shap_tld.png' alt='SHAP importance — Tld'><figcaption style='font-size:11px;color:#888;margin-top:4px'>SHAP importance — Tld</figcaption></figure><figure><img src='../../outputs\plots\bias\shap_groups\shap_domain_length.png' alt='SHAP importance — Domain Length'><figcaption style='font-size:11px;color:#888;margin-top:4px'>SHAP importance — Domain Length</figcaption></figure><figure><img src='../../outputs\plots\bias\shap_groups\shap_ext_resources.png' alt='SHAP importance — Ext Resources'><figcaption style='font-size:11px;color:#888;margin-top:4px'>SHAP importance — Ext Resources</figcaption></figure>
+
+<h2 style='border-left:4px solid #E24B4A;color:#A32D2D'>Explaining the Near-Perfect Model Performance</h2>
+<div class="perf">
+  <strong>Observation:</strong> ROC-AUC ≈ 1.0, Accuracy ≈ 99.98%, F1 ≈ 99.98%<br>
+  <strong>Primary cause:</strong> Dataset contains highly discriminative features with near-zero class overlap.<br>
+  Top feature: <code>LineOfCode</code> | Top-3: <code>LineOfCode</code>, <code>LetterRatioInURL</code>, <code>IsHTTPS</code>
+</div>
+<div class="grid3">
+  <div class="card"><div class="card-v">10.8%</div><div class="card-l">Top-1 feature importance</div></div>
+  <div class="card"><div class="card-v">46.5%</div><div class="card-l">Top-5 features importance</div></div>
+  <div class="card"><div class="card-v">15</div><div class="card-l">Features for 80% importance</div></div>
+</div>
+<div class="warn">
+  <strong>Feature concentration:</strong> Top-3 features account for 31.1% of model decisions.
+  Top-10 account for 68.3%. Model is highly dependent on a small feature subset.
+</div>
+<h3>Visualisation 1 — Top Feature Dominance</h3>
+<figure><img src='../../outputs\plots\bias\performance_investigation\top_feature_dominance.png' alt='Top-10 SHAP relative contribution'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Top-10 SHAP relative contribution</figcaption></figure>
+<h3>Visualisation 2 — Dataset Separability</h3>
+<figure><img src='../../outputs\plots\bias\performance_investigation\dataset_separability.png' alt='Class-separated distributions of top features'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Class-separated distributions of top features</figcaption></figure>
+<h3>Visualisation 3 — Feature Dominance vs Remaining</h3>
+<figure><img src='../../outputs\plots\bias\performance_investigation\dominance_vs_remaining.png' alt='Top-N vs remaining feature importance share'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Top-N vs remaining feature importance share</figcaption></figure>
+<h3>Visualisation 4 — Cumulative SHAP Importance Curve</h3>
+<figure><img src='../../outputs\plots\bias\performance_investigation\cumulative_shap_curve.png' alt='Cumulative importance — steep rise confirms concentration'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Cumulative importance — steep rise confirms concentration</figcaption></figure>
+<h3>Visualisation 5 — Feature Contribution Distribution</h3>
+<figure><img src='../../outputs\plots\bias\performance_investigation\contribution_distribution.png' alt='Heavy right tail confirms extreme feature dominance'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Heavy right tail confirms extreme feature dominance</figcaption></figure>
+<h3>Visualisation 6 — URLSimilarityIndex Impact (Track A leakage)</h3>
+<figure><img src='../../outputs\plots\bias\performance_investigation\usi_impact.png' alt='ALL legitimate sites have URLSimilarityIndex=100.0'><figcaption style='font-size:11px;color:#888;margin-top:4px'>ALL legitimate sites have URLSimilarityIndex=100.0</figcaption></figure>
+<h3>Visualisation 7 — HTTPS Impact</h3>
+<figure><img src='../../outputs\plots\bias\performance_investigation\https_impact.png' alt='ALL legitimate sites use HTTPS → strong separating signal'><figcaption style='font-size:11px;color:#888;margin-top:4px'>ALL legitimate sites use HTTPS → strong separating signal</figcaption></figure>
+<h3>Conclusions</h3>
+<ul style='margin:10px 0 10px 20px'>
+<li style="margin:4px 0">Dataset appears intrinsically separable — non-overlapping class distributions explain AUC≈1.0</li><li style="margin:4px 0">Near-perfect performance is REAL for this dataset but may not generalise to adversarial evasion</li>
+</ul>
+<h2>10. Recommendations</h2>
+<div class="alert"><strong>Risk:</strong> Group <code>top</code> has FPR=0.0040 — investigate training data coverage.</div>
+<div class="warn"><strong>Detection gap:</strong> Group <code>Long (>31)</code> has FNR=0.0000 — phishing more likely to evade.</div>
+<p class="footer">M9 complete. Next: M10 — Blind Spot Analysis.</p></body></html>

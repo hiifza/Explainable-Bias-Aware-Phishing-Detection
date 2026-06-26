@@ -2,604 +2,484 @@
 
 # 🛡️ Explainable & Bias-Aware Phishing Website Detection
 
-### Explainable Cybersecurity Intelligence using Machine Learning, SHAP, LIME, Fairness Analysis, and Trustworthy AI
+### Using Interpretable Cybersecurity Analytics
 
-<p align="center">
-<img src="https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge">
-<img src="https://img.shields.io/badge/Scikit--Learn-Machine%20Learning-orange?style=for-the-badge">
-<img src="https://img.shields.io/badge/SHAP-Explainable%20AI-green?style=for-the-badge">
-<img src="https://img.shields.io/badge/LIME-Interpretability-success?style=for-the-badge">
-<img src="https://img.shields.io/badge/Cybersecurity-Phishing%20Detection-red?style=for-the-badge">
-<img src="https://img.shields.io/badge/Fairness-Bias%20Analysis-purple?style=for-the-badge">
-</p>
+<br>
 
-### Building Cybersecurity Systems That Security Analysts Can Understand, Trust, and Validate
+![Python](https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python)
+![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-Machine%20Learning-orange?style=for-the-badge)
+![LightGBM](https://img.shields.io/badge/LightGBM-Deployment-success?style=for-the-badge)
+![SHAP](https://img.shields.io/badge/Explainability-SHAP-purple?style=for-the-badge)
+![LIME](https://img.shields.io/badge/Explainability-LIME-yellow?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-red?style=for-the-badge)
 
-Unlike traditional phishing detection systems that stop at prediction, this project investigates **why a website is classified as phishing, whether the decision is trustworthy, whether bias exists, and what hidden weaknesses remain inside the model.**
+<br>
+
+### Building Transparent, Fair and Explainable Machine Learning Systems for Cybersecurity
 
 </div>
 
 ---
 
-# 🚀 Project Highlights
+# 📖 Overview
 
-| Category                         | Result                        |
-| -------------------------------- | ----------------------------- |
-| Dataset                          | PhiUSIIL Phishing URL Dataset |
-| Total Samples                    | 235,795                       |
-| Original Features                | 56                            |
-| Final Deployment Features        | 56                            |
-| Models Trained                   | 4                             |
-| ROC-AUC                          | ~1.000                        |
-| Accuracy                         | ~99.98–100%                   |
-| F1 Score                         | ~99.98–100%                   |
-| SHAP Features Explained          | 56                            |
-| SHAP-LIME Agreement              | 52%                           |
-| Feature Consistency Score        | 60%                           |
-| Most Biased Dimension            | TLD                           |
-| SHAP Rank Shifts Identified      | 540                           |
-| Performance Investigation Charts | 7                             |
+Modern phishing attacks increasingly mimic legitimate websites, making them difficult to detect using conventional security techniques. Although machine learning models achieve excellent predictive performance, they often provide little explanation for *why* a website is classified as phishing.
+
+This project presents an **end-to-end cybersecurity intelligence framework** that combines high-performance phishing detection with **Explainable AI**, **Fairness Evaluation**, **Reliability Assessment**, and **Blind Spot Discovery**.
+
+Rather than focusing solely on classification accuracy, the framework investigates how machine learning models make decisions, where they fail, and how reliable those decisions are, enabling transparent and trustworthy AI-assisted cybersecurity.
 
 ---
 
-# 🎯 Project Goal
+# ✨ At a Glance
 
-Phishing websites remain one of the most common cybersecurity threats.
-
-Attackers continuously create fake websites designed to steal:
-
-* User Credentials
-* Banking Information
-* Personal Data
-* Corporate Assets
-* Sensitive Organizational Information
-
-Most machine learning systems focus on answering only one question:
-
-> Is this website phishing?
-
-This project goes much further.
-
-It attempts to answer:
-
-> Why was the website classified as phishing?
-
-> Which features influenced the decision?
-
-> Can the explanation be trusted?
-
-> Is the model biased?
-
-> Why does the model achieve near-perfect performance?
-
-> Where could the model still fail?
-
-The objective is to build a **Trustworthy Cybersecurity Intelligence Framework** rather than a simple phishing classifier.
+| | |
+|:--|:--|
+| 📊 **Dataset** | **235,795** Website Samples |
+| 🧩 **Features** | **56 Engineered Features** |
+| 🤖 **Models** | Logistic Regression, Random Forest, XGBoost & LightGBM |
+| 🏆 **Deployment Model** | **LightGBM (Track B)** |
+| 🧠 **Explainability** | SHAP & LIME |
+| ⚖️ **Trustworthiness** | Bias & Fairness Evaluation |
+| 🚨 **Security Intelligence** | Blind Spot Discovery |
 
 ---
 
-# 🔍 What Makes This Project Different?
+# 📈 Performance Snapshot
 
-Traditional phishing detection projects typically follow:
-
-```text
-Website
-    ↓
-Machine Learning Model
-    ↓
-Prediction
-```
-
-This project extends the pipeline significantly:
-
-```text
-Website
-    ↓
-Feature Engineering
-    ↓
-Machine Learning
-    ↓
-Prediction
-    ↓
-SHAP Explainability
-    ↓
-LIME Explainability
-    ↓
-Bias Analysis
-    ↓
-Performance Investigation
-    ↓
-Blind Spot Discovery
-    ↓
-Cybersecurity Intelligence
-```
-
-The focus is not merely achieving high accuracy.
-
-The focus is understanding, validating, and trusting every model decision.
+| Metric | Value |
+|:----------------------------|:------------:|
+| Dataset Size | **235,795** |
+| Features | **56** |
+| Models Evaluated | **4** |
+| Best Accuracy | **99.99%+** |
+| ROC–AUC | **1.00** |
+| Deployment Model | **LightGBM (Track B)** |
+| Fairness Status | ✅ PASS |
+| Critical Blind Spots | **3** |
 
 ---
 
-# 🏗️ System Architecture
+# 🖼️ Project Preview
 
-```text
-┌──────────────────────┐
-│   Website Features   │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ Feature Engineering  │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ Machine Learning     │
-│ Models               │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ Prediction Engine    │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ SHAP Analysis        │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ LIME Analysis        │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ Bias Investigation   │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ Performance          │
-│ Investigation        │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ Security Intelligence│
-└──────────────────────┘
-```
+<div align="center">
 
----
+### Model Benchmark
 
-# 📊 Dataset
+<img src="outputs/plots/training/benchmark_roc_auc.png" width="90%">
 
-## PhiUSIIL Phishing URL Dataset
-
-A large-scale cybersecurity dataset containing phishing and legitimate websites represented through URL, domain, content, behavioral, and security-related indicators.
-
-The dataset provides a rich collection of features suitable for phishing website detection, explainability analysis, and fairness evaluation.
-
-### Dataset Summary
-
-| Metric              | Value         |
-| ------------------- | ------------- |
-| Total Samples       | 235,795       |
-| Legitimate Websites | 134,850       |
-| Phishing Websites   | 100,945       |
-| Original Features   | 56            |
-| Missing Values      | 0             |
-| Target Variable     | Label         |
-| Domain              | Cybersecurity |
-
-### Dataset Source
-
-PhiUSIIL Phishing URL Dataset
-
-https://www.kaggle.com/datasets/kaggleprollc/phishing-url-websites-dataset-phiusiil
+<br><br>
 
 ### Dataset Distribution
 
-<div align="center">
-
-<img src="outputs/plots/eda/class_distribution.png" width="320">
+<img src="outputs/plots/eda/class_distribution.png" width="70%">
 
 </div>
 
-<p align="center">
-Class Distribution of Legitimate and Phishing Websites
-</p>
+---
+
+# 🎯 Project Objectives
+
+- Detect phishing websites using advanced machine learning techniques.
+- Interpret model predictions using SHAP and LIME.
+- Evaluate fairness across multiple website characteristics.
+- Discover critical blind spots and high-risk prediction failures.
+- Build an explainable and trustworthy cybersecurity intelligence framework.
+
+---
+# 🚀 Research Pipeline
+
+The framework follows a modular pipeline that transforms raw phishing website data into actionable cybersecurity intelligence. Each stage contributes a specific capability, enabling not only accurate phishing detection but also transparent model interpretation, fairness evaluation, and reliability assessment.
 
 ---
 
-# 🔬 Feature Audit & Leakage Investigation
+<div align="center">
 
-Before any model training, a complete feature audit was performed.
+```text
+                 PhiUSIIL Dataset
+                        │
+                        ▼
+            Data Validation & Profiling
+                        │
+                        ▼
+        Exploratory Data Analysis (EDA)
+                        │
+                        ▼
+      Feature Engineering & Preprocessing
+                        │
+                        ▼
+       Machine Learning Model Training
+                        │
+                        ▼
+        Model Evaluation & Benchmarking
+                        │
+                        ▼
+      SHAP Explainability Analysis
+                        │
+                        ▼
+      LIME Local Interpretability
+                        │
+                        ▼
+      Bias & Fairness Investigation
+                        │
+                        ▼
+      Blind Spot Discovery & Reliability
+                        │
+                        ▼
+      Cybersecurity Intelligence Reports
+```
 
-The audit investigated:
+</div>
 
-* Feature Quality
-* Data Leakage
-* Multicollinearity
-* Redundant Variables
-* Dominant Predictors
-* Feature Trustworthiness
+---
+
+# 🔬 Framework Components
+
+| Component | Purpose |
+|-----------|---------|
+| 📂 **Data Analysis** | Validated dataset quality, feature distributions, correlations, outliers, and potential leakage before training. |
+| ⚙️ **Feature Engineering** | Processed 56 phishing-related website features and prepared two experimental datasets. |
+| 🤖 **Model Development** | Trained and benchmarked Logistic Regression, Random Forest, XGBoost, and LightGBM. |
+| 📈 **Performance Evaluation** | Compared models using Accuracy, Precision, Recall, F1-Score, ROC-AUC, Calibration, and Confusion Matrices. |
+| 🧠 **Explainable AI** | Applied SHAP and LIME to understand both global model behaviour and individual predictions. |
+| ⚖️ **Bias Analysis** | Evaluated prediction consistency across URL length, HTTPS, TLD, domain characteristics, and external resources. |
+| 🚨 **Blind Spot Intelligence** | Investigated false negatives, recurring phishing archetypes, and prediction reliability. |
+
+---
+
+# 📊 Exploratory Data Analysis
+
+Before model development, the dataset was carefully examined to understand statistical properties, feature relationships, and class behaviour.
+
+<div align="center">
+
+<img src="outputs/plots/eda/correlation_heatmap.png" width="48%">
+
+<img src="outputs/plots/eda/mutual_information.png" width="48%">
+
+</div>
+
+---
+
+# 🏆 Model Benchmark
+
+Four supervised learning algorithms were evaluated across two experimental tracks to identify the most reliable deployment model.
+
+<div align="center">
+
+<img src="outputs/plots/training/benchmark_f1.png" width="48%">
+
+<img src="outputs/plots/evaluation/roc/roc_all_tracks.png" width="48%">
+
+</div>
+
+---
+
+## 📌 Key Takeaways
+
+- Comprehensive data validation ensured high-quality model inputs.
+- Multiple machine learning algorithms were benchmarked under identical evaluation settings.
+- Explainability, fairness, and reliability were integrated directly into the learning pipeline rather than treated as post-processing steps.
+- The framework extends beyond phishing detection by providing actionable cybersecurity intelligence for model interpretation and risk analysis.
+
+---
+# 📊 Experimental Results & Explainable AI
+
+The proposed framework was evaluated beyond conventional classification metrics to understand **why the model performs well**, **which features influence predictions**, and **how explanations differ across instances**. Explainability was integrated throughout the evaluation process to improve transparency and trustworthiness.
+
+---
+
+# 🏆 Model Performance
+
+Four machine learning algorithms were benchmarked using multiple evaluation metrics. LightGBM (Track B) demonstrated the strongest balance between predictive performance, generalization, and deployment suitability.
+
+<div align="center">
+
+<img src="outputs/plots/training/benchmark_roc_auc.png" width="48%">
+
+<img src="outputs/plots/evaluation/roc/roc_all_tracks.png" width="48%">
+
+</div>
+
+<br>
+
+<div align="center">
+
+<img src="outputs/plots/evaluation/confusion_matrices/cm_grid_trackB.png" width="75%">
+
+</div>
+
+---
+
+## 📈 Performance Summary
+
+| Model | Accuracy | ROC-AUC | Status |
+|:----------------------|:---------:|:-------:|:----------------|
+| Logistic Regression | 99.99% | 1.00 | Excellent |
+| Random Forest | 100.00% | 1.00 | Excellent |
+| XGBoost | 99.99% | 1.00 | Excellent |
+| **LightGBM** | **99.99%** | **1.00** | **Deployment Model** |
+
+---
+
+# 🧠 Global Explainability (SHAP)
+
+SHAP was used to quantify the contribution of each feature towards phishing predictions, allowing the model's internal decision process to be interpreted globally.
+
+<div align="center">
+
+<img src="outputs/plots/shap/summary_beeswarm.png" width="48%">
+
+<img src="outputs/plots/shap/global_importance.png" width="48%">
+
+</div>
+
+<br>
+
+<div align="center">
+
+<img src="outputs/plots/shap/interactions/interaction_heatmap.png" width="75%">
+
+</div>
+
+---
+
+## 🔍 Major SHAP Findings
+
+- **LetterRatioInURL** emerged as the most influential phishing indicator.
+- URL composition features contributed more strongly than visual webpage characteristics.
+- HTTPS status alone was insufficient to determine website legitimacy.
+- Feature interaction analysis revealed hidden relationships between phishing indicators.
+
+---
+
+# 💡 Local Explainability (LIME)
+
+While SHAP explains global model behaviour, LIME provides local explanations for individual predictions, enabling investigation of specific phishing and legitimate website classifications.
+
+<div align="center">
+
+<img src="outputs/plots/lime/shap_lime_agreement.png" width="48%">
+
+<img src="outputs/plots/lime/feature_consistency.png" width="48%">
+
+</div>
+
+---
+
+## 📌 Explainability Insights
+
+✔ Global feature importance identified the strongest phishing indicators.
+
+✔ Local explanations revealed why individual websites were classified as phishing.
+
+✔ SHAP and LIME complemented each other by providing both global and instance-level interpretability.
+
+✔ Explainability transformed the model from a black-box classifier into an interpretable cybersecurity decision-support system.
+
+---
+# 🛡️ Trustworthiness, Fairness & Blind Spot Intelligence
+
+A reliable cybersecurity system must do more than achieve high accuracy—it should make consistent, unbiased, and trustworthy predictions under diverse conditions. To evaluate the robustness of the proposed framework, extensive analyses were performed to measure fairness, investigate prediction failures, and assess model reliability.
+
+---
+
+# ⚖️ Fairness & Bias Analysis
+
+The deployment model was evaluated across multiple website characteristics to determine whether predictive performance remained consistent for different data groups.
+
+<div align="center">
+
+<img src="outputs/plots/bias/disparity/accuracy_heatmap.png" width="48%">
+
+<img src="outputs/plots/bias/disparity/fpr_fnr_disparity.png" width="48%">
+
+</div>
+
+<br>
+
+<div align="center">
+
+<img src="outputs/plots/bias/tld/tld_fairness.png" width="75%">
+
+</div>
+
+---
+
+## 📊 Fairness Summary
+
+| Evaluation Group | Result |
+|:-----------------|:------:|
+| URL Length | ✅ PASS |
+| Domain Length | ✅ PASS |
+| HTTPS Usage | ✅ PASS |
+| Top-Level Domain | ✅ PASS |
+| External Resources | ✅ PASS |
 
 ### Key Findings
 
-* URLSimilarityIndex showed extremely strong predictive influence.
-* HTTPS was highly separative.
-* Several features demonstrated dominance behavior.
-* URLTitleMatchScore was removed due to redundancy.
-* Separate experimental tracks were created to evaluate potential leakage effects.
-
-This step ensured that performance results could be interpreted responsibly rather than blindly trusted.
-
----
-# 📈 Exploratory Data Analysis
-
-Before model development, a comprehensive exploratory analysis was conducted to understand the structure, distribution, and predictive characteristics of the dataset.
-
-The analysis focused on:
-
-* Class Distribution
-* Feature Correlations
-* Feature Dominance
-* Data Leakage Indicators
-* Statistical Characteristics
-* Predictive Signals
+- No statistically significant performance drift was observed across evaluated website groups.
+- Prediction quality remained stable regardless of URL structure or website characteristics.
+- The deployment model demonstrated strong fairness and consistent generalization.
 
 ---
 
-### Dataset Distribution & Feature Relationships
+# 🚨 Blind Spot Analysis
+
+High-performing models can still fail on rare and difficult phishing websites. To better understand these failures, false negatives and challenging predictions were investigated using clustering, explanation analysis, and confidence evaluation.
 
 <div align="center">
 
-<img src="outputs/plots/eda/class_distribution.png" width="320">
-<img src="outputs/plots/eda/target_correlation_full.png" width="450">
+<img src="outputs/plots/blindspot/clusters/pca_cluster_map.png" width="48%">
+
+<img src="outputs/plots/blindspot/clusters/failure_density.png" width="48%">
 
 </div>
 
-<p align="center">
-Dataset Distribution and Feature Correlation Analysis
-</p>
-
 ---
 
-### Correlation Analysis
+# 📈 Reliability Assessment
+
+Prediction confidence was compared with explanation agreement to identify situations where highly confident predictions may still require human review.
 
 <div align="center">
 
-<img src="outputs/plots/eda/correlation_heatmap_pearson.png" width="500">
+<img src="outputs/plots/blindspot/reliability/agreement_reliability.png" width="48%">
+
+<img src="outputs/plots/blindspot/confidence/zone_error_rates.png" width="48%">
 
 </div>
 
-<p align="center">
-Pearson Correlation Heatmap
-</p>
+---
+---
 
-The analysis revealed several highly influential features and helped identify potential redundancy and leakage risks before model training.
+# 🌐 M11 – PhishGuard Intelligence Platform
+
+The final phase of the project transforms the research pipeline into an interactive web-based intelligence platform. Instead of viewing results through notebooks or static reports, analysts can explore explainability, model performance, fairness, and blind spot investigations through a unified dashboard.
 
 ---
 
-# 🔬 Feature Leakage Investigation
+## 🚀 Platform Features
 
-One of the most important phases of this project involved determining whether exceptionally strong performance was caused by genuine learning or by highly dominant features.
-
-Instead of blindly trusting accuracy metrics, the project investigated:
-
-* Feature Leakage
-* Artificial Performance Inflation
-* Dominant Predictors
-* Dataset Separability
-* Trustworthiness of Results
-
----
-
-### Key Discovery
-
-The feature:
-
-**URLSimilarityIndex**
-
-demonstrated exceptionally strong predictive influence and required dedicated investigation.
-
-To evaluate its impact responsibly:
-
-| Track                | URLSimilarityIndex |
-| -------------------- | ------------------ |
-| Track A              | Included           |
-| Track B              | Removed            |
-| Deployment Benchmark | Track B            |
-
-This approach allowed the project to compare performance under both conditions and better understand the influence of dominant features.
+| Module | Description |
+|---------|-------------|
+| 📊 Executive Dashboard | Summarizes dataset statistics, model performance, fairness status, and deployment metrics. |
+| 🧠 SHAP Intelligence | Interactive visualization of global feature importance and explainable model behaviour. |
+| 💡 LIME Analysis | Local explanations for individual phishing predictions with feature-level interpretation. |
+| ⚖️ Bias & Fairness | Performance comparison across multiple website characteristics to detect potential bias. |
+| 🚨 Blind Spot Analysis | Investigation of critical false negatives, reliability zones, and failure archetypes. |
+| 📈 Model Comparison | Comparative evaluation of Logistic Regression, Random Forest, XGBoost, and LightGBM. |
+| 📂 Research Reports | Serves generated reports, plots, and CSV outputs directly from the research pipeline. |
 
 ---
 
-<div align="center">
+## 🏗️ System Architecture
 
-<img src="outputs/plots/eda/leakage_urlsimilarity.png" width="380">
-<img src="outputs/plots/eda/leakage_auroc_comparison.png" width="380">
-
-</div>
-
-<p align="center">
-Leakage Investigation and Performance Impact Analysis
-</p>
-
----
-
-# ⚙️ Feature Engineering
-
-To capture higher-level cybersecurity patterns, several engineered features were introduced.
-
-### Engineered Features
-
-| Feature                |
-| ---------------------- |
-| ContentComplexityScore |
-| FormDangerIndex        |
-| TrustBadgeScore        |
-| RedirectActivity       |
-| ExternalRefDensity     |
-| TLD_is_gov_edu         |
-| SubdomainRatio         |
-
-These features provide richer representations of website behavior and improve the model's ability to distinguish phishing websites from legitimate ones.
+```text
+React + Vite Frontend
+          │
+          ▼
+ FastAPI REST API
+          │
+          ▼
+ Research Outputs (M1–M10)
+          │
+          ├── CSV Reports
+          ├── PNG Visualizations
+          ├── HTML Reports
+          └── Trained ML Models
+```
 
 ---
 
-### Final Feature Sets
+## 🔌 Backend Intelligence APIs
 
-| Track   | Features |
-| ------- | -------- |
-| Track A | 57       |
-| Track B | 56       |
+The FastAPI backend exposes research outputs through REST endpoints, allowing the frontend to consume live data directly from the generated artifacts.
 
----
-
-# 🤖 Machine Learning Pipeline
-
-Multiple machine learning algorithms were trained and benchmarked to identify the most reliable phishing detection model.
-
-### Models Evaluated
-
-| Model               |
-| ------------------- |
-| Logistic Regression |
-| Random Forest       |
-| XGBoost             |
-| LightGBM            |
-
-### Evaluation Metrics
-
-* Accuracy
-* Precision
-* Recall
-* F1 Score
-* ROC-AUC
-* Cross Validation Performance
-
-The goal was not simply selecting the highest-performing model, but identifying a model suitable for explainability, fairness analysis, and trustworthy deployment.
+| Endpoint | Purpose |
+|----------|---------|
+| `/api/intelligence/shap` | SHAP feature importance |
+| `/api/intelligence/lime` | LIME explanation summary |
+| `/api/intelligence/models` | Model evaluation metrics |
+| `/api/intelligence/bias` | Bias & fairness analysis |
+| `/api/intelligence/blindspots` | Blind spot investigation |
+| `/api/intelligence/reliability` | Reliability assessment |
+| `/api/intelligence/dataset` | Dataset overview |
+| `/api/intelligence/executive` | Executive dashboard metrics |
 
 ---
 
-<div align="center">
+## 💻 Technology Stack
 
-<img src="outputs/plots/training/benchmark_roc_auc.png" width="380">
-<img src="outputs/plots/training/benchmark_f1.png" width="380">
-
-</div>
-
-<p align="center">
-ROC-AUC and F1 Score Benchmarking
-</p>
-
----
-
-<div align="center">
-
-<img src="outputs/plots/training/benchmark_cv_roc_auc.png" width="450">
-
-</div>
-
-<p align="center">
-Cross-Validation Performance Analysis
-</p>
+- **Frontend:** React, Vite
+- **Backend:** FastAPI
+- **Machine Learning:** Scikit-learn, LightGBM, XGBoost
+- **Explainability:** SHAP, LIME
+- **Data Processing:** Pandas, NumPy
+- **Visualization:** Matplotlib
+- **API Communication:** REST API (JSON)
 
 ---
 
-# 🧠 Explainable Artificial Intelligence
-
-Most phishing detection systems behave as black boxes.
-
-This project incorporates Explainable AI techniques to make model decisions transparent and interpretable.
-
-Two complementary explainability frameworks were employed:
+> **M11 bridges research and deployment by converting the outputs of M1–M10 into an interactive cybersecurity intelligence platform, making model interpretation, fairness evaluation, and phishing analysis accessible through a modern web interface.**
 
 ---
 
-## SHAP
+# 🔬 Research Contributions
 
-SHAP provides a global understanding of model behavior.
+This framework extends traditional phishing detection by integrating multiple complementary research components into a single cybersecurity intelligence pipeline.
 
-It answers:
+### ✔ Explainable AI
 
-> Which features influence predictions the most?
+- Global explanations using SHAP
+- Local explanations using LIME
+- Feature interaction analysis
 
-> How important is each feature across the entire dataset?
+### ✔ Fairness Intelligence
 
-### SHAP Findings
+- Multi-dimensional bias evaluation
+- Group-wise performance comparison
+- Robustness assessment
 
-| Metric                          | Result           |
-| ------------------------------- | ---------------- |
-| Features Explained              | 56               |
-| Top Feature                     | LetterRatioInURL |
-| Interaction Pairs Evaluated     | 1,540            |
-| URLSimilarityIndex Contribution | 18.68%           |
+### ✔ Reliability Intelligence
+
+- Confidence zone analysis
+- Explanation agreement evaluation
+- Prediction consistency measurement
+
+### ✔ Blind Spot Intelligence
+
+- Failure archetype discovery
+- Critical false-negative investigation
+- Reliability-based risk assessment
+
+---
+
+# 🎯 Key Outcomes
+
+- 🏆 LightGBM (Track B) achieved the strongest deployment performance.
+- 🧠 Explainable AI improved transparency of phishing predictions.
+- ⚖️ Fairness analysis showed stable behaviour across evaluated groups.
+- 🚨 Blind spot analysis revealed recurring high-risk phishing patterns.
+- 📊 Reliability evaluation demonstrated the value of combining prediction confidence with explanation agreement.
+- 🔍 The framework provides interpretable cybersecurity intelligence beyond conventional machine learning classification.
+
+---
+
+# 👥 Contributors
+
+| | |
+|:--:|:--:|
+| **Hifza Amir** | **Shihan Ahmad** |
+| B.Tech CSE (Data Science) | B.Tech CSE (Cybersecurity) |
+| Machine Learning • Explainable AI • Bias Analysis • Documentation | Cybersecurity Research • Model Development • Validation |
 
 ---
 
 <div align="center">
 
-<img src="outputs/plots/shap/global_importance.png" width="380">
-<img src="outputs/plots/shap/summary_beeswarm.png" width="380">
+### ⭐ If you found this project interesting, consider giving it a Star.
 
-</div>
-
-<p align="center">
-SHAP Global Importance and Summary Analysis
-</p>
-
----
-
-<div align="center">
-
-<img src="outputs/plots/shap/track_comparison_importance.png" width="450">
-
-</div>
-
-<p align="center">
-Feature Importance Across Experimental Tracks
-</p>
-
----
-
-# 🔎 Local Explainability with LIME
-
-While SHAP explains overall model behavior, LIME focuses on individual predictions.
-
-LIME helps answer:
-
-> Why was this specific website classified as phishing?
-
-By generating local explanations, security analysts can understand the reasoning behind individual model decisions.
-
----
-
-# 🔬 SHAP × LIME Validation
-
-Interpretability itself should be validated.
-
-To improve explanation reliability, SHAP and LIME explanations were compared across multiple prediction scenarios.
-
-This evaluation focused on:
-
-* Explanation Consistency
-* Feature Agreement
-* Reliability of Interpretations
-* High-Disagreement Cases
-
----
-
-### Results
-
-| Metric                  | Value      |
-| ----------------------- | ---------- |
-| SHAP-LIME Agreement     | 0.52       |
-| Feature Consistency     | 0.60       |
-| Shared Top Features     | 12 / 20    |
-| High Disagreement Cases | Identified |
-
----
-
-<div align="center">
-
-<img src="outputs/plots/lime/shap_lime_agreement.png" width="380">
-<img src="outputs/plots/lime/feature_consistency.png" width="380">
-
-</div>
-
-<p align="center">
-SHAP-LIME Agreement and Feature Consistency Analysis
-</p>
-
----
-
-# 🚀 Future Roadmap
-
-### 🎯 M10 — Blind Spot Intelligence
-
-The next phase focuses on discovering hidden model weaknesses through:
-
-* Failure Archetype Discovery
-* Blind Spot Severity Ranking
-* Confidence Reliability Analysis
-* SHAP–LIME Disagreement Investigation
-* Hidden Weakness Detection
-
-**Goal:** Understand where the model fails, why it fails, and how risky those failures are.
-
----
-
-### 🛡️ M11 — Cybersecurity Intelligence Dashboard
-
-The final phase transforms the project into an interactive intelligence platform featuring:
-
-* Threat Detection Center
-* SHAP & LIME Explainability Center
-* Bias Intelligence Center
-* Blind Spot Intelligence Center
-* Performance Intelligence Center
-
-**Goal:** Build a transparent, explainable, and trustworthy cybersecurity intelligence system.
-
----
-
-
-### Why This Matters
-
-Many phishing detection projects stop after generating predictions.
-
-This project evaluates whether the explanations themselves can be trusted.
-
-The result is a cybersecurity intelligence framework capable of providing both accurate predictions and transparent reasoning.
-
----
-# 👨‍💻 Contributors
-
-## Hifza Amir
-
-**B.Tech CSE (Data Science)**  
-IILM University, Greater Noida
-
-**Areas of Interest**
-
-- Data Science
-- Machine Learning
-- Explainable AI
-- Predictive Analytics
-- Trustworthy AI
-
-GitHub:
-https://github.com/hiifza
-
----
-
-## Shihan Ahmad
-
-**B.Tech CSE (Cybersecurity)**
-
-**Areas of Interest**
-
-- Cybersecurity
-- Threat Intelligence
-- Security Analytics
-- Network Security
-
-GitHub:
-https://github.com/ShihanG9
-
-<div align="center">
-
-# 🌟 Vision
-
-Building cybersecurity systems that are not only accurate but also transparent, interpretable, fair, and trustworthy.
-
-### Explainable AI × Cybersecurity × Trustworthy Machine Learning
-
-This project demonstrates how modern machine learning can move beyond black-box predictions and provide meaningful explanations, fairness insights, and actionable intelligence for security analysts.
-
-⭐ If you found this project useful, consider starring the repository.
+**Built using Machine Learning, Explainable AI, and Cybersecurity Analytics.**
 
 </div>

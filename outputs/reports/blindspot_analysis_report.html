@@ -1,0 +1,115 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<title>M10 Blind Spot Intelligence — Phishing Detection</title><style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,sans-serif;font-size:14px;color:#1a1a1a;
+     max-width:1140px;margin:40px auto;padding:0 26px 80px}
+h1{font-size:22px;font-weight:700;border-bottom:3px solid #185FA5;padding-bottom:12px;margin-bottom:6px}
+h2{font-size:16px;font-weight:600;color:#185FA5;margin:32px 0 10px;border-left:4px solid #185FA5;padding-left:10px}
+h3{font-size:14px;font-weight:600;color:#333;margin:16px 0 8px}
+p{line-height:1.65;color:#444;margin-bottom:10px}
+p.meta{font-size:12px;color:#888;margin-bottom:22px}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0 20px}
+th{background:#E6F1FB;padding:8px 12px;text-align:left;border:1px solid #B5D4F4;font-weight:600;white-space:nowrap}
+td{padding:7px 12px;border:1px solid #ddd}tr:nth-child(even) td{background:#F8FBFF}
+code{font-family:monospace;font-size:12px;background:#F1F3F5;padding:2px 5px;border-radius:3px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:12px 0 20px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0}
+.card{border:1px solid #B5D4F4;border-radius:8px;padding:13px 17px;background:#F0F7FF}
+.card-v{font-size:24px;font-weight:700;color:#185FA5}.card-l{font-size:12px;color:#666;margin-top:3px}
+.alert{border-left:4px solid #E24B4A;background:#FCEBEB;padding:10px 14px;border-radius:0 6px 6px 0;margin:10px 0}
+.warn{border-left:4px solid #EF9F27;background:#FAEEDA;padding:10px 14px;border-radius:0 6px 6px 0;margin:10px 0}
+.ok{border-left:4px solid #1D9E75;background:#E1F5EE;padding:10px 14px;border-radius:0 6px 6px 0;margin:10px 0}
+.info{border-left:4px solid #378ADD;background:#E6F1FB;padding:10px 14px;border-radius:0 6px 6px 0;margin:10px 0}
+.badge-r{background:#FCEBEB;color:#A32D2D;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:600}
+.badge-y{background:#FAEEDA;color:#854F0B;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:600}
+.badge-g{background:#E1F5EE;color:#0F6E56;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:600}
+img{max-width:100%;border:1px solid #ddd;border-radius:6px;margin:6px 0;display:block}
+.img2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.footer{font-size:12px;color:#aaa;margin-top:56px;border-top:1px solid #eee;padding-top:16px}
+</style></head><body>
+<h1>Module M10 — Failure Intelligence Engine</h1>
+<p class="meta">Project: Explainable and Bias-Aware ML | Generated: 2026-06-22 20:02:33 | Model: LogisticRegression</p>
+
+<h2>1. Executive Summary</h2>
+<div class="grid4">
+  <div class="card"><div class="card-v">47,074</div><div class="card-l">Test samples</div></div>
+  <div class="card"><div class="card-v">3</div><div class="card-l">Hard errors (FP+FN)</div></div>
+  <div class="card"><div class="card-v">103</div><div class="card-l">Failure zone cases</div></div>
+  <div class="card"><div class="card-v">3</div><div class="card-l">Archetypes discovered</div></div>
+</div>
+<div class="alert">
+  <strong>Hard errors:</strong> 0 FP (legit flagged as phishing) + 3 FN (phishing missed).
+  Error rate: 0.00006373 on 47,074 samples.
+</div>
+<div class="info">
+  <strong>Near-perfect performance confirmed.</strong>
+  Failure intelligence focuses on the uncertainty zone (83 samples)
+  and explanation disagreements as the primary risk signals.
+</div>
+
+<h2>2. Confidence Reliability Engine</h2>
+<div class="grid4">
+  <div class='card' style='border-color:#1D9E75'><div class='card-v' style='color:#1D9E75'>46991</div><div class='card-l'>Green zone (conf ≥0.95)</div><div class='card-l'>error rate: 0.000000</div></div><div class='card' style='border-color:#EF9F27'><div class='card-v' style='color:#EF9F27'>72</div><div class='card-l'>Yellow zone (conf 0.75-0.95)</div><div class='card-l'>error rate: 0.027778</div></div><div class='card' style='border-color:#E24B4A'><div class='card-v' style='color:#E24B4A'>11</div><div class='card-l'>Red zone (conf <0.75)</div><div class='card-l'>error rate: 0.090909</div></div>
+</div>
+<div class="img2"><figure><img src='../../outputs\plots\blindspot\confidence\confidence_distribution.png' alt='Confidence distribution'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Confidence distribution</figcaption></figure><figure><img src='../../outputs\plots\blindspot\confidence\zone_error_rates.png' alt='Zone error rates'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Zone error rates</figcaption></figure></div>
+
+<h2>3. Top-20 Blind Spots (by Severity Score)</h2>
+<p>Severity = 0.40×error + 0.30×uncertainty + 0.20×disagreement + 0.10×SHAP-instability</p>
+<table><thead><tr><th>severity_rank</th><th>sample_idx</th><th>confidence_zone</th><th>is_error</th><th>confidence</th><th>severity_score_norm</th><th>tiers_flagged</th><th>risk_level</th></tr></thead><tbody><tr><td>1</td><td>17372</td><td>red</td><td>True</td><td>0.6261</td><td>1.0000</td><td>tier1_error|tier3_explanation|tier4_combined</td><td><span class='badge-r'>CRITICAL</span></td></tr>
+<tr><td>2</td><td>11301</td><td>yellow</td><td>True</td><td>0.8746</td><td>0.8931</td><td>tier1_error|tier3_explanation|tier4_combined</td><td><span class='badge-r'>CRITICAL</span></td></tr>
+<tr><td>3</td><td>30588</td><td>yellow</td><td>True</td><td>0.8835</td><td>0.8893</td><td>tier1_error|tier3_explanation|tier4_combined</td><td><span class='badge-r'>CRITICAL</span></td></tr>
+<tr><td>4</td><td>20604</td><td>green</td><td>False</td><td>0.9984</td><td>0.2660</td><td>tier3_explanation</td><td><span class='badge-g'>LOW</span></td></tr>
+<tr><td>5</td><td>23614</td><td>green</td><td>False</td><td>0.9999</td><td>0.2654</td><td>tier3_explanation</td><td><span class='badge-g'>LOW</span></td></tr>
+<tr><td>6</td><td>4397</td><td>green</td><td>False</td><td>1.0000</td><td>0.2654</td><td>tier3_explanation</td><td><span class='badge-g'>LOW</span></td></tr>
+<tr><td>7</td><td>21286</td><td>green</td><td>False</td><td>1.0000</td><td>0.2654</td><td>tier3_explanation</td><td><span class='badge-g'>LOW</span></td></tr>
+<tr><td>7</td><td>9346</td><td>green</td><td>False</td><td>1.0000</td><td>0.2654</td><td>tier3_explanation</td><td><span class='badge-g'>LOW</span></td></tr>
+<tr><td>7</td><td>32758</td><td>green</td><td>False</td><td>1.0000</td><td>0.2654</td><td>tier3_explanation</td><td><span class='badge-g'>LOW</span></td></tr>
+<tr><td>7</td><td>36372</td><td>green</td><td>False</td><td>1.0000</td><td>0.2654</td><td>tier3_explanation</td><td><span class='badge-g'>LOW</span></td></tr>
+<tr><td>11</td><td>18994</td><td>green</td><td>False</td><td>1.0000</td><td>0.2654</td><td>tier3_explanation</td><td><span class='badge-g'>LOW</span></td></tr>
+<tr><td>11</td><td>3971</td><td>green</td><td>False</td><td>1.0000</td><td>0.2654</td><td>tier3_explanation</td><td><span class='badge-g'>LOW</span></td></tr>
+<tr><td>11</td><td>8738</td><td>green</td><td>False</td><td>1.0000</td><td>0.2654</td><td>tier3_explanation</td><td><span class='badge-g'>LOW</span></td></tr>
+<tr><td>11</td><td>17563</td><td>green</td><td>False</td><td>1.0000</td><td>0.2654</td><td>tier3_explanation</td><td><span class='badge-g'>LOW</span></td></tr>
+<tr><td>11</td><td>20324</td><td>green</td><td>False</td><td>1.0000</td><td>0.2654</td><td>tier3_explanation</td><td><span class='badge-g'>LOW</span></td></tr>
+<tr><td>11</td><td>4147</td><td>green</td><td>False</td><td>1.0000</td><td>0.2654</td><td>tier3_explanation</td><td><span class='badge-g'>LOW</span></td></tr>
+<tr><td>11</td><td>30402</td><td>green</td><td>False</td><td>1.0000</td><td>0.2654</td><td>tier3_explanation</td><td><span class='badge-g'>LOW</span></td></tr>
+<tr><td>11</td><td>36889</td><td>green</td><td>False</td><td>1.0000</td><td>0.2654</td><td>tier3_explanation</td><td><span class='badge-g'>LOW</span></td></tr>
+<tr><td>11</td><td>38769</td><td>green</td><td>False</td><td>1.0000</td><td>0.2654</td><td>tier3_explanation</td><td><span class='badge-g'>LOW</span></td></tr>
+<tr><td>11</td><td>40392</td><td>green</td><td>False</td><td>1.0000</td><td>0.2654</td><td>tier3_explanation</td><td><span class='badge-g'>LOW</span></td></tr></tbody></table>
+
+<h2>4. Failure Archetypes (Auto-Discovered)</h2>
+<div class="info">Silhouette score: 0.1874 | PCA variance explained: 63.96%</div>
+<table><thead><tr><th>#</th><th>Archetype</th><th>N</th><th>Errors</th><th>Mean Conf</th><th>Risk</th></tr></thead><tbody><tr><td>0</td><td><strong>Non-HTTPS+Gov/Edu domain+Password-form</strong></td><td>13</td><td>1</td><td>0.9559</td><td><span class='badge-r'>HIGH</span></td></tr><tr><td>1</td><td><strong>HTTPS+Gov/Edu domain+Social-linked</strong></td><td>30</td><td>0</td><td>0.9206</td><td><span class='badge-g'>LOW</span></td></tr><tr><td>2</td><td><strong>Non-HTTPS+Gov/Edu domain+Social-linked</strong></td><td>60</td><td>2</td><td>0.8792</td><td><span class='badge-r'>HIGH</span></td></tr></tbody></table>
+<div class="img2"><figure><img src='../../outputs\plots\blindspot\clusters\pca_cluster_map.png' alt='PCA cluster map'><figcaption style='font-size:11px;color:#888;margin-top:4px'>PCA cluster map</figcaption></figure><figure><img src='../../outputs\plots\blindspot\clusters\confidence_heatmap.png' alt='Cluster risk heatmap'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Cluster risk heatmap</figcaption></figure></div>
+<figure><img src='../../outputs\plots\blindspot\clusters\failure_density.png' alt='Failure density vs all test'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Failure density vs all test</figcaption></figure>
+
+<h2>5. SHAP Failure Analysis</h2>
+<p>Top failure-zone feature: <code>LineOfCode</code></p>
+<div class="img2"><figure><img src='../../outputs\plots\blindspot\shap_failure\shap_failure_comparison.png' alt='SHAP: global vs failure zones'><figcaption style='font-size:11px;color:#888;margin-top:4px'>SHAP: global vs failure zones</figcaption></figure><figure><img src='../../outputs\plots\blindspot\shap_failure\dominant_feature_masking.png' alt='Dominant feature masking'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Dominant feature masking</figcaption></figure></div>
+
+<h2>6. LIME Failure Analysis</h2>
+
+
+<h2>7. SHAP-LIME Reliability Correlation</h2>
+<div class="info"><strong>Q1: Low agreement → higher error?</strong> Low-agree error rate=0.1304  High-agree error rate=nan  (No clear effect)</div>
+<div class="info"><strong>Q2: Low agreement → lower confidence?</strong> Low-agree mean confidence=0.9732  High-agree=nan  (No clear effect)</div>
+<div class="info"><strong>Q3: Low agreement → higher severity?</strong> Low-agree mean severity=0.3517  High-agree=nan  (No clear effect)</div>
+<figure><img src='../../outputs\plots\blindspot\reliability\agreement_reliability.png' alt='Agreement vs error/uncertainty'><figcaption style='font-size:11px;color:#888;margin-top:4px'>Agreement vs error/uncertainty</figcaption></figure>
+
+<h2>8. Hidden Weakness Investigation</h2>
+<div class="warn"><strong>HTTPS dependence:</strong> All legitimate sites use HTTPS; non-HTTPS legitimate sites are a structural blind spot.</div>
+<div class="warn"><strong>Dominant feature masking:</strong> <code>LineOfCode</code> dominates model decisions — adversarial manipulation of this feature may evade detection.</div>
+<div class="warn"><strong>Rare TLD blind spots:</strong> Low-frequency TLDs have sparse training data; model may be miscalibrated for novel domains.</div>
+<div class="ok"><strong>Error rate is extremely low</strong> (0.00006373); remaining risk is structural rather than statistical.</div>
+
+<h2>9. Dashboard-Ready Outputs</h2>
+<table>
+  <tr><th>Object</th><th>Description</th><th>For Module</th></tr>
+  <tr><td><code>top_20_bs</code></td><td>Top-20 most dangerous blind spots</td><td>M11 Dashboard: Blind Spot Center</td></tr>
+  <tr><td><code>fcs</code></td><td>FailureCaseSet with all tier flags</td><td>M11 Dashboard: Threat Intelligence</td></tr>
+  <tr><td><code>archetype_r</code></td><td>Cluster labels + metadata</td><td>M11 Dashboard: Blind Spot Center</td></tr>
+  <tr><td><code>severity_df</code></td><td>Per-case severity scores</td><td>M11 Dashboard: Performance Intelligence</td></tr>
+  <tr><td><code>uncertainty_r[zone_stats]</code></td><td>Green/Yellow/Red zone stats</td><td>M11 Dashboard: All centers</td></tr>
+  <tr><td><code>reliability_r</code></td><td>SHAP-LIME correlation analysis</td><td>M11 Dashboard: Explainability Center</td></tr>
+</table>
+
+<p class="footer">M10 complete. Next: M11 — Streamlit Dashboard.</p></body></html>

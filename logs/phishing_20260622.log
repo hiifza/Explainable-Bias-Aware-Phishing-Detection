@@ -1,0 +1,71 @@
+2026-06-22 19:52:12 | DEBUG    | src.models.xgboost_model                 | xgboost library found — using XGBClassifier
+2026-06-22 19:52:13 | DEBUG    | src.models.lightgbm_model                | lightgbm library found — using LGBMClassifier
+2026-06-22 19:54:36 | DEBUG    | src.models.xgboost_model                 | xgboost library found — using XGBClassifier
+2026-06-22 19:54:36 | DEBUG    | src.models.lightgbm_model                | lightgbm library found — using LGBMClassifier
+2026-06-22 19:54:41 | INFO     | src.explainability.shap_explainer        | shap 0.51.0 available — using native SHAP
+2026-06-22 19:54:41 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\logistic_regression.pkl
+2026-06-22 19:54:41 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\random_forest.pkl
+2026-06-22 19:54:41 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\xgboost.pkl
+2026-06-22 19:54:41 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\lightgbm.pkl
+2026-06-22 19:54:41 | INFO     | src.training.model_saver                 | Loaded 4/4 Track B models
+2026-06-22 19:54:43 | INFO     | src.blindspots.blindspot_analyzer        | M10 inputs: LogisticRegression  X_test=(47074, 56)  errors=3  agreement_rows=23
+2026-06-22 19:54:48 | INFO     | src.explainability.shap_explainer        | SHAP subsampled: 47,074 → 1,000 test rows
+2026-06-22 19:54:48 | INFO     | src.explainability.shap_explainer        | Native SHAP: linear explainer for LogisticRegression on 1,000 samples …
+2026-06-22 19:54:48 | INFO     | src.explainability.shap_explainer        | Native SHAP complete: shap_values shape=(1000, 56)  expected_value=0.468059
+2026-06-22 19:54:48 | INFO     | src.blindspots.failure_case_extractor    | Failure cases extracted: 103 total  errors=3 (FP=0 FN=3)  red=11  yellow=72
+2026-06-22 19:54:48 | INFO     | src.blindspots.uncertainty_analysis      | =======================================================
+2026-06-22 19:54:48 | INFO     | src.blindspots.uncertainty_analysis      | M10 — CONFIDENCE RELIABILITY ENGINE
+2026-06-22 19:54:48 | INFO     | src.blindspots.uncertainty_analysis      | =======================================================
+2026-06-22 19:54:48 | INFO     | src.blindspots.uncertainty_analysis      |   GREEN : n=46,991 (99.82%)  error_rate=0.000000  mean_conf=0.9998
+2026-06-22 19:54:48 | INFO     | src.blindspots.uncertainty_analysis      |   YELLOW: n=    72 (0.15%)  error_rate=0.027778  mean_conf=0.9088
+2026-06-22 19:54:48 | INFO     | src.blindspots.uncertainty_analysis      |   RED   : n=    11 (0.02%)  error_rate=0.090909  mean_conf=0.6695
+2026-06-22 19:54:50 | INFO     | src.blindspots.uncertainty_analysis      | Saved: confidence_distribution.png
+2026-06-22 19:54:51 | INFO     | src.blindspots.uncertainty_analysis      | Saved: zone_error_rates.png
+2026-06-22 19:54:51 | INFO     | src.blindspots.severity_ranker           | Severity scores computed: 103 cases  max_score=1.0000  mean_score=0.1044
+2026-06-22 19:54:51 | INFO     | src.blindspots.severity_ranker           | Top-20 blind spots:  errors=3  red_zone=1  max_severity=1.0000
+2026-06-22 19:54:51 | INFO     | src.blindspots.failure_archetype_discovery | Discovering archetypes from 103 failure cases …
+2026-06-22 19:54:56 | INFO     | src.blindspots.failure_archetype_discovery | Auto-k: best k=3  silhouette=0.1876
+2026-06-22 19:54:56 | INFO     | src.blindspots.failure_archetype_discovery | Archetypes discovered: 3 clusters  silhouette=0.1874  PCA_var=0.640
+2026-06-22 19:54:56 | INFO     | src.blindspots.failure_archetype_discovery |   [0] Non-HTTPS+Gov/Edu domain+Password-form: n=13 errors=1
+2026-06-22 19:54:56 | INFO     | src.blindspots.failure_archetype_discovery |   [1] HTTPS+Gov/Edu domain+Social-linked: n=30 errors=0
+2026-06-22 19:54:56 | INFO     | src.blindspots.failure_archetype_discovery |   [2] Non-HTTPS+Gov/Edu domain+Social-linked: n=60 errors=2
+2026-06-22 20:01:56 | DEBUG    | src.models.xgboost_model                 | xgboost library found — using XGBClassifier
+2026-06-22 20:01:56 | DEBUG    | src.models.lightgbm_model                | lightgbm library found — using LGBMClassifier
+2026-06-22 20:01:57 | INFO     | src.explainability.shap_explainer        | shap 0.51.0 available — using native SHAP
+2026-06-22 20:01:57 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\logistic_regression.pkl
+2026-06-22 20:01:58 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\random_forest.pkl
+2026-06-22 20:01:58 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\xgboost.pkl
+2026-06-22 20:01:58 | INFO     | src.training.model_saver                 | Model loaded ← C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\models\track_B\lightgbm.pkl
+2026-06-22 20:01:58 | INFO     | src.training.model_saver                 | Loaded 4/4 Track B models
+2026-06-22 20:01:59 | INFO     | src.blindspots.blindspot_analyzer        | M10 inputs: LogisticRegression  X_test=(47074, 56)  errors=3  agreement_rows=23
+2026-06-22 20:02:04 | INFO     | src.explainability.shap_explainer        | SHAP subsampled: 47,074 → 1,000 test rows
+2026-06-22 20:02:04 | INFO     | src.explainability.shap_explainer        | Native SHAP: linear explainer for LogisticRegression on 1,000 samples …
+2026-06-22 20:02:04 | INFO     | src.explainability.shap_explainer        | Native SHAP complete: shap_values shape=(1000, 56)  expected_value=0.468059
+2026-06-22 20:02:04 | INFO     | src.blindspots.failure_case_extractor    | Failure cases extracted: 103 total  errors=3 (FP=0 FN=3)  red=11  yellow=72
+2026-06-22 20:02:04 | INFO     | src.blindspots.uncertainty_analysis      | =======================================================
+2026-06-22 20:02:04 | INFO     | src.blindspots.uncertainty_analysis      | M10 — CONFIDENCE RELIABILITY ENGINE
+2026-06-22 20:02:04 | INFO     | src.blindspots.uncertainty_analysis      | =======================================================
+2026-06-22 20:02:04 | INFO     | src.blindspots.uncertainty_analysis      |   GREEN : n=46,991 (99.82%)  error_rate=0.000000  mean_conf=0.9998
+2026-06-22 20:02:04 | INFO     | src.blindspots.uncertainty_analysis      |   YELLOW: n=    72 (0.15%)  error_rate=0.027778  mean_conf=0.9088
+2026-06-22 20:02:04 | INFO     | src.blindspots.uncertainty_analysis      |   RED   : n=    11 (0.02%)  error_rate=0.090909  mean_conf=0.6695
+2026-06-22 20:02:06 | INFO     | src.blindspots.uncertainty_analysis      | Saved: confidence_distribution.png
+2026-06-22 20:02:07 | INFO     | src.blindspots.uncertainty_analysis      | Saved: zone_error_rates.png
+2026-06-22 20:02:07 | INFO     | src.blindspots.severity_ranker           | Severity scores computed: 103 cases  max_score=1.0000  mean_score=0.1044
+2026-06-22 20:02:07 | INFO     | src.blindspots.severity_ranker           | Top-20 blind spots:  errors=3  red_zone=1  max_severity=1.0000
+2026-06-22 20:02:07 | INFO     | src.blindspots.failure_archetype_discovery | Discovering archetypes from 103 failure cases …
+2026-06-22 20:02:10 | INFO     | src.blindspots.failure_archetype_discovery | Auto-k: best k=3  silhouette=0.1876
+2026-06-22 20:02:11 | INFO     | src.blindspots.failure_archetype_discovery | Archetypes discovered: 3 clusters  silhouette=0.1874  PCA_var=0.640
+2026-06-22 20:02:11 | INFO     | src.blindspots.failure_archetype_discovery |   [0] Non-HTTPS+Gov/Edu domain+Password-form: n=13 errors=1
+2026-06-22 20:02:11 | INFO     | src.blindspots.failure_archetype_discovery |   [1] HTTPS+Gov/Edu domain+Social-linked: n=30 errors=0
+2026-06-22 20:02:11 | INFO     | src.blindspots.failure_archetype_discovery |   [2] Non-HTTPS+Gov/Edu domain+Social-linked: n=60 errors=2
+2026-06-22 20:02:12 | INFO     | src.blindspots.cluster_visualization     | Saved: pca_cluster_map.png
+2026-06-22 20:02:12 | INFO     | src.blindspots.cluster_visualization     | Saved: confidence_heatmap.png
+2026-06-22 20:02:29 | INFO     | src.blindspots.cluster_visualization     | Saved: failure_density.png
+2026-06-22 20:02:29 | INFO     | src.blindspots.cluster_visualization     | UMAP not available — skipping UMAP plot (pip install umap-learn)
+2026-06-22 20:02:32 | INFO     | src.blindspots.reliability_analysis      | M10 — SHAP-LIME RELIABILITY ANALYSIS
+2026-06-22 20:02:32 | INFO     | src.blindspots.reliability_analysis      | Reliability Q1: Low-agree error rate=0.1304  High-agree error rate=nan  (No clear effect)
+2026-06-22 20:02:32 | INFO     | src.blindspots.reliability_analysis      | Reliability Q2: Low-agree mean confidence=0.9732  High-agree=nan  (No clear effect)
+2026-06-22 20:02:32 | INFO     | src.blindspots.reliability_analysis      | Reliability Q3: Low-agree mean severity=0.3517  High-agree=nan  (No clear effect)
+2026-06-22 20:02:33 | INFO     | src.blindspots.reliability_analysis      | Saved: agreement_reliability.png
+2026-06-22 20:02:33 | INFO     | src.blindspots.reliability_analysis      | Saved: reliability_bin_stats.csv
+2026-06-22 20:02:33 | INFO     | src.blindspots.blindspot_report          | Blindspot report saved: C:\Users\admin\Desktop\VS CODE\Explainable-Bias-Aware-Phishing-Detection\outputs\reports\blindspot_analysis_report.html

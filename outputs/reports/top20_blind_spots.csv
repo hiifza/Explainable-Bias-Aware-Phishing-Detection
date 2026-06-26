@@ -1,0 +1,21 @@
+sample_idx,y_true,y_pred,confidence,confidence_zone,is_error,is_fp,is_fn,agreement_score,tiers_flagged,error_component,uncertainty_component,disagreement_component,shap_instab_component,severity_score,risk_level,label_str,severity_score_norm,severity_rank
+17372,0,1,0.626135,red,True,False,True,0.0,tier1_error|tier3_explanation|tier4_combined,1.0,0.3739,1.0,0.0,0.71216,CRITICAL,False Negative,1.0,1
+11301,0,1,0.874598,yellow,True,False,True,0.0,tier1_error|tier3_explanation|tier4_combined,1.0,0.1254,1.0,0.0,0.637621,CRITICAL,False Negative,0.893081,2
+30588,0,1,0.883466,yellow,True,False,True,0.0,tier1_error|tier3_explanation|tier4_combined,1.0,0.1165,1.0,0.0,0.63496,CRITICAL,False Negative,0.889264,3
+20604,1,1,0.998416,green,False,False,False,0.0,tier3_explanation,0.0,0.0016,1.0,0.0,0.200475,LOW,Correct-but-uncertain,0.266037,4
+23614,0,0,0.999912,green,False,False,False,0.0,tier3_explanation,0.0,0.0001,1.0,0.0,0.200026,LOW,Correct-but-uncertain,0.265393,5
+4397,1,1,0.999988,green,False,False,False,0.0,tier3_explanation,0.0,0.0,1.0,0.0,0.200004,LOW,Correct-but-uncertain,0.265362,6
+21286,0,0,0.999998,green,False,False,False,0.0,tier3_explanation,0.0,0.0,1.0,0.0,0.200001,LOW,Correct-but-uncertain,0.265357,7
+9346,1,1,0.999996,green,False,False,False,0.0,tier3_explanation,0.0,0.0,1.0,0.0,0.200001,LOW,Correct-but-uncertain,0.265357,7
+32758,1,1,0.999998,green,False,False,False,0.0,tier3_explanation,0.0,0.0,1.0,0.0,0.200001,LOW,Correct-but-uncertain,0.265357,7
+36372,1,1,0.999996,green,False,False,False,0.0,tier3_explanation,0.0,0.0,1.0,0.0,0.200001,LOW,Correct-but-uncertain,0.265357,7
+18994,0,0,1.0,green,False,False,False,0.0,tier3_explanation,0.0,0.0,1.0,0.0,0.2,LOW,Correct-but-uncertain,0.265356,11
+3971,1,1,1.0,green,False,False,False,0.0,tier3_explanation,0.0,0.0,1.0,0.0,0.2,LOW,Correct-but-uncertain,0.265356,11
+8738,0,0,1.0,green,False,False,False,0.0,tier3_explanation,0.0,0.0,1.0,0.0,0.2,LOW,Correct-but-uncertain,0.265356,11
+17563,0,0,1.0,green,False,False,False,0.0,tier3_explanation,0.0,0.0,1.0,0.0,0.2,LOW,Correct-but-uncertain,0.265356,11
+20324,1,1,1.0,green,False,False,False,0.0,tier3_explanation,0.0,0.0,1.0,0.0,0.2,LOW,Correct-but-uncertain,0.265356,11
+4147,1,1,1.0,green,False,False,False,0.0,tier3_explanation,0.0,0.0,1.0,0.0,0.2,LOW,Correct-but-uncertain,0.265356,11
+30402,0,0,1.0,green,False,False,False,0.0,tier3_explanation,0.0,0.0,1.0,0.0,0.2,LOW,Correct-but-uncertain,0.265356,11
+36889,0,0,1.0,green,False,False,False,0.0,tier3_explanation,0.0,0.0,1.0,0.0,0.2,LOW,Correct-but-uncertain,0.265356,11
+38769,0,0,1.0,green,False,False,False,0.0,tier3_explanation,0.0,0.0,1.0,0.0,0.2,LOW,Correct-but-uncertain,0.265356,11
+40392,1,1,1.0,green,False,False,False,0.0,tier3_explanation,0.0,0.0,1.0,0.0,0.2,LOW,Correct-but-uncertain,0.265356,11

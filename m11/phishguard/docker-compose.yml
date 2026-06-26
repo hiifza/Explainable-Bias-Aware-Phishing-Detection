@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount repository outputs so the backend reads real M1-M10 data
+      - ../outputs:/repo/outputs:ro
+      - ../models:/repo/models:ro
+    environment:
+      - REPO_ROOT=/repo
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  # Combined: build frontend, serve via FastAPI static
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.combined
+    ports:
+      - "8080:8000"
+    volumes:
+      - ../outputs:/repo/outputs:ro
+      - ../models:/repo/models:ro
+    environment:
+      - REPO_ROOT=/repo
+    restart: unless-stopped
+    profiles:
+      - combined

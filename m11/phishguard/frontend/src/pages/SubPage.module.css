@@ -1,0 +1,255 @@
+.page { min-height: 100vh; padding-top: 64px; }
+
+/* ── Hero ── */
+.hero {
+  padding: 80px 0 72px;
+  position: relative;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-default), transparent);
+}
+.heroTitle {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-bright);
+  line-height: var(--leading-tight);
+  margin-bottom: 16px;
+}
+.heroSub {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  max-width: 540px;
+  line-height: var(--leading-relaxed);
+}
+
+/* ── Sections ── */
+.section { padding: 88px 0; }
+.sectionAlt { background: var(--bg-elevated); }
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-bright);
+  margin-bottom: 12px;
+}
+.sectionSub {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  max-width: 520px;
+  line-height: var(--leading-relaxed);
+  margin-bottom: 40px;
+}
+
+/* ── Archetypes ── */
+.archetypeGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 40px;
+}
+@media (max-width: 768px) { .archetypeGrid { grid-template-columns: 1fr; } }
+
+.archetypeCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+  padding: 28px;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: border-color var(--duration-base) var(--ease-in-out),
+              transform var(--duration-base) var(--ease-in-out);
+}
+.archetypeCard:hover {
+  border-color: var(--border-accent);
+  transform: translateY(-3px);
+}
+.archetypeLetter {
+  font-family: var(--font-display);
+  font-size: 3.5rem; font-weight: var(--weight-bold);
+  color: var(--border-default); line-height: 1;
+  transition: color var(--duration-base) var(--ease-in-out);
+}
+.archetypeCard:hover .archetypeLetter { color: var(--border-strong); }
+.archetypeName {
+  font-family: var(--font-mono); font-size: var(--text-xs);
+  color: var(--accent); text-transform: uppercase; letter-spacing: var(--tracking-widest);
+  font-weight: var(--weight-semi);
+}
+.archetypeTags { display: flex; flex-direction: column; gap: 8px; }
+.archTag {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--surface-1); border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md); padding: 8px 12px;
+  font-size: var(--text-sm); color: var(--text-primary);
+}
+.archetypeInsight {
+  font-size: var(--text-xs); color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  border-top: 1px solid var(--border-subtle); padding-top: 14px;
+}
+
+/* ── Research findings ── */
+.findingsList { display: flex; flex-direction: column; gap: 14px; margin-top: 40px; }
+.findingCard {
+  display: grid; grid-template-columns: 48px 1fr; gap: 20px;
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg); padding: 22px 24px;
+  transition: border-color var(--duration-base) var(--ease-in-out),
+              transform var(--duration-base) var(--ease-in-out);
+}
+.findingCard:hover { border-color: var(--border-default); transform: translateX(4px); }
+.findingNum {
+  font-family: var(--font-display); font-size: 1.8rem; font-weight: var(--weight-bold);
+  color: var(--border-default); line-height: 1; text-align: right; padding-top: 2px;
+}
+.findingTitle {
+  font-family: var(--font-display); font-size: var(--text-base);
+  font-weight: var(--weight-bold); color: var(--text-bright); margin-bottom: 8px;
+}
+.findingText { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+
+/* ── Timeline ── */
+.timeline {
+  margin-top: 40px; position: relative;
+  padding-left: 20px;
+}
+.timeline::before {
+  content: ''; position: absolute; left: 16px; top: 0; bottom: 0; width: 1px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+}
+.tlItem {
+  display: grid; grid-template-columns: 52px 1fr; gap: 20px;
+  margin-bottom: 24px; position: relative;
+}
+.tlNode {
+  width: 44px; height: 44px; border-radius: var(--r-md);
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 0.68rem; font-weight: var(--weight-bold);
+  color: var(--accent); flex-shrink: 0; position: relative; z-index: 1;
+}
+.tlContent {
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg); padding: 16px 20px;
+  transition: border-color var(--duration-base) var(--ease-in-out);
+}
+.tlContent:hover { border-color: var(--border-default); }
+.tlCurrent .tlNode { border-color: var(--accent); background: var(--accent-glow); }
+.tlCurrent .tlContent { border-color: var(--border-accent); }
+.tlName {
+  font-family: var(--font-display); font-size: var(--text-base);
+  font-weight: var(--weight-bold); color: var(--text-bright); margin-bottom: 5px;
+}
+.tlDesc { font-size: var(--text-xs); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+.tlLive {
+  display: inline-block; margin-top: 8px;
+  font-family: var(--font-mono); font-size: 0.68rem;
+  color: var(--accent); letter-spacing: var(--tracking-wider);
+}
+
+/* ── Education ── */
+.eduGrid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 40px;
+}
+@media (max-width: 900px) { .eduGrid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 540px) { .eduGrid { grid-template-columns: 1fr; } }
+.eduCard {
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg); padding: 22px;
+  transition: border-color var(--duration-base) var(--ease-in-out),
+              transform var(--duration-base) var(--ease-in-out);
+}
+.eduCard:hover { border-color: var(--border-default); transform: translateY(-2px); }
+.eduIcon { font-size: 1.8rem; margin-bottom: 12px; }
+.eduTitle {
+  font-family: var(--font-display); font-size: var(--text-base);
+  font-weight: var(--weight-bold); color: var(--text-bright); margin-bottom: 8px;
+}
+.eduDesc { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+
+/* ── Tips ── */
+.tipsList { display: flex; flex-direction: column; gap: 12px; margin-top: 40px; }
+.tipCard {
+  display: grid; grid-template-columns: 48px 1fr; gap: 18px;
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg); padding: 20px 22px;
+  transition: border-color var(--duration-base) var(--ease-in-out);
+  align-items: start;
+}
+.tipCard:hover { border-color: var(--border-default); }
+.tipNum {
+  font-family: var(--font-display); font-size: 1.5rem; font-weight: var(--weight-bold);
+  color: var(--border-default); line-height: 1.2;
+}
+.tipTitle {
+  font-family: var(--font-display); font-size: var(--text-base);
+  font-weight: var(--weight-semi); color: var(--text-bright); margin-bottom: 5px;
+}
+.tipDetail { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+
+/* ── Team ── */
+.teamGrid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 32px;
+}
+@media (max-width: 640px) { .teamGrid { grid-template-columns: 1fr; } }
+.teamCard {
+  background: var(--bg-card); border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg); padding: 32px;
+  transition: border-color var(--duration-base) var(--ease-in-out),
+              transform var(--duration-base) var(--ease-in-out);
+}
+.teamCard:hover { border-color: var(--border-accent); transform: translateY(-3px); }
+.avatar {
+  width: 56px; height: 56px; border-radius: var(--r-lg);
+  background: linear-gradient(135deg, var(--secondary), var(--accent));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 1.2rem; font-weight: var(--weight-bold);
+  color: var(--bg-base); margin-bottom: 18px;
+}
+.teamName {
+  font-family: var(--font-display); font-size: var(--text-xl);
+  font-weight: var(--weight-bold); color: var(--text-bright); margin-bottom: 4px;
+}
+.teamRole { font-size: var(--text-sm); color: var(--accent); font-weight: var(--weight-medium); margin-bottom: 16px; }
+.teamDesc { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: 18px; }
+.moduleList { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 18px; }
+.modBadge {
+  font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-secondary);
+  background: var(--surface-1); border: 1px solid var(--border-subtle);
+  padding: 3px 9px; border-radius: var(--r-sm);
+  text-transform: uppercase; letter-spacing: var(--tracking-wide);
+}
+.teamLinks { display: flex; gap: 10px; }
+.teamLink {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: var(--r-md);
+  border: 1px solid var(--border-subtle); background: var(--surface-1);
+  color: var(--text-secondary); text-decoration: none;
+  font-size: var(--text-sm); font-weight: var(--weight-medium);
+  transition: color var(--duration-base) var(--ease-in-out),
+              border-color var(--duration-base) var(--ease-in-out),
+              background var(--duration-base) var(--ease-in-out);
+}
+.teamLink:hover { color: var(--accent); border-color: var(--border-default); background: var(--surface-2); }
+
+/* ── Dataset card ── */
+.datasetCard {
+  background: var(--surface-1); border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg); padding: 28px 32px; text-align: center;
+}
+.datasetLabel {
+  font-family: var(--font-mono); font-size: var(--text-xs); color: var(--accent);
+  text-transform: uppercase; letter-spacing: var(--tracking-widest); margin-bottom: 10px;
+}
+.datasetName {
+  font-family: var(--font-display); font-size: var(--text-xl);
+  font-weight: var(--weight-bold); color: var(--text-bright); margin-bottom: 8px;
+}
+.datasetMeta { font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: 6px; }
+.datasetModel { font-size: var(--text-sm); color: var(--text-secondary); }
+.datasetModel strong { color: var(--text-bright); font-weight: var(--weight-semi); }

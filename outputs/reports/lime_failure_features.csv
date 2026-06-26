@@ -1,0 +1,25 @@
+feature,count
+LetterRatioInURL|LineOfCode|DomainLength|NoOfSelfRef|NoOfExternalRef,23
+NoOfDegitsInURL <= 0.00|IsDomainIP <= 0.00|LineOfCode > 0.26|NoOfOtherSpecialCharsInURL <= 0.00|NoOfAmpersandInURL <= 0.00,1
+NoOfDegitsInURL <= 0.00|ObfuscationRatio <= 0.00|NoOfAmpersandInURL <= 0.00|0.00 < LineOfCode <= 0.26|NoOfEqualsInURL <= 0.00,1
+NoOfDegitsInURL <= 0.00|LineOfCode > 0.26|HasObfuscation <= 0.00|NoOfExternalRef > 0.49|NoOfEqualsInURL <= 0.00,1
+NoOfDegitsInURL <= 0.00|DomainLength > 0.45|NoOfAmpersandInURL <= 0.00|0.00 < LineOfCode <= 0.26|NoOfEqualsInURL <= 0.00,1
+NoOfDegitsInURL > 0.00|LetterRatioInURL <= -0.53|DomainLength <= -0.55|NoOfAmpersandInURL <= 0.00|NoOfOtherSpecialCharsInURL <= 0.00,1
+NoOfDegitsInURL <= 0.00|LetterRatioInURL <= -0.53|DomainLength <= -0.55|NoOfObfuscatedChar <= 0.00|ObfuscationRatio <= 0.00,1
+NoOfDegitsInURL <= 0.00|LineOfCode > 0.26|NoOfEqualsInURL <= 0.00|HasObfuscation <= 0.00|TLD_is_gov_edu <= 0.00,1
+NoOfDegitsInURL <= 0.00|NoOfAmpersandInURL <= 0.00|NoOfOtherSpecialCharsInURL <= 0.00|ObfuscationRatio <= 0.00|HasObfuscation <= 0.00,1
+NoOfDegitsInURL <= 0.00|IsDomainIP <= 0.00|NoOfObfuscatedChar <= 0.00|ObfuscationRatio <= 0.00|LargestLineLength > 0.54,1
+NoOfDegitsInURL <= 0.00|LineOfCode > 0.26|NoOfAmpersandInURL <= 0.00|NoOfObfuscatedChar <= 0.00|NoOfOtherSpecialCharsInURL <= 0.00,1
+NoOfDegitsInURL <= 0.00|LetterRatioInURL > 0.47|LineOfCode <= -0.74|NoOfAmpersandInURL <= 0.00|NoOfOtherSpecialCharsInURL <= 0.00,1
+NoOfDegitsInURL <= 0.00|LetterRatioInURL > 0.47|NoOfAmpersandInURL <= 0.00|NoOfOtherSpecialCharsInURL > 1.00|SpacialCharRatioInURL > 0.73,1
+LetterRatioInURL > 0.47|LineOfCode <= -0.74|NoOfDegitsInURL > 0.00|NoOfAmpersandInURL <= 0.00|DomainLength > 0.45,1
+NoOfDegitsInURL <= 0.00|NoOfAmpersandInURL <= 0.00|LineOfCode <= -0.74|ObfuscationRatio <= 0.00|IsDomainIP <= 0.00,1
+LetterRatioInURL > 0.47|NoOfDegitsInURL > 0.00|NoOfAmpersandInURL <= 0.00|DomainLength > 0.45|ObfuscationRatio <= 0.00,1
+LetterRatioInURL > 0.47|NoOfDegitsInURL > 0.00|DomainLength > 0.45|NoOfOtherSpecialCharsInURL > 1.00|IsDomainIP <= 0.00,1
+LetterRatioInURL > 0.47|NoOfDegitsInURL > 0.00|DomainLength > 0.45|NoOfAmpersandInURL <= 0.00|IsDomainIP <= 0.00,1
+NoOfDegitsInURL <= 0.00|NoOfAmpersandInURL <= 0.00|LetterRatioInURL <= -0.53|ObfuscationRatio <= 0.00|DomainLength <= -0.55,1
+NoOfDegitsInURL <= 0.00|LineOfCode <= -0.74|IsDomainIP <= 0.00|LargestLineLength <= -0.46|NoOfAmpersandInURL <= 0.00,1
+NoOfDegitsInURL > 0.00|LineOfCode <= -0.74|LetterRatioInURL <= -0.53|NoOfObfuscatedChar <= 0.00|DomainLength <= -0.55,1
+NoOfObfuscatedChar <= 0.00|NoOfDegitsInURL <= 0.00|DomainLength <= -0.55|NoOfOtherSpecialCharsInURL <= 0.00|HasExternalFormSubmit <= 0.00,1
+NoOfDegitsInURL <= 0.00|NoOfAmpersandInURL <= 0.00|DomainLength <= -0.55|LargestLineLength > 0.54|SpacialCharRatioInURL > 0.73,1
+NoOfDegitsInURL <= 0.00|NoOfAmpersandInURL <= 0.00|ObfuscationRatio <= 0.00|HasObfuscation <= 0.00|LargestLineLength <= -0.46,1

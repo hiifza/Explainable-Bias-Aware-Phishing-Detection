@@ -1,0 +1,95 @@
+.wrap { display: flex; flex-direction: column; gap: 24px; }
+
+.list { display: flex; flex-direction: column; }
+
+.row {
+  display: grid;
+  grid-template-columns: 32px 1fr 56px;
+  align-items: center;
+  gap: 16px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background var(--duration-base) var(--ease-in-out),
+              border-radius var(--duration-base) var(--ease-in-out),
+              padding var(--duration-base) var(--ease-in-out);
+}
+
+.row:last-child { border-bottom: none; }
+
+.row:hover {
+  background: var(--surface-hover);
+  border-radius: var(--r-md);
+  padding: 13px 12px;
+  margin: 0 -12px;
+  border-bottom-color: transparent;
+}
+
+.rank {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  text-align: right;
+}
+
+.info { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+
+.names { display: flex; align-items: baseline; gap: 10px; }
+
+.humanName {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semi);
+  color: var(--text-bright);
+  white-space: nowrap;
+}
+
+.techName {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.barBg {
+  height: 6px;
+  background: var(--surface-2);
+  border-radius: var(--r-full);
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: var(--r-full);
+  background: linear-gradient(90deg, var(--secondary), var(--accent));
+}
+
+.pct {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--accent);
+  text-align: right;
+}
+
+.note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 16px 18px;
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-border);
+  border-radius: var(--r-lg);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+.noteIcon {
+  color: var(--warn);
+  flex-shrink: 0;
+  font-size: 1rem;
+  margin-top: 1px;
+}
+
+.note strong { color: var(--text-bright); font-weight: var(--weight-semi); }

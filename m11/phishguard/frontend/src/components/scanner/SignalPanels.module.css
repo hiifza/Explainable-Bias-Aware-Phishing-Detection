@@ -1,0 +1,343 @@
+/* ── Shared panel ───────────────────────────────── */
+.panel {
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+  padding: 20px;
+}
+
+.panelDanger {
+  background: var(--danger-bg);
+  border-color: var(--danger-border);
+}
+
+.panelSafe {
+  background: var(--safe-bg);
+  border-color: var(--safe-border);
+}
+
+.panelLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--accent);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+/* ── Signals ─────────────────────────────────────── */
+.signals { display: flex; flex-direction: column; gap: 10px; }
+
+.signal {
+  border-radius: var(--r-md);
+  padding: 12px 14px;
+  border-left: 3px solid transparent;
+}
+
+.impact_high   { background: var(--danger-bg);   border-color: var(--critical); }
+.impact_medium { background: var(--warn-bg);     border-color: var(--warn); }
+.impact_low    { background: var(--safe-bg);     border-color: var(--safe); }
+
+.sigHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.sigName {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semi);
+  color: var(--text-bright);
+}
+
+.sigBadge {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: var(--weight-semi);
+  padding: 2px 8px;
+  border-radius: var(--r-full);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.badge_high   { background: var(--critical-bg); color: var(--critical); border: 1px solid var(--critical-border); }
+.badge_medium { background: var(--warn-bg);     color: var(--warn);     border: 1px solid var(--warn-border); }
+.badge_low    { background: var(--safe-bg);     color: var(--safe);     border: 1px solid var(--safe-border); }
+
+.sigDesc {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+.empty { font-size: var(--text-sm); color: var(--text-tertiary); }
+
+/* ── Attacker sim ────────────────────────────────── */
+.simIntro {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.simList { display: flex; flex-direction: column; gap: 8px; }
+
+.simRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+}
+
+.simRow_high   { border-left: 2px solid var(--critical); }
+.simRow_medium { border-left: 2px solid var(--warn); }
+.simRow_low    { border-left: 2px solid var(--safe); }
+
+.simCheck { color: var(--warn); font-size: 0.85rem; flex-shrink: 0; margin-top: 1px; }
+
+.simSignal {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-bright);
+  margin-bottom: 3px;
+}
+
+.simExpl {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+/* ── Action guidance ─────────────────────────────── */
+.actions { display: flex; flex-direction: column; gap: 8px; list-style: none; }
+
+.actionItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  line-height: var(--leading-relaxed);
+}
+
+.actionBullet { flex-shrink: 0; font-size: 0.85rem; margin-top: 2px; font-weight: var(--weight-bold); }
+.bulletDanger { color: var(--critical); }
+.bulletSafe   { color: var(--safe); }
+
+/* ── Expert panel ────────────────────────────────── */
+.expertWrap {
+  border-top: 1px solid var(--border-subtle);
+  margin: 0 -32px;
+  padding: 28px 32px;
+}
+
+@media (max-width: 768px) {
+  .expertWrap { margin: 0 -20px; padding: 24px 20px; }
+}
+
+.expertHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.expertTag {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--accent);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  border: 1px solid var(--border-default);
+  padding: 4px 12px;
+  border-radius: var(--r-full);
+  background: var(--accent-glow);
+}
+
+.expertSub {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-wider);
+}
+
+.expertGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .expertGrid { grid-template-columns: 1fr; }
+}
+
+.expertSection {
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+  padding: 18px 20px;
+}
+
+.expertSectionLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* Feature rows */
+.featRow {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.featRow:last-child { border-bottom: none; }
+
+.featName {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.featBar {
+  width: 60px;
+  height: 4px;
+  background: var(--border-subtle);
+  border-radius: var(--r-full);
+  overflow: hidden;
+}
+
+.featFill {
+  height: 100%;
+  border-radius: var(--r-full);
+  transition: width 0.8s var(--ease-out);
+}
+
+.featVal {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  min-width: 48px;
+  text-align: right;
+  color: var(--text-secondary);
+}
+
+/* Agreement */
+.agreementBadge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle);
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+
+.agreementVal {
+  font-family: var(--font-mono);
+  font-weight: var(--weight-semi);
+  padding: 2px 10px;
+  border-radius: var(--r-full);
+  font-size: var(--text-xs);
+}
+
+.agreeGreen  { background: var(--safe-bg);     color: var(--safe);     border: 1px solid var(--safe-border); }
+.agreeYellow { background: var(--warn-bg);     color: var(--warn);     border: 1px solid var(--warn-border); }
+.agreeRed    { background: var(--critical-bg); color: var(--critical); border: 1px solid var(--critical-border); }
+
+/* Domain */
+.domainGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+.domainStat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.domainKey {
+  font-size: 0.68rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+}
+
+.domainVal {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-primary);
+  word-break: break-all;
+}
+
+.hl_safe     { color: var(--safe); }
+.hl_warn     { color: var(--warn); }
+.hl_danger   { color: var(--danger); }
+.hl_critical { color: var(--critical); }
+
+.suspKeywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-subtle);
+  align-items: center;
+}
+
+.suspLabel {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.keyword {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  background: var(--danger-bg);
+  color: var(--danger);
+  border: 1px solid var(--danger-border);
+  padding: 2px 8px;
+  border-radius: var(--r-sm);
+}
+
+/* Scam psychology */
+.psychList { display: flex; flex-direction: column; gap: 8px; }
+
+.psychRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--r-md);
+}
+
+.psychDetected { background: var(--danger-bg); border: 1px solid var(--danger-border); }
+.psychClear    { background: var(--surface-1); border: 1px solid var(--border-subtle); }
+
+.psychDot { font-size: 0.8rem; margin-top: 2px; flex-shrink: 0; }
+.psychDetected .psychDot { color: var(--danger); }
+.psychClear    .psychDot { color: var(--text-tertiary); }
+
+.psychTactic {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semi);
+  color: var(--text-bright);
+  margin-bottom: 3px;
+}
+
+.psychDesc {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}

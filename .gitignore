@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Frontend
+node_modules/
+dist/
+build/
+
+# Vite
+m11/phishguard/frontend/node_modules/
+m11/phishguard/frontend/dist/
+
+# Backend static build (optional)
+m11/phishguard/backend/static/assets/
+
+# OS
+.DS_Store
+Thumbs.db

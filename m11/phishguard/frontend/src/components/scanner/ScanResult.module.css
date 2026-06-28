@@ -3,20 +3,31 @@
   inset: 0;
   z-index: 1000;
   background: var(--bg-overlay);
-  backdrop-filter: blur(12px) saturate(120%);
-  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
   overflow-y: auto;
-  padding: 80px 20px 60px;
+  padding: 80px 24px 60px;
 }
 
 .panel {
-  max-width: 1040px;
+  max-width: 1020px;
   margin: 0 auto;
   background: var(--bg-card);
   border: 1px solid var(--border-default);
-  border-radius: var(--r-xl);
+  border-radius: var(--r-2xl);
   overflow: hidden;
-  box-shadow: var(--shadow-xl);
+  box-shadow: var(--shadow-xl), 0 0 0 1px var(--border-subtle);
+  position: relative;
+}
+
+/* Top accent line */
+.panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--secondary), var(--accent), var(--secondary-2));
+  z-index: 1;
 }
 
 /* Header */
@@ -24,31 +35,28 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 28px 32px 20px;
+  padding: 28px 32px 22px;
   border-bottom: 1px solid var(--border-subtle);
 }
-
 .headerLeft { flex: 1; min-width: 0; }
-
 .headerTag {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--accent);
   letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
-
 .headerUrl {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   color: var(--text-secondary);
   word-break: break-all;
+  line-height: 1.5;
 }
 
 .closeBtn {
-  width: 36px;
-  height: 36px;
+  width: 36px; height: 36px;
   border-radius: var(--r-md);
   background: var(--surface-1);
   border: 1px solid var(--border-subtle);
@@ -60,18 +68,17 @@
   flex-shrink: 0;
   margin-left: 16px;
   transition:
-    color var(--duration-base) var(--ease-in-out),
-    border-color var(--duration-base) var(--ease-in-out),
-    background var(--duration-base) var(--ease-in-out);
+    color var(--dur-base) var(--ease-in-out),
+    border-color var(--dur-base) var(--ease-in-out),
+    background var(--dur-base) var(--ease-in-out);
 }
-
 .closeBtn:hover {
   color: var(--danger);
   border-color: var(--danger-border);
   background: var(--danger-bg);
 }
 
-/* Verdict banner */
+/* Verdict */
 .verdict {
   display: flex;
   align-items: center;
@@ -80,14 +87,12 @@
   background: var(--surface-1);
   border-bottom: 1px solid var(--border-subtle);
 }
-
 .verdictLabel {
   font-family: var(--font-display);
   font-size: var(--text-xl);
   font-weight: var(--weight-bold);
-  letter-spacing: var(--tracking-tight);
+  letter-spacing: -0.025em;
 }
-
 .verdictConf {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
@@ -98,18 +103,16 @@
 .body {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0;
-  padding: 28px 32px;
   gap: 32px;
+  padding: 28px 32px;
 }
-
-@media (max-width: 768px) {
+@media(max-width:768px){
   .body { grid-template-columns: 1fr; gap: 24px; }
   .panel { border-radius: 0; }
   .overlay { padding: 64px 0 40px; }
 }
 
-.col { display: flex; flex-direction: column; gap: 20px; }
+.col { display: flex; flex-direction: column; gap: 18px; }
 
 /* Narrative */
 .narrative {
@@ -118,7 +121,6 @@
   border-radius: var(--r-lg);
   padding: 20px;
 }
-
 .narrativeLabel {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
@@ -127,11 +129,10 @@
   text-transform: uppercase;
   margin-bottom: 10px;
 }
-
 .narrativeText {
   font-size: var(--text-sm);
   color: var(--text-primary);
-  line-height: var(--leading-relaxed);
+  line-height: 1.72;
 }
 
 /* Brand alert */
@@ -144,24 +145,7 @@
   border-radius: var(--r-lg);
   padding: 18px 20px;
 }
-
-.brandAlertIcon { font-size: 1.4rem; flex-shrink: 0; }
-
-.brandAlertTitle {
-  font-family: var(--font-display);
-  font-weight: var(--weight-semi);
-  font-size: var(--text-sm);
-  color: var(--danger);
-  margin-bottom: 6px;
-}
-
-.brandAlertBody {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
-  line-height: var(--leading-relaxed);
-}
-
-.brandAlertBody strong {
-  color: var(--text-bright);
-  font-weight: var(--weight-semi);
-}
+.brandAlertIcon    { font-size: 1.3rem; flex-shrink: 0; }
+.brandAlertTitle   { font-family: var(--font-display); font-weight: var(--weight-semi); font-size: var(--text-sm); color: var(--danger); margin-bottom: 5px; }
+.brandAlertBody    { font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.65; }
+.brandAlertBody strong { color: var(--text-bright); font-weight: var(--weight-semi); }

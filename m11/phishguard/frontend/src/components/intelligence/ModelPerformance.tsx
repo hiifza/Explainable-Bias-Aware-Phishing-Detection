@@ -1,37 +1,26 @@
 import { useState, useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
+import { useModelData } from '@/hooks/useIntelligence'
 import styles from './ModelPerformance.module.css'
-
-const TRACK_A = [
-  { name: 'Logistic Regression', accuracy: 99.9958, f1: 99.9958, auc: 1.00, deploy: false },
-  { name: 'Random Forest',       accuracy: 100.00,  f1: 100.00,  auc: 1.00, deploy: false },
-  { name: 'XGBoost',             accuracy: 99.9958, f1: 99.9958, auc: 1.00, deploy: false },
-  { name: 'LightGBM',            accuracy: 100.00,  f1: 100.00,  auc: 1.00, deploy: false },
-]
-
-const TRACK_B = [
-  { name: 'LightGBM',            accuracy: 99.9936, f1: 99.9936, auc: 1.00, deploy: true  },
-  { name: 'Logistic Regression', accuracy: 99.9936, f1: 99.9936, auc: 1.00, deploy: false },
-  { name: 'XGBoost',             accuracy: 99.9894, f1: 99.9894, auc: 1.00, deploy: false },
-  { name: 'Random Forest',       accuracy: 99.9851, f1: 99.9851, auc: 1.00, deploy: false },
-]
 
 type Track = 'A' | 'B'
 
 export default function ModelPerformance() {
   const [track, setTrack] = useState<Track>('B')
+  const { data, loading, source } = useModelData()
   const gridRef = useRef<HTMLDivElement>(null)
 
-  const models = track === 'A' ? TRACK_A : TRACK_B
+  const models = track === 'A'
+    ? (data?.models?.track_A ?? [])
+    : (data?.models?.track_B ?? [])
 
   useEffect(() => {
-    if (!gridRef.current) return
+    if (!gridRef.current || loading) return
     gsap.fromTo(
       gridRef.current.querySelectorAll(`.${styles.card}`),
       { opacity: 0, y: 18 },
       { opacity: 1, y: 0, stagger: 0.08, duration: 0.55, ease: 'power3.out' }
     )
-    // Animate bars
     gridRef.current.querySelectorAll<HTMLElement>('[data-bar]').forEach((bar) => {
       const target = parseFloat(bar.dataset.bar ?? '0')
       gsap.fromTo(bar,
@@ -39,11 +28,18 @@ export default function ModelPerformance() {
         { width: `${target}%`, duration: 1.2, ease: 'power3.out', delay: 0.2 }
       )
     })
-  }, [track])
+  }, [track, loading])
+
+  if (loading) return (
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+      {[1,2,3,4].map(i => (
+        <div key={i} style={{ height: 160, borderRadius: 'var(--r-lg)', background: 'var(--surface-1)', animation: 'pulseGlow 1.6s ease-in-out infinite' }} />
+      ))}
+    </div>
+  )
 
   return (
     <div className={styles.wrap}>
-      {/* Track switcher */}
       <div className={styles.tabs}>
         {(['A', 'B'] as Track[]).map((t) => (
           <button
@@ -54,6 +50,7 @@ export default function ModelPerformance() {
             {t === 'B' ? 'Track B · Deployment' : 'Track A · Research'}
           </button>
         ))}
+        {source === 'api' && <span className={styles.liveTag}>Live</span>}
       </div>
 
       {track === 'A' && (
@@ -64,32 +61,28 @@ export default function ModelPerformance() {
       )}
 
       <div ref={gridRef} className={styles.grid}>
-        {models.map((m) => (
+        {models.map((m: any) => (
           <div key={m.name} className={`${styles.card} ${m.deploy ? styles.cardDeploy : ''}`}>
             {m.deploy && <span className={styles.deployBadge}>✦ Deployment Model</span>}
-
             <div className={styles.modelName}>{m.name}</div>
-
             <div className={styles.metrics}>
               {[
                 { k: 'Accuracy', v: m.accuracy },
                 { k: 'F1 Score', v: m.f1 },
-                { k: 'ROC-AUC',  v: m.auc },
+                { k: 'ROC-AUC',  v: m.roc_auc },
               ].map(({ k, v }) => (
                 <div key={k} className={styles.metric}>
                   <span className={styles.metricVal}>
-                    {v === 1.00 ? '1.00' : `${v.toFixed(4)}%`}
+                    {v === 1.00 || v === 1 ? '1.00' : `${parseFloat(v).toFixed(4)}%`}
                   </span>
                   <span className={styles.metricKey}>{k}</span>
                 </div>
               ))}
             </div>
-
-            {/* Accuracy bar */}
             <div className={styles.barWrap}>
               <div className={styles.barLabel}>
                 <span>Accuracy</span>
-                <span>{m.accuracy === 100 ? '100.00%' : `${m.accuracy.toFixed(4)}%`}</span>
+                <span>{m.accuracy === 100 ? '100.00%' : `${parseFloat(m.accuracy).toFixed(4)}%`}</span>
               </div>
               <div className={styles.barBg}>
                 <div

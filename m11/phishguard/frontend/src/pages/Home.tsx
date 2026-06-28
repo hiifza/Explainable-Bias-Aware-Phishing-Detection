@@ -16,201 +16,157 @@ import styles from './Home.module.css'
 gsap.registerPlugin(ScrollTrigger)
 
 export default function Home() {
-  const heroRef  = useRef<HTMLDivElement>(null)
-  const titleRef = useRef<HTMLHeadingElement>(null)
-  const mode     = useAppStore((s) => s.mode)
+  const ref  = useRef<HTMLDivElement>(null)
+  const mode = useAppStore((s) => s.mode)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Hero entrance
-      gsap.fromTo('.pg-hero-eyebrow',
-        { opacity: 0, y: 16 },
-        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', delay: 0.2 }
-      )
-      gsap.fromTo('.pg-hero-title',
-        { opacity: 0, y: 24 },
-        { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', delay: 0.4 }
-      )
-      gsap.fromTo('.pg-hero-sub',
-        { opacity: 0, y: 16 },
-        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', delay: 0.6 }
-      )
-      gsap.fromTo('.pg-hero-scanner',
-        { opacity: 0, y: 20, scale: 0.98 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power3.out', delay: 0.8 }
-      )
-      gsap.fromTo('.pg-hero-metrics',
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', delay: 1.0 }
-      )
+      // Staggered hero entrance
+      const tl = gsap.timeline({ delay: 0.25 })
+      tl.fromTo('.pg-eyebrow',   { opacity:0, y:14 }, { opacity:1, y:0, duration:0.6, ease:'power3.out' })
+        .fromTo('.pg-title',     { opacity:0, y:28 }, { opacity:1, y:0, duration:0.8, ease:'power3.out' }, '-=0.3')
+        .fromTo('.pg-sub',       { opacity:0, y:18 }, { opacity:1, y:0, duration:0.6, ease:'power3.out' }, '-=0.4')
+        .fromTo('.pg-scanner',   { opacity:0, y:22, scale:0.98 }, { opacity:1, y:0, scale:1, duration:0.7, ease:'power3.out' }, '-=0.3')
+        .fromTo('.pg-metrics',   { opacity:0, y:18 }, { opacity:1, y:0, duration:0.6, ease:'power3.out' }, '-=0.2')
 
       // Section reveals
       gsap.utils.toArray<HTMLElement>('.pg-reveal').forEach((el) => {
         gsap.fromTo(el,
-          { opacity: 0, y: 32 },
-          {
-            opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
-            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-          }
+          { opacity:0, y:36 },
+          { opacity:1, y:0, duration:0.85, ease:'power3.out',
+            scrollTrigger: { trigger: el, start:'top 88%', once:true } }
         )
       })
-    }, heroRef)
-
+    }, ref)
     return () => ctx.revert()
   }, [])
 
   return (
-    <div ref={heroRef} className={styles.home}>
+    <div ref={ref} className={styles.home}>
 
-      {/* ── HERO ─────────────────────────────────────────────── */}
+      {/* ── HERO ─────────────────────────────────────────── */}
       <section className={styles.hero}>
+        <div className={styles.gridBg} />
         <ThreatGlobe />
 
         <div className={styles.heroGrid}>
-          <div className={styles.heroContent}>
-            <div className={`${styles.eyebrow} pg-hero-eyebrow`}>
-              <span className={styles.eyebrowDot} />
-              Explainable · Bias-Aware · Phishing Detection Intelligence
-            </div>
+          <div className={`${styles.eyebrow} pg-eyebrow`}>
+            <span className={styles.eyebrowDot} />
+            Explainable · Bias-Aware · Phishing Detection
+          </div>
 
-            <h1 className={`${styles.heroTitle} pg-hero-title`} ref={titleRef}>
-              Is this website
-              <br />
-              <span className={styles.accentWord}>safe to trust?</span>
-            </h1>
+          <h1 className={`${styles.heroTitle} pg-title`}>
+            Is this website
+            <span className={styles.accentWord}>safe to trust?</span>
+          </h1>
 
-            <p className={`${styles.heroSub} pg-hero-sub`}>
-              PhishGuard analyzes any URL using a machine learning system
-              trained on 235,795 real phishing and legitimate websites — and explains
-              exactly why it reached its decision.
-            </p>
+          <p className={`${styles.heroSub} pg-sub`}>
+            PhishGuard analyzes any URL through a machine learning system
+            trained on 235,795 real phishing and legitimate sites — and explains
+            exactly why it reached its verdict.
+          </p>
 
-            <div className={`pg-hero-scanner ${styles.scannerWrap}`}>
-              <Scanner />
-            </div>
+          <div className={`pg-scanner ${styles.scannerWrap}`}>
+            <Scanner />
           </div>
         </div>
 
-        <div className={`pg-hero-metrics ${styles.heroMetrics}`}>
+        <div className={`pg-metrics ${styles.heroMetrics}`}>
           <MetricCards />
         </div>
 
         <div className={styles.scrollHint} aria-hidden="true">
           <span className={styles.scrollLine} />
-          <span className={styles.scrollLabel}>Intelligence Report Below</span>
+          <span className={styles.scrollLabel}>Intelligence Below</span>
         </div>
       </section>
 
-      {/* ── MODEL PERFORMANCE ────────────────────────────────── */}
+      {/* ── MODEL PERFORMANCE ──────────────────────────── */}
       <section className={styles.section} id="models">
         <div className="section-inner">
           <div className="pg-reveal">
             <div className="section-tag">Model Performance Laboratory</div>
-            <h2 className={styles.sectionTitle}>
-              Four models. Two tracks.
-              <br />Near-perfect detection.
-            </h2>
+            <h2 className={styles.sectionTitle}>Four models.<br />Two tracks. Near-perfect.</h2>
             <p className={styles.sectionSub}>
-              All four architectures evaluated across Track A (with URLSimilarityIndex leakage signal)
-              and Track B (production-safe). Track B LightGBM is the deployment model.
+              Track A includes URLSimilarityIndex (data leakage). Track B is production-safe.
+              Track B LightGBM is the deployment model.
             </p>
           </div>
-          <div className="pg-reveal">
-            <ModelPerformance />
-          </div>
+          <div className="pg-reveal"><ModelPerformance /></div>
         </div>
       </section>
 
-      {/* ── SHAP EXPLAINABILITY ──────────────────────────────── */}
+      {/* ── SHAP ────────────────────────────────────────── */}
       <section className={`${styles.section} ${styles.sectionAlt}`} id="shap">
         <div className="section-inner">
           <div className="pg-reveal">
             <div className="section-tag">SHAP Explainability</div>
             <h2 className={styles.sectionTitle}>What drives every decision?</h2>
             <p className={styles.sectionSub}>
-              SHAP (SHapley Additive exPlanations) reveals the precise contribution of each
-              feature — globally consistent across all 235,795 samples.
+              SHAP reveals the exact contribution of each feature — globally
+              consistent across all 235,795 samples.
             </p>
           </div>
-          <div className="pg-reveal">
-            <ShapSection />
-          </div>
+          <div className="pg-reveal"><ShapSection /></div>
         </div>
       </section>
 
-      {/* ── SHAP vs LIME ─────────────────────────────────────── */}
+      {/* ── CONFLICT ────────────────────────────────────── */}
       <section className={styles.section} id="conflict">
         <div className="section-inner">
           <div className="pg-reveal">
             <div className="section-tag">SHAP vs LIME Conflict Analyzer</div>
-            <h2 className={styles.sectionTitle}>
-              Two explanation methods.
-              <br />Zero agreement.
-            </h2>
+            <h2 className={styles.sectionTitle}>Two explanation methods.<br />Zero agreement.</h2>
             <p className={styles.sectionSub}>
-              The most critical research finding: despite near-perfect predictions,
-              SHAP and LIME identify entirely different explanatory features.
+              The most critical finding: despite near-perfect predictions, SHAP and LIME
+              identify entirely different explanatory features for the same decisions.
             </p>
           </div>
-          <div className="pg-reveal">
-            <ShapLimeConflict />
-          </div>
+          <div className="pg-reveal"><ShapLimeConflict /></div>
         </div>
       </section>
 
-      {/* ── BLIND SPOTS ──────────────────────────────────────── */}
+      {/* ── BLIND SPOTS (expert only) ──────────────────── */}
       {mode === 'expert' && (
         <section className={`${styles.section} ${styles.sectionAlt}`} id="blindspots">
           <div className="section-inner">
             <div className="pg-reveal">
               <div className="section-tag">Blind Spot Investigation Center</div>
-              <h2 className={styles.sectionTitle}>
-                3 failures in 47,159 samples.
-                <br />We found all three.
-              </h2>
+              <h2 className={styles.sectionTitle}>3 failures in 47,159 samples.<br />All found.</h2>
             </div>
-            <div className="pg-reveal">
-              <BlindspotSection />
-            </div>
+            <div className="pg-reveal"><BlindspotSection /></div>
           </div>
         </section>
       )}
 
-      {/* ── BIAS ─────────────────────────────────────────────── */}
+      {/* ── BIAS ────────────────────────────────────────── */}
       <section className={`${styles.section} ${mode === 'expert' ? '' : styles.sectionAlt}`} id="bias">
         <div className="section-inner">
           <div className="pg-reveal">
             <div className="section-tag">Bias & Fairness Observatory</div>
-            <h2 className={styles.sectionTitle}>Audited for fairness.</h2>
+            <h2 className={styles.sectionTitle}>Audited for fairness<br />across five dimensions.</h2>
             <p className={styles.sectionSub}>
-              Five dimensions of performance fairness — URL length, domain length,
-              HTTPS status, TLD groups, and external resources.
-              All five pass.
+              URL length, domain length, HTTPS status, TLD groups, external resources.
+              Every dimension passes.
             </p>
           </div>
-          <div className="pg-reveal">
-            <BiasSection />
-          </div>
+          <div className="pg-reveal"><BiasSection /></div>
         </div>
       </section>
 
-      {/* ── RELIABILITY ──────────────────────────────────────── */}
+      {/* ── RELIABILITY (expert only) ──────────────────── */}
       {mode === 'expert' && (
         <section className={styles.section} id="reliability">
           <div className="section-inner">
             <div className="pg-reveal">
               <div className="section-tag">Reliability Analysis Center</div>
-              <h2 className={styles.sectionTitle}>
-                When confidence misleads.
-              </h2>
+              <h2 className={styles.sectionTitle}>13.04% error rate.<br />97.31% confidence.</h2>
               <p className={styles.sectionSub}>
-                The Red Zone: 13.04% error rate despite 97.31% mean model confidence.
-                Explanation agreement is a better reliability signal than confidence alone.
+                The Red Zone reveals that model confidence alone does not predict
+                reliability — explanation agreement does.
               </p>
             </div>
-            <div className="pg-reveal">
-              <ReliabilitySection />
-            </div>
+            <div className="pg-reveal"><ReliabilitySection /></div>
           </div>
         </section>
       )}

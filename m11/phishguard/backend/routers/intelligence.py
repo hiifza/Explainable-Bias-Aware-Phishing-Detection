@@ -15,46 +15,27 @@ router = APIRouter(tags=["Intelligence"])
 
 # ── Repo path resolution (portable) ──────────────────────────────────────────
 def get_repo() -> Path:
-    """
-    Find the real repository root by walking upward until an outputs folder exists.
-    """
-
-    current = Path(__file__).resolve()
-
-    for parent in current.parents:
-        if (parent / "outputs").exists():
-            return parent
-
-    raise FileNotFoundError(
-        "Could not locate repository root containing 'outputs' folder."
-    )
+    """Walk up from this file to find the repository root."""
+    here = Path(__file__).parent.resolve()
+    for candidate in [here.parent.parent, here.parent.parent.parent]:
+        if (candidate / "outputs").exists():
+            return candidate
+    # Fallback: look for outputs/ relative to cwd
+    cwd = Path.cwd()
+    for candidate in [cwd, cwd.parent]:
+        if (candidate / "outputs").exists():
+            return candidate
+    return here.parent.parent   # best guess
 
 
-def safe_csv(path: Path):
-    print("\n========== CSV DEBUG ==========")
-    print("Reading:", path)
-    print("Exists :", path.exists())
-
+def safe_csv(path: Path) -> list[dict]:
+    """Read a CSV file safely, return [] if missing."""
     if not path.exists():
         return []
-
     try:
-        with path.open("r", encoding="utf-8") as f:
-            print("First 5 lines:")
-            for i in range(5):
-                line = f.readline()
-                print(repr(line))
-
-        with path.open("r", encoding="utf-8") as f:
-            rows = list(csv.DictReader(f))
-
-        print("Rows:", len(rows))
-        print("===============================\n")
-
-        return rows
-
-    except Exception as e:
-        print("CSV ERROR:", e)
+        with path.open(newline='', encoding='utf-8') as f:
+            return list(csv.DictReader(f))
+    except Exception:
         return []
 
 
@@ -147,28 +128,12 @@ KNOWN = {
 
 @router.get("/shap")
 async def get_shap():
-    repo = get_repo()
-
+    repo    = get_repo()
     csv_path = repo / "outputs" / "reports" / "shap_feature_ranking.csv"
-
-    print("Repository:", repo)
-    print("CSV exists:", csv_path.exists())
-    print("CSV path:", csv_path)
-
-    rows = safe_csv(csv_path)
-
-    print("Rows loaded:", len(rows))
-
+    rows    = safe_csv(csv_path)
     if rows:
-        return {
-            "source": "repository",
-            "features": rows
-        }
-
-    return {
-        "source": "known_results",
-        "features": KNOWN["shap_features"]
-    }
+        return {"source": "repository", "features": rows}
+    return {"source": "known_results", "features": KNOWN["shap_features"]}
 
 
 @router.get("/lime")

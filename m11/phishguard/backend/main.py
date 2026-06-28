@@ -18,7 +18,7 @@ from routers import analyze, intelligence, reports
 
 # ── Paths (portable) ──────────────────────────────────────────────────────────
 THIS_DIR  = Path(__file__).parent.resolve()
-REPO_ROOT = THIS_DIR.parents[2]          # phishguard/ → project root
+REPO_ROOT = THIS_DIR.parent          # phishguard/ → project root
 STATIC    = THIS_DIR / "static"      # built frontend lands here
 STATIC.mkdir(exist_ok=True)
 

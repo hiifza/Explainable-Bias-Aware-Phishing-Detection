@@ -159,3 +159,18 @@
   background: linear-gradient(90deg, var(--accent), var(--safe)) !important;
   box-shadow: 0 0 8px var(--accent-glow);
 }
+
+.liveTag {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: var(--weight-semi);
+  color: var(--safe);
+  border: 1px solid var(--safe-border);
+  background: var(--safe-bg);
+  padding: 3px 10px;
+  border-radius: var(--r-full);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  margin-left: 8px;
+  align-self: center;
+}

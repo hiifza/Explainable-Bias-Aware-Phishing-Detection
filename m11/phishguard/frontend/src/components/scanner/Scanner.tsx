@@ -12,17 +12,16 @@ const EXAMPLE_URLS = [
 ]
 
 export default function Scanner() {
-  const { scanUrl, setScanUrl, setIsScanning, setScanResult, setScanError, setShowResult, isScanning } = useAppStore()
-  const inputRef  = useRef<HTMLInputElement>(null)
-  const btnRef    = useRef<HTMLButtonElement>(null)
-  const wrapRef   = useRef<HTMLDivElement>(null)
+  const { scanUrl, setScanUrl, setIsScanning, setScanResult, setScanError, setShowResult, isScanning, scanError } = useAppStore()
+  const inputRef = useRef<HTMLInputElement>(null)
+  const btnRef   = useRef<HTMLButtonElement>(null)
+  const wrapRef  = useRef<HTMLDivElement>(null)
   const [focused, setFocused] = useState(false)
 
   const runScan = useCallback(async () => {
     const url = scanUrl.trim()
     if (!url || isScanning) return
 
-    // Button pulse
     gsap.fromTo(btnRef.current,
       { scale: 0.95 },
       { scale: 1, duration: 0.4, ease: 'elastic.out(1, 0.5)' }
@@ -36,7 +35,7 @@ export default function Scanner() {
       setScanResult(result)
       setShowResult(true)
     } catch (err: any) {
-      const msg = err?.response?.data?.detail ?? 'Analysis failed. Check the URL and try again.'
+      const msg = err?.response?.data?.detail ?? 'Backend unavailable. Start the FastAPI server with: uvicorn main:app --port 8000'
       setScanError(msg)
     } finally {
       setIsScanning(false)
@@ -49,6 +48,7 @@ export default function Scanner() {
 
   const handleExample = (url: string) => {
     setScanUrl(url)
+    setScanError(null)
     inputRef.current?.focus()
     gsap.fromTo(wrapRef.current,
       { borderColor: 'var(--border-subtle)' },
@@ -60,7 +60,7 @@ export default function Scanner() {
     <div className={styles.scanner}>
       <div
         ref={wrapRef}
-        className={`${styles.inputWrap} ${focused ? styles.focused : ''}`}
+        className={`${styles.inputWrap} ${focused ? styles.focused : ''} ${scanError ? styles.hasError : ''}`}
       >
         <span className={styles.icon} aria-hidden="true">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
@@ -74,7 +74,7 @@ export default function Scanner() {
           className={styles.input}
           placeholder="Paste any URL to analyze — https://example.com"
           value={scanUrl}
-          onChange={(e) => setScanUrl(e.target.value)}
+          onChange={(e) => { setScanUrl(e.target.value); setScanError(null) }}
           onKeyDown={handleKey}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
@@ -105,9 +105,15 @@ export default function Scanner() {
       {isScanning && (
         <div className={styles.scanStatus} role="status" aria-live="polite">
           <span className={styles.scanDot} />
-          <span className={styles.scanText}>
-            Analyzing URL through PhishGuard Intelligence Engine…
-          </span>
+          <span className={styles.scanText}>Analyzing URL through PhishGuard Intelligence Engine…</span>
+        </div>
+      )}
+
+      {scanError && (
+        <div className={styles.errorBanner} role="alert">
+          <span className={styles.errorIcon}>⚠</span>
+          <span className={styles.errorText}>{scanError}</span>
+          <button className={styles.errorDismiss} onClick={() => setScanError(null)} aria-label="Dismiss error">✕</button>
         </div>
       )}
 

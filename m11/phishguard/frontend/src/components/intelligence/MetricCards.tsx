@@ -1,64 +1,61 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
+import { useDatasetStats, useBlindspotData, useBiasData, useReliabilityData } from '@/hooks/useIntelligence'
 import styles from './MetricCards.module.css'
 
-const METRICS = [
-  { value: 100,    suffix: '%',  label: 'Best Accuracy',        color: 'safe',    decimals: 0 },
-  { value: 235795, suffix: '',   label: 'URLs Analyzed',        color: 'accent',  decimals: 0 },
-  { value: 56,     suffix: '',   label: 'Features Analyzed',    color: 'accent',  decimals: 0 },
-  { value: 4,      suffix: '',   label: 'Models Evaluated',     color: 'accent',  decimals: 0 },
-  { value: 3,      suffix: '',   label: 'Critical Failures',    color: 'danger',  decimals: 0 },
-  { value: 0,      suffix: '%',  label: 'Bias Violations',      color: 'safe',    decimals: 0 },
-  { value: 13.04,  suffix: '%',  label: 'Red Zone Error Rate',  color: 'warn',    decimals: 2 },
-  { value: 1.0,    suffix: '',   label: 'Best ROC-AUC',         color: 'safe',    decimals: 2 },
-]
-
 export default function MetricCards() {
+  const { data: dsData } = useDatasetStats()
+  const { data: bsData } = useBlindspotData()
+  const { data: biasData } = useBiasData()
+  const { data: relData } = useReliabilityData()
   const cardsRef = useRef<HTMLDivElement>(null)
+
+  // Build metrics from live API data with fallbacks
+  const metrics = [
+    { value: 100,    suffix: '%',  label: 'Best Accuracy',       color: 'safe',   decimals: 0 },
+    { value: dsData?.dataset?.rows ?? 235795, suffix: '', label: 'URLs Analyzed', color: 'accent', decimals: 0 },
+    { value: dsData?.dataset?.features ?? 56, suffix: '', label: 'Features Analyzed', color: 'accent', decimals: 0 },
+    { value: 4,      suffix: '',   label: 'Models Evaluated',    color: 'accent', decimals: 0 },
+    { value: bsData?.top3?.length ?? 3, suffix: '', label: 'Critical Failures', color: 'danger', decimals: 0 },
+    { value: biasData?.summary?.violations ?? 0, suffix: '%', label: 'Bias Violations', color: 'safe', decimals: 0 },
+    { value: relData?.summary?.zones?.find((z: any) => z.zone === 'RED')?.error_rate ?? 13.04, suffix: '%', label: 'Red Zone Error Rate', color: 'warn', decimals: 2 },
+    { value: 1.0,    suffix: '',   label: 'Best ROC-AUC',        color: 'safe',   decimals: 2 },
+  ]
 
   useEffect(() => {
     if (!cardsRef.current) return
     const counters = cardsRef.current.querySelectorAll<HTMLElement>('[data-count]')
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return
-          const el = entry.target as HTMLElement
-          const target   = parseFloat(el.dataset.count ?? '0')
-          const decimals = parseInt(el.dataset.decimals ?? '0')
-          const obj = { val: 0 }
-          gsap.to(obj, {
-            val: target,
-            duration: 1.8,
-            ease: 'power3.out',
-            delay: parseFloat(el.dataset.delay ?? '0'),
-            onUpdate: () => {
-              el.textContent = decimals > 0
-                ? obj.val.toFixed(decimals)
-                : Math.round(obj.val).toLocaleString()
-            },
-          })
-          observer.unobserve(el)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        const el = entry.target as HTMLElement
+        const target   = parseFloat(el.dataset.count ?? '0')
+        const decimals = parseInt(el.dataset.decimals ?? '0')
+        const obj = { val: 0 }
+        gsap.to(obj, {
+          val: target,
+          duration: 1.8,
+          ease: 'power3.out',
+          delay: parseFloat(el.dataset.delay ?? '0'),
+          onUpdate: () => {
+            el.textContent = decimals > 0
+              ? obj.val.toFixed(decimals)
+              : Math.round(obj.val).toLocaleString()
+          },
         })
-      },
-      { threshold: 0.4 }
-    )
-
+        observer.unobserve(el)
+      })
+    }, { threshold: 0.4 })
     counters.forEach((c) => observer.observe(c))
     return () => observer.disconnect()
-  }, [])
+  }, [metrics.map(m => m.value).join(',')])
 
   return (
     <div ref={cardsRef} className={styles.grid}>
-      {METRICS.map((m, i) => (
+      {metrics.map((m, i) => (
         <div key={m.label} className={`${styles.card} ${styles[`card_${m.color}`]}`}>
           <div className={`${styles.value} ${styles[`val_${m.color}`]}`}>
-            <span
-              data-count={m.value}
-              data-decimals={m.decimals}
-              data-delay={i * 0.07}
-            >
+            <span data-count={m.value} data-decimals={m.decimals} data-delay={i * 0.07}>
               {m.decimals > 0 ? m.value.toFixed(m.decimals) : m.value.toLocaleString()}
             </span>
             {m.suffix && <span className={styles.suffix}>{m.suffix}</span>}

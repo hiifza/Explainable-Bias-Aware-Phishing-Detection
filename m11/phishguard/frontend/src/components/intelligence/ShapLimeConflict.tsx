@@ -1,48 +1,50 @@
 import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useShapData, useLimeData } from '@/hooks/useIntelligence'
 import styles from './ShapLimeConflict.module.css'
 
-const SHAP_TOP = [
-  'LetterRatioInURL', 'LineOfCode', 'IsHTTPS',
-  'NoOfDegitsInURL', 'DomainLength', 'NoOfSelfRef',
-]
 const LIME_TOP = [
   'HasPasswordField', 'NoOfExternalRef', 'URLLength',
   'HasTitle', 'LargestLineLength', 'ObfuscationRatio',
 ]
 
 export default function ShapLimeConflict() {
-  const scoreRef  = useRef<HTMLDivElement>(null)
+  const { data: shapData, loading: shapLoading } = useShapData()
+  const { data: limeData, loading: limeLoading } = useLimeData()
+  const scoreRef   = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLDivElement>(null)
 
+  const shapTop = shapData?.features?.slice(0, 6).map((f: any) => f.feature ?? f.name) ?? []
+  const limeTop = limeData?.agreement_data?.slice(0, 6).map((r: any) => r.feature ?? r.lime_feature) ?? LIME_TOP
+  const actualLime = limeTop.length > 0 ? limeTop : LIME_TOP
+
+  const agree   = limeData?.summary?.mean_agreement ?? 0.52
+  const localAgree = limeData?.summary?.local_agreement_pct ?? 0
+
   useEffect(() => {
-    if (!sectionRef.current) return
+    if (shapLoading || limeLoading || !sectionRef.current) return
     ScrollTrigger.create({
       trigger: sectionRef.current,
       start: 'top 75%',
       once: true,
       onEnter: () => {
-        // Animate the big 0% score
         if (scoreRef.current) {
           gsap.fromTo(scoreRef.current,
             { scale: 0.6, opacity: 0 },
             { scale: 1, opacity: 1, duration: 0.8, ease: 'back.out(1.7)', delay: 0.2 }
           )
         }
-        // Animate feature rows
         gsap.fromTo(`.${styles.shapRow}, .${styles.limeRow}`,
           { opacity: 0, y: 12 },
           { opacity: 1, y: 0, stagger: 0.07, duration: 0.5, ease: 'power3.out', delay: 0.4 }
         )
       },
     })
-  }, [])
+  }, [shapLoading, limeLoading])
 
   return (
     <div ref={sectionRef} className={styles.wrap}>
-
-      {/* Top row: SHAP | Score | LIME */}
       <div className={styles.conflictRow}>
 
         {/* SHAP panel */}
@@ -55,24 +57,21 @@ export default function ShapLimeConflict() {
             Shapley values · Mathematically guaranteed · Model-consistent
           </div>
           <div className={styles.featureList}>
-            {SHAP_TOP.map((f, i) => (
+            {(shapTop.length > 0 ? shapTop : ['LetterRatioInURL','LineOfCode','IsHTTPS','NoOfDegitsInURL','DomainLength','NoOfSelfRef']).map((f: string, i: number) => (
               <div key={f} className={styles.shapRow}>
                 <span className={styles.featRank}>{i + 1}</span>
                 <span className={styles.featName}>{f}</span>
                 <div className={styles.featBar}>
-                  <div
-                    className={styles.featFillShap}
-                    style={{ width: `${100 - i * 14}%` }}
-                  />
+                  <div className={styles.featFillShap} style={{ width: `${100 - i * 14}%` }} />
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Center score */}
+        {/* Center */}
         <div className={styles.centerCol}>
-          <div ref={scoreRef} className={styles.conflictScore}>0%</div>
+          <div ref={scoreRef} className={styles.conflictScore}>{localAgree}%</div>
           <div className={styles.conflictLabel}>Agreement</div>
           <div className={styles.conflictArrows}>
             <span className={styles.arrow}>←</span>
@@ -80,7 +79,7 @@ export default function ShapLimeConflict() {
             <span className={styles.arrow}>→</span>
           </div>
           <div className={styles.conflictSub}>
-            Feature overlap<br />across top local<br />explanations
+            Local feature<br />overlap across<br />top explanations
           </div>
         </div>
 
@@ -94,15 +93,12 @@ export default function ShapLimeConflict() {
             Surrogate model · Instance-level · Locally faithful
           </div>
           <div className={styles.featureList}>
-            {LIME_TOP.map((f, i) => (
+            {actualLime.slice(0, 6).map((f: string, i: number) => (
               <div key={f} className={styles.limeRow}>
                 <span className={styles.featRank}>{i + 1}</span>
                 <span className={styles.featName}>{f}</span>
                 <div className={styles.featBar}>
-                  <div
-                    className={styles.featFillLime}
-                    style={{ width: `${100 - i * 14}%` }}
-                  />
+                  <div className={styles.featFillLime} style={{ width: `${100 - i * 14}%` }} />
                 </div>
               </div>
             ))}
@@ -111,15 +107,13 @@ export default function ShapLimeConflict() {
 
       </div>
 
-      {/* Stats strip */}
       <div className={styles.statsStrip}>
-        <Stat label="Mean SHAP-LIME Agreement" value="0.52" note="global" color="warn" />
-        <Stat label="Feature Consistency"       value="0.60" note="score"  color="warn" />
-        <Stat label="Shared Top-20 Features"   value="12"   note="of 20"  color="warn" />
-        <Stat label="Local Agreement"           value="0%"   note="critical" color="danger" />
+        <Stat label="Mean SHAP-LIME Agreement" value={agree.toFixed(2)}         note="global"   color="warn"   />
+        <Stat label="Feature Consistency"       value={(limeData?.summary?.feature_consistency ?? 0.60).toFixed(2)} note="score"    color="warn"   />
+        <Stat label="Shared Top-20 Features"   value={String(limeData?.summary?.shared_top20 ?? 12)}              note="of 20"   color="warn"   />
+        <Stat label="Local Agreement"           value={`${localAgree}%`}         note="critical" color="danger" />
       </div>
 
-      {/* Finding callout */}
       <div className={styles.finding}>
         <div className={styles.findingIcon}>⊗</div>
         <div className={styles.findingBody}>
@@ -132,7 +126,6 @@ export default function ShapLimeConflict() {
           </p>
         </div>
       </div>
-
     </div>
   )
 }

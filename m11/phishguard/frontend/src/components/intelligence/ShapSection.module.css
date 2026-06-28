@@ -93,3 +93,18 @@
 }
 
 .note strong { color: var(--text-bright); font-weight: var(--weight-semi); }
+
+.sourceTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--safe);
+  border: 1px solid var(--safe-border);
+  background: var(--safe-bg);
+  padding: 3px 10px;
+  border-radius: var(--r-full);
+  letter-spacing: var(--tracking-wide);
+  margin-bottom: 16px;
+}
